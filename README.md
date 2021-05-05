@@ -16,6 +16,9 @@
 * Run_filter_may2020.sh
   - GATK pipeline
 
+* WGS_STB_Populations.xlsx 
+  - metadata for all isolates
+
 * amendingfile.R
   - script that modified GATK output VCF
   - used in PlotFilteredSNPs.rmd
