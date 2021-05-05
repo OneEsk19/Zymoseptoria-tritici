@@ -1,5 +1,5 @@
 ---
-title: "PlotFilteredSNPS"
+title: "PlotFiltersGR""
 output: html_document
 editor_options: 
   chunk_output_type: console
@@ -8,91 +8,133 @@ editor_options:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-## First replace FILTERED1,FILTERED5 with simple FILTER in .tab file
 
- # Import VCF files
+# Quality Metrics
+
+### Previous steps / background
+"So, GATK is the software suite that I used to call my SNPs. The last step is “joint genotyping”, where you take all of your preliminary vcfs (one vcf for each individual) and combine this into one giant VCF and do the SNP calling for all isolates together. This joint SNP calling makes sure that you assign unified quality scores for all SNPs across the whole dataset." 
+
+"The output of joint genotype is the file called “Global_vcf_450.unfilt.vcf.gz”, found in the May2020_gadi_genotyping folder on rds."
+
+"NEXT, I use GATK to “filter” this VCF file. Filter is a tricky word here because GATK does not actually remove any SNPs from the VCF file, instead it simply labels SNPs with a “Filter” Flag, or “PASS”. Attached is my script that I used to “filter” my VCF. In this same script I also use the GATK tool “VariantToTable” which outputs some of the data from my VCF into a tab deliminated file. This .tab file is much smaller than the 20GB vcf and allows me to look at the quality scores of all my SNPs. I have also attached an Rmd script which uses the .tab files to plot some of the quality metrics for SNPs across the whole dataset."
+
+Quality scores info: https://gatk.broadinstitute.org/hc/en-us/articles/360035890471-Hard-filtering-germline-short-variants
+
+### First replace FILTERED1,FILTERED5 with simple FILTER in .tab file
+
+```{r eval=FALSE, include=TRUE}
+# as per scropt "amending.R"
+# not run here
+
+thefile <- tabfile
+
+thefile$FILTER[thefile$FILTER != "PASS"] <- "FILTERED" 
+head(thefile)
+
+thefile$FILTER <- as.character(thefile$FILTER)
+thefile$FILTER[is.na(thefile$FILTER)] <- "FILTERED"
+write.csv(thefile, "amemdedTABfile.tsv", sep = "/t")
+```
+
+
 ```{r}
-getwd()
-UNFILT<-read.delim("/Volumes/Solomon_Lab/Megan/ZYMO_GWAS/June2019_rajinMappedReads/GATK_vcfs/joint_genotype/AUS_NZ_450.plain.first.tab", header=T, stringsAsFactors=T)
+tabfile <- read.csv("Data/May2020_gadi_genotyping/joint_genotype/amemdedTABfile.tsv", header = T, stringsAsFactors = T)
 
-head(UNFILT)
+tabfile <- tabfile[,-1]
+```
+
+"If a SNP is very low quality it will get assigned more than one flag. For example “Filter1,Filter2,Filter3”. In order to look just at FILTERED vs PASS I have used grep (or regex find replace in BBedit, sublime text) to find these more complex Filters and just replace with a simple “FILTERED”. This gives me a binary column with “FILTERED” or “PASS” that I can then use as a factor for ggplot2.
+
+It would be great if you could have a look at “Global_vcf_450.plain.may2020.tab” and try to plot the SNP quality scores. Please download this locally or make a copy and then modify the filter flags so you only have FILTERED or PASS in the first column."
+
+
+
+### Import VCF files
+```{r}
+# tabfile <- read.delim("Data/May2020_gadi_genotyping/joint_genotype/Global_vcf_450.plain.may2020.tab", header = T, stringsAsFactors = T)
+# 
+# head(tabfile)
+```
+
+
+### 1. Straight Quality plot
+```{r}
 library("ggplot2")
 ```
-## 1. Straight Quality plot
+
 ```{r}
-library("ggplot2")
-UNQUALplot<-ggplot(UNFILT, aes(x=QUAL))+geom_histogram(alpha=0.5)+ xlim(0,2000)
+UNQUALplot<-ggplot(tabfile, aes(x=QUAL))+geom_histogram(alpha=0.5)+ xlim(0,2000)
 UNQUALplot
 
-QUALplot<-ggplot(UNFILT, aes(x=log(QUAL)))+geom_histogram(aes(fill=FILTER), alpha=0.5)+
+QUALplot<-ggplot(tabfile, aes(x=log(QUAL)))+geom_histogram(aes(fill=FILTER), alpha=0.5)+
   theme(legend.position = "none")
 QUALplot
 
 ```
 
 
-## 2. Quality by Depth Plot (QD)
+### 2. Quality by Depth Plot (QD)
 ```{r, echo=FALSE}
-UNQDplot<-ggplot(UNFILT, aes(x=QD))+geom_histogram()
+UNQDplot<-ggplot(tabfile, aes(x=QD))+geom_histogram()
 UNQDplot
 
-QDplot<-ggplot(UNFILT, aes(x=QD))+geom_histogram(aes(fill=FILTER), alpha=0.5)+
+QDplot<-ggplot(tabfile, aes(x=QD))+geom_histogram(aes(fill=FILTER), alpha=0.5)+
   theme(legend.position = "none")
 QDplot
 
 ```
 
-## 3. FisherStrand plot (FS)
+### 3. FisherStrand plot (FS)
 some values at 0 dont work for the log10 scale so I added a very small amount to the variable (0.1)
 ```{r}
-UNFSplot<-ggplot(UNFILT, aes(x=FS))+geom_histogram()
+UNFSplot<-ggplot(tabfile, aes(x=FS))+geom_histogram()
 UNFSplot
 
-FSplot<-ggplot(UNFILT, aes(x=FS))+geom_histogram(aes(fill=FILTER), alpha=0.5)+xlim(-1,25)+
+FSplot<-ggplot(tabfile, aes(x=FS))+geom_histogram(aes(fill=FILTER), alpha=0.5)+xlim(-1,25)+
   theme(legend.position = "none")
 FSplot
 
 
 ```
 
-## 4. StrandOddsRatio (SOR)
+### 4. StrandOddsRatio (SOR)
 ```{r}
-UNSORplot<-ggplot(UNFILT, aes(x=SOR))+geom_histogram()
+UNSORplot<-ggplot(tabfile, aes(x=SOR))+geom_histogram()
 UNSORplot
 
-SORplot<-ggplot(UNFILT, aes(x=SOR))+geom_histogram(aes(fill=FILTER), alpha=0.5)+
+SORplot<-ggplot(tabfile, aes(x=SOR))+geom_histogram(aes(fill=FILTER), alpha=0.5)+
   theme(legend.position = "none")
 SORplot
 
 ```
 
-## 5. RMSMappingQuality (MQ)
+### 5. RMSMappingQuality (MQ)
 ```{r}
-UNRMSplot<-ggplot(UNFILT, aes(x=MQ))+geom_histogram()
+UNRMSplot<-ggplot(tabfile, aes(x=MQ))+geom_histogram()
 UNRMSplot
 
-RMSplot<-ggplot(UNFILT, aes(x=MQ))+geom_histogram(aes(fill=FILTER), alpha=0.5)+
+RMSplot<-ggplot(tabfile, aes(x=MQ))+geom_histogram(aes(fill=FILTER), alpha=0.5)+
   theme(legend.position = "none")
 RMSplot
 
 ```
 
-## 6. MapplingQualityRankSumTest (MQRankSum)
+### 6. MapplingQualityRankSumTest (MQRankSum)
 ```{r}
-UNMQrankplot<-ggplot(UNFILT, aes(x=MQRankSum))+geom_histogram()
+UNMQrankplot<-ggplot(tabfile, aes(x=MQRankSum))+geom_histogram()
 UNMQrankplot
 
-MQrankplot<-ggplot(UNFILT, aes(x=MQRankSum))+geom_histogram(aes(fill=FILTER), alpha=0.5)+
+MQrankplot<-ggplot(tabfile, aes(x=MQRankSum))+geom_histogram(aes(fill=FILTER), alpha=0.5)+
   theme(legend.position = "none")
 MQrankplot
 
 ```
-## 7. ReadPosRankSumTest (ReadPosRankSum)
+### 7. ReadPosRankSumTest (ReadPosRankSum)
 ```{r}
-UNRPrank<-ggplot(UNFILT, aes(x=ReadPosRankSum))+geom_histogram()
+UNRPrank<-ggplot(tabfile, aes(x=ReadPosRankSum))+geom_histogram()
 UNRPrank
 
-RPrank<-ggplot(UNFILT, aes(x=ReadPosRankSum))+geom_histogram(aes(fill=FILTER), alpha=0.5)+
+RPrank<-ggplot(tabfile, aes(x=ReadPosRankSum))+geom_histogram(aes(fill=FILTER), alpha=0.5)+
   theme(legend.position = "none")
 RPrank
 
@@ -101,7 +143,10 @@ RPrank
 ### Get Legend for shared plotting
 ```{r}
 library(cowplot)
-legendp<-ggplot(UNFILT, aes(x=ReadPosRankSum))+geom_histogram(aes(fill=FILTER), alpha=0.5)
+```
+
+```{r}
+legendp<-ggplot(tabfile, aes(x=ReadPosRankSum))+geom_histogram(aes(fill=FILTER), alpha=0.5)
 
 legend <- get_legend(
   # create some space to the left of the legend
@@ -110,14 +155,14 @@ legend <- get_legend(
 legend
 ```
 
-## All 
+### All 
 ```{r}
 
 
 Combined<-plot_grid(QUALplot,QDplot,FSplot,SORplot,RMSplot,MQrankplot,RPrank, align="v", ncol = 2, axis="lrtb") 
 Combined
 getwd()
-ggsave("/Volumes/Solomon_Lab/Megan/ZYMO_GWAS/June2019_rajinMappedReads/GATK_vcfs/joint_genotype/NZ_AUS450_qualFilters.pdf", Combined, width = 24, height =32, units=c("cm"),dpi=300)
+ggsave("Data/May2020_gadi_genotyping/joint_genotype/plots.pdf", Combined, width = 24, height =32, units=c("cm"),dpi=300)
 
 
 ```
