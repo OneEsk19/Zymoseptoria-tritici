@@ -1,0 +1,124 @@
+---
+title: "PlotFilteredSNPS"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## First replace FILTERED1,FILTERED5 with simple FILTER in .tab file
+
+ # Import VCF files
+```{r}
+getwd()
+UNFILT<-read.delim("/Volumes/Solomon_Lab/Megan/ZYMO_GWAS/June2019_rajinMappedReads/GATK_vcfs/joint_genotype/AUS_NZ_450.plain.first.tab", header=T, stringsAsFactors=T)
+
+head(UNFILT)
+library("ggplot2")
+```
+## 1. Straight Quality plot
+```{r}
+library("ggplot2")
+UNQUALplot<-ggplot(UNFILT, aes(x=QUAL))+geom_histogram(alpha=0.5)+ xlim(0,2000)
+UNQUALplot
+
+QUALplot<-ggplot(UNFILT, aes(x=log(QUAL)))+geom_histogram(aes(fill=FILTER), alpha=0.5)+
+  theme(legend.position = "none")
+QUALplot
+
+```
+
+
+## 2. Quality by Depth Plot (QD)
+```{r, echo=FALSE}
+UNQDplot<-ggplot(UNFILT, aes(x=QD))+geom_histogram()
+UNQDplot
+
+QDplot<-ggplot(UNFILT, aes(x=QD))+geom_histogram(aes(fill=FILTER), alpha=0.5)+
+  theme(legend.position = "none")
+QDplot
+
+```
+
+## 3. FisherStrand plot (FS)
+some values at 0 dont work for the log10 scale so I added a very small amount to the variable (0.1)
+```{r}
+UNFSplot<-ggplot(UNFILT, aes(x=FS))+geom_histogram()
+UNFSplot
+
+FSplot<-ggplot(UNFILT, aes(x=FS))+geom_histogram(aes(fill=FILTER), alpha=0.5)+xlim(-1,25)+
+  theme(legend.position = "none")
+FSplot
+
+
+```
+
+## 4. StrandOddsRatio (SOR)
+```{r}
+UNSORplot<-ggplot(UNFILT, aes(x=SOR))+geom_histogram()
+UNSORplot
+
+SORplot<-ggplot(UNFILT, aes(x=SOR))+geom_histogram(aes(fill=FILTER), alpha=0.5)+
+  theme(legend.position = "none")
+SORplot
+
+```
+
+## 5. RMSMappingQuality (MQ)
+```{r}
+UNRMSplot<-ggplot(UNFILT, aes(x=MQ))+geom_histogram()
+UNRMSplot
+
+RMSplot<-ggplot(UNFILT, aes(x=MQ))+geom_histogram(aes(fill=FILTER), alpha=0.5)+
+  theme(legend.position = "none")
+RMSplot
+
+```
+
+## 6. MapplingQualityRankSumTest (MQRankSum)
+```{r}
+UNMQrankplot<-ggplot(UNFILT, aes(x=MQRankSum))+geom_histogram()
+UNMQrankplot
+
+MQrankplot<-ggplot(UNFILT, aes(x=MQRankSum))+geom_histogram(aes(fill=FILTER), alpha=0.5)+
+  theme(legend.position = "none")
+MQrankplot
+
+```
+## 7. ReadPosRankSumTest (ReadPosRankSum)
+```{r}
+UNRPrank<-ggplot(UNFILT, aes(x=ReadPosRankSum))+geom_histogram()
+UNRPrank
+
+RPrank<-ggplot(UNFILT, aes(x=ReadPosRankSum))+geom_histogram(aes(fill=FILTER), alpha=0.5)+
+  theme(legend.position = "none")
+RPrank
+
+```
+
+### Get Legend for shared plotting
+```{r}
+library(cowplot)
+legendp<-ggplot(UNFILT, aes(x=ReadPosRankSum))+geom_histogram(aes(fill=FILTER), alpha=0.5)
+
+legend <- get_legend(
+  # create some space to the left of the legend
+  legendp + theme(legend.box.margin = margin(0, 0, 0, 12))
+)
+legend
+```
+
+## All 
+```{r}
+
+
+Combined<-plot_grid(QUALplot,QDplot,FSplot,SORplot,RMSplot,MQrankplot,RPrank, align="v", ncol = 2, axis="lrtb") 
+Combined
+getwd()
+ggsave("/Volumes/Solomon_Lab/Megan/ZYMO_GWAS/June2019_rajinMappedReads/GATK_vcfs/joint_genotype/NZ_AUS450_qualFilters.pdf", Combined, width = 24, height =32, units=c("cm"),dpi=300)
+
+
+```
+
