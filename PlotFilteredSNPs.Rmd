@@ -38,7 +38,7 @@ write.csv(thefile, "amemdedTABfile.tsv", sep = "/t")
 
 
 ```{r}
-tabfile <- read.csv("Data/May2020_gadi_genotyping/joint_genotype/amemdedTABfile.tsv", header = T, stringsAsFactors = T)
+tabfile <- read.csv("../Data/May2020_gadi_genotyping/joint_genotype/amemdedTABfile.tsv", header = T, stringsAsFactors = T)
 
 tabfile <- tabfile[,-1]
 ```

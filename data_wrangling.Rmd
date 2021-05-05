@@ -1,0 +1,46 @@
+---
+title: "Data_Wrangling"
+author: "Georgina Robertson"
+date: "05/05/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Connecting the metadata to our VCF isolates
+
+Raad in the excel sheets
+```{r}
+library("readxl")
+packageVersion("readxl")
+```
+```{r}
+all_isolates<- read_excel("WGS_STB_Populations.xlsx", sheet = 1)
+summary_pops <- read_excel("WGS_STB_Populations.xlsx", sheet = 2)
+isolate_list <- read_excel("WGS_STB_Populations.xlsx", sheet = 3)
+```
+
+
+```{r}
+head(all_isolates)
+```
+Now looking at the .tab file, which is a summarised version of a VCF file. WRONG THING TO DO
+```{r}
+head(tabfile)
+unique(tabfile$CHROM)
+```
+To extract sample ID using vcftools:
+```{bash eval=FALSE, include=TRUE}
+# for AUS/NZ
+cd /Data/May2020_gadi_genotyping/joint_genotype
+
+vcf-query -l AUS_NZ_450.filtered1.recode.vcf > samples_in_AUS_NZvcf.txt
+
+# For Global
+vcf-query -l Global_vcf_450.may2020.vcf > samples_in_globalVCF.txt
+```
+ These outputs appear identical.
+ Perhaps we need to filter the vcf to only contain the AUS isolates.
+http://samtools.github.io/bcftools/bcftools.html#common_options
