@@ -21,16 +21,44 @@ all_isolates<- read_excel("WGS_STB_Populations.xlsx", sheet = 1)
 summary_pops <- read_excel("WGS_STB_Populations.xlsx", sheet = 2)
 isolate_list <- read_excel("WGS_STB_Populations.xlsx", sheet = 3)
 ```
+### Exploring the metadata
 
+What are the variables in all_isolates?
+```{r}
+colnames(all_isolates)
+```
+What species?
+```{r}
+unique(all_isolates$SPECIES)
+# pull out the unknown(s) for future invstigation
+unknownspp <- all_isolates[all_isolates$SPECIES== "?", ]
+```
 
+I noticed there were more observations in "all isolates" compared to isolate_list: 394 vs 373
 ```{r}
-head(all_isolates)
+# find the difference
+diffbetween <- setdiff(all_isolates$ID, isolate_list$ID)
+diffbetweenALLandLIST
 ```
-Now looking at the .tab file, which is a summarised version of a VCF file. WRONG THING TO DO
+What years do we have?
 ```{r}
-head(tabfile)
-unique(tabfile$CHROM)
+unique(all_isolates$COL_YEAR)
 ```
+The millennium drought occurred from ate 1996 to mid-2010 according to:
+http://www.bom.gov.au/climate/updates/articles/a010-southern-rainfall-decline.html
+
+So pre-drought in our data: 1980
+During drought: 2001
+Post drought: 2011, 2012, 2013, 2014, 2016, 2017, 2018
+
+Will need to create subsets, or at least add a new categorical indicating drought status for each isolate. Which data to add this info to.... not sure yet. Probably the main one: "all isolates"
+
+_______________________________________________________________
+Now i want to see which isolates are in the vcf file.
+
+---------------- WRONG VCF, REDO --------------------------------
+Also not sure what data to use as AUS_names.txt, the one i used in previus pipeline was pulled from isolate_list here.
+
 To extract sample ID using vcftools:
 ```{bash eval=FALSE, include=TRUE}
 # for AUS/NZ
@@ -43,4 +71,31 @@ vcf-query -l Global_vcf_450.may2020.vcf > samples_in_globalVCF.txt
 ```
  These outputs appear identical.
  Perhaps we need to filter the vcf to only contain the AUS isolates.
+
+Will look at AUS_NZ and see how the IDs compare to the excel data
+```{r}
+IDsfromVCF <- read.table("samples_in_AUS_NZvcf.txt")
+colnames(IDsfromVCF) <- "ID"
+```
+450 isolates here, how do they compare?
+```{r}
+diffbetweenALLandVCF <- setdiff(all_isolates$ID, IDsfromVCF$ID)
+diffbetweenALLandVCF
+```
+
+```{r}
+diffbetweenVCFandALL <- setdiff(IDsfromVCF$ID, all_isolates$ID)
+diffbetweenVCFandALL
+```
+
+```{r}
+diffbetweenLISTandVCF <- setdiff(isolate_list$ID, IDsfromVCF$ID)
+diffbetweenLISTandVCF
+```
+```{r}
+diffbetweenVCFandLIST <- setdiff(IDsfromVCF$ID, isolate_list$ID)
+diffbetweenVCFandLIST
+```
+
+
 http://samtools.github.io/bcftools/bcftools.html#common_options

@@ -51,7 +51,21 @@ Files:
 
 See if you can re-create and maybe improve. One suggestion would be dots of different sizes to represent the number of samples from a particular location?
 
- 
+> maybe helpful: https://ggplot2.tidyverse.org/reference/scale_size.html 
 
 > Tutorial on a different dataset but with different map packages, see “Making Maps in R with ggplot (July 15)”
 https://bdsi.anu.edu.au/training-courses/tools-reproducible-science
+
+### Refs and Species' names
+
+* Septoria tritici
+* Mycosphaerella graminicola 
+* Zymoseptoria tritici
+
+The virulence genes for the fungus are referred to as “effectors” or “avirulence” (avr) genes. The term “avirulence” can be quite confusing but essentially they were called this because these genes are recognised by their cognate Stb plant resistance genes, which leads to the plant being “immune”. Mutations, either non-synonymous substitutions in the avr gene or deletions of the whole gene, lead to a “loss of recognition” and strains that carry these mutation are then virulent on the wheat cultivar carrying the corresponding STB gene.
+
+ 
+
+> A good review summarising plant defense/immunity is here: https://www.nature.com/articles/nrg2812 and https://www.sciencedirect.com/science/article/pii/S0176161720302145?via%3Dihub
+
+> A good review summarising what we know about avr (effector) genes is here: https://www.annualreviews.org/doi/10.1146/annurev-arplant-043014-114623?utm_source=TrendMD&utm_medium=cpc&utm_campaign=Annual_Review_of_Plant_Biology_TrendMD_0  and https://www.frontiersin.org/articles/10.3389/fpls.2017.00119/full
