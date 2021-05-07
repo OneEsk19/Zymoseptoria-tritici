@@ -37,55 +37,31 @@ unknownspp <- all_isolates[all_isolates$SPECIES== "?", ]
 I noticed there were more observations in "all isolates" compared to isolate_list: 394 vs 373
 ```{r}
 # find the difference
-diffbetween <- setdiff(all_isolates$ID, isolate_list$ID)
+diffbetweenALLandLIST <- setdiff(all_isolates$ID, isolate_list$ID)
 diffbetweenALLandLIST
 ```
-What years do we have?
-```{r}
-unique(all_isolates$COL_YEAR)
-```
-The millennium drought occurred from ate 1996 to mid-2010 according to:
-http://www.bom.gov.au/climate/updates/articles/a010-southern-rainfall-decline.html
+______________________________________________________________________________
 
-So pre-drought in our data: 1980
-During drought: 2001
-Post drought: 2011, 2012, 2013, 2014, 2016, 2017, 2018
-
-Will need to create subsets, or at least add a new categorical indicating drought status for each isolate. Which data to add this info to.... not sure yet. Probably the main one: "all isolates"
-
-_______________________________________________________________
-Now i want to see which isolates are in the vcf file.
-
----------------- WRONG VCF, REDO --------------------------------
-Also not sure what data to use as AUS_names.txt, the one i used in previus pipeline was pulled from isolate_list here.
+Now I will compare what isolates came out of the VCF filtering with the metadata in the excel file.
 
 To extract sample ID using vcftools:
 ```{bash eval=FALSE, include=TRUE}
 # for AUS/NZ
-cd /Data/May2020_gadi_genotyping/joint_genotype
+cd ./Data/May2020_gadi_genotyping/joint_genotype
 
-vcf-query -l AUS_NZ_450.filtered1.recode.vcf > samples_in_AUS_NZvcf.txt
-
-# For Global
-vcf-query -l Global_vcf_450.may2020.vcf > samples_in_globalVCF.txt
+vcf-query -l AUS372.biallelic.maf0.5.miss0.9.recode.vcf > samples_after_some_filters.txt
 ```
- These outputs appear identical.
- Perhaps we need to filter the vcf to only contain the AUS isolates.
 
-Will look at AUS_NZ and see how the IDs compare to the excel data
 ```{r}
-IDsfromVCF <- read.table("samples_in_AUS_NZvcf.txt")
+IDsfromVCF <- read.table("samples_after_some_filters.txt")
 colnames(IDsfromVCF) <- "ID"
 ```
-450 isolates here, how do they compare?
+
+375 isolates here, how do they compare?
+
 ```{r}
 diffbetweenALLandVCF <- setdiff(all_isolates$ID, IDsfromVCF$ID)
 diffbetweenALLandVCF
-```
-
-```{r}
-diffbetweenVCFandALL <- setdiff(IDsfromVCF$ID, all_isolates$ID)
-diffbetweenVCFandALL
 ```
 
 ```{r}
@@ -93,9 +69,136 @@ diffbetweenLISTandVCF <- setdiff(isolate_list$ID, IDsfromVCF$ID)
 diffbetweenLISTandVCF
 ```
 ```{r}
-diffbetweenVCFandLIST <- setdiff(IDsfromVCF$ID, isolate_list$ID)
-diffbetweenVCFandLIST
+setdiff(diffbetweenALLandVCF, diffbetweenLISTandVCF)
 ```
+This is zero, which means the above isolates are what were removed by some of the VCF filtering steps.
+So I'll save these for future reference and clean up some objects in the environment.
+```{r}
+write(diffbetweenALLandVCF, "isolates_removed_by_VCFfiltering.txt")
+```
+```{r}
+rm(diffbetweenALLandVCF)
+rm(diffbetweenLISTandVCF)
+```
+
+
+```{r}
+diffbetweenVCFandLIST <- setdiff(IDsfromVCF$ID, isolate_list$ID)
+```
+_________________________________________________
+##### Up Until here was redone ##########
+_________________________________________________
+Are these the same IDs that were in the "isolate_list" and not the "all-isolates" ?
+```{r}
+setdiff(diffbetweenALLandLIST, diffbetweenVCFandLIST)
+setdiff(diffbetweenVCFandLIST, diffbetweenALLandLIST)
+```
+Yes, so I will write these down for future reference and clean the env
+```{r}
+write(diffbetweenVCFandLIST, "diffbetween_ListandVCF.txt")
+```
+```{r}
+rm(diffbetweenALLandLIST)
+rm(diffbetweenVCFandLIST)
+```
+_____________________________________________________________________________
+
+The millennium drought occurred from late 1996 to mid-2010 according to:
+http://www.bom.gov.au/climate/updates/articles/a010-southern-rainfall-decline.html
+
+It would be nice to add a new categorical indicating drought status for each isolate.  Which data to add this info to.... not sure yet. Probably the main one: "all isolates"
+
+What years do we have?
+```{r}
+unique(all_isolates$COL_YEAR)
+```
+So pre-drought in our data: 1980
+During drought: 2001
+Post drought: 2011, 2012, 2013, 2014, 2016, 2017, 2018
+
+Which isolates are pre-dought?
+```{r}
+preDisolates <- all_isolates[all_isolates$COL_YEAR == 1980, ]
+preDisolates
+```
+Only one: WAI320
+Hopefully this wasn't filtered out
+```{bash}
+grep WAI320 isolates_removed_by_VCFfiltering.txt
+```
+It wasn't.
+
+Which isolates are mid-drought?
+```{r}
+midDisolates <- all_isolates[all_isolates$COL_YEAR == 2001, ]
+midDisolates$ID
+```
+25 of them.
+
+```{r}
+write(midDisolates$ID, "temp.txt")
+```
+```{bash}
+grep -f temp.txt -- isolates_removed_by_VCFfiltering.txt
+```
+Two of them:
+WAI56
+WAI55
+
+All the other isolates are post drought:
+
+```{r}
+postDisolates <- all_isolates[all_isolates$COL_YEAR != c(1980, 2001),]
+```
+
+Again, which were removed in the VCf?
+```{r}
+write(postDisolates$ID, "temp2.txt")
+```
+```{bash}
+grep -f temp2.txt -- isolates_removed_by_VCFfiltering.txt
+```
+Quite a few, but it shouldn't matter too much as this is the largest drought status subset!
+
+WAI2960
+WAI3601
+WAI3653
+WAI3868
+WAI3869
+WAI3863
+WAI3864
+WAI3865
+WAI3866
+WAI3867
+WAI3261
+WAI3901
+WAI3904
+WAI3065
+WAI851
+WAI919
+WAI3500
+WAI3630
+WAI3850
+WAI3851
+WAI3852
+WAI3854
+WAI3855
+WAI3856
+WAI3857
+WAI3858
+WAI3859
+WAI3860
+WAI3861
+WAI56
+WAI55
+
+> Note: I realise the above methods could have been avoided if I had just changed "all_isolates" by removing isolates that were excluded by VCF filtering but:
+1) I don't know if the filtering I did was correct (mainly because am unsure if i used the correct data to populate "AUS_names.txt")
+2) Wanted to preserve the original
+_______________________________________________________________
+
+Now i will create an updated table. (If anything has gone wrong upstream I can reuse this to redo)
+
 
 
 http://samtools.github.io/bcftools/bcftools.html#common_options

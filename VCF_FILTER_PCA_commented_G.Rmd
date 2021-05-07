@@ -16,7 +16,7 @@ Set up conda environment variables for downstream analyses
 vcftools in installed in my gatk4 conda environment
 
 ```{bash}
-# did not run as i already had the output file
+
 source activate gatk4
 cd /Volumes/Solomon_Lab/Megan/ZYMO_GWAS/May2020_gadi_genotyping/joint_genotype/
 
@@ -34,7 +34,7 @@ use keepfile to filter out NZ isolates from our big VCF file
 BASE_VCF="AUS_NZ_450.filtered1"
 # output vcf
 OUT_VCF="AUS_375.biallelic"
-# I made this from the excel file, sheet isolate_list
+
 KEEP_FILE="AUS_names.txt"
 
 vcftools --vcf ${BASE_VCF}.recode.vcf --min-alleles 2 --max-alleles 2 --keep ${KEEP_FILE} --recode --out ${OUT_VCF}
@@ -58,9 +58,12 @@ awk '{printf "%.1f\n", $5}' out.imiss | sort | uniq -c | sort -nrk2,2
 ######## AM UNCLEAR ON WHAT THIS ^ INPUT MEANS ##########
 ###### THEREFORE UNCLEAR ON OUTPUT TOO###
 # Which was:
- # 86 0.2
- # 256 0.1
- # 1 0.0
+#  2 0.6
+#  1 0.5
+#  94 0.2
+#  278 0.1
+#   1 0.0
+
 #__________________________________________________________
 
 # Make list of isolates missing 10% of their genotypes
@@ -90,11 +93,19 @@ vcftools --vcf ${FINAL_VCF}.recode.vcf --missing-indv
 
 # Calculate missing XX% of the total genotypes for each isolate
 awk '{printf "%.1f\n", $5}' out.imiss | sort | uniq -c | sort -nrk2,2
-# 343 0.0
+#  2 0.6
+#  1 0.5
+#  373 0.0
+
 
 # Make list of isolates missing 10% of their genotypes
 awk '$5 >  0.05{print $1}' out.imiss > high.missing.indv
 cat high.missing.indv
+# INDV
+# WAI1857
+# WAI1881
+# WAI1883
+
 # Exclude isolates missing 10% or more of the genotype calls
 
 #Now filter for Minor Allele Frequency and site missingness
@@ -103,6 +114,10 @@ cat high.missing.indv
 #(i.e. MAF will change depending on what individuals you include in the analysis)
 tail -n 3 high.missing.indv > remove.indv
 cat remove.indv
+# WAI1857
+# WAI1881
+# WAI1883
+
 FINAL_VCF="AUS372.biallelic.maf0.5.miss0.9"
 OUT_NOMISS="AUS372.biallelic.maf0.5.miss0.9.nomiss"
 
@@ -113,21 +128,46 @@ ________________________________________________________________________________
 ## Make PCA for VCF file to get a sense of where all AUS isolates are sitting
 Note after running once I will comment out some of these steps because the genofiles XXXX.gds only need to be created once
 #snpgdsVCF2GDS("./joint_genotype/AUS372.biallelic.maf0.5.miss0.9.nomiss.recode.vcf", "AUS_372.gds")
+
+```{r}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("SNPRelate")
+```
+
+
 ```{r}
 library("ggplot2")
 library("SNPRelate")
+# SNPRelate: Parallel computing toolset for relatedness and principal component analysis of SNP data
+# https://www.rdocumentation.org/packages/SNPRelate/versions/1.6.4
 library("plotly")
 ```
 
+Tutorials for SNPRelate: http://corearray.sourceforge.net/tutorials/SNPRelate/
+
 ```{r}
+
+setwd("../Data/May2020_gadi_genotyping/")
 getwd()
-setwd("/Volumes/Solomon_Lab/Megan/ZYMO_GWAS/May2020_gadi_genotyping/")
-getwd()
-snpgdsVCF2GDS("./joint_genotype/AUS372.biallelic.maf0.5.miss0.9.nomiss.recode.vcf", "AUS_372.gds")
+
+snpgdsVCF2GDS("joint_genotype/AUS372.biallelic.maf0.5.miss0.9.nomiss.recode.vcf", "AUS_372.gds")
+# Reformats a vcf file to GDS
+# https://www.rdocumentation.org/packages/SNPRelate/versions/1.6.4/topics/snpgdsVCF2GDS
+
 genofile1<-openfn.gds("AUS_372.gds")
 
 AUS372_pca1<-snpgdsPCA(genofile1, autosome.only=F)
-sample.IDs<-read.table("./Isolate_details/AUS372_popfile.txt", header=T)
+# Principal Component Analysis (PCA) on genotypes:
+# Excluding 0 SNP (monomorphic: TRUE, MAF: NaN, missing rate: NaN)
+#     # of samples: 372
+#     # of SNPs: 370,375
+#     using 1 thread
+#     # of principal components: 32
+# PCA:    the sum of all selected genotypes (0,1,2) = 67799637
+# CPU capabilities: Double-Precision SSE2
+sample.IDs<-read.table("Isolate_details/AUS372_popfile.txt", header=T)
 
 AUS372_pca1$sample <-sample.IDs$pop[which(AUS372_pca1$sample == sample.IDs$sample)]
 
@@ -157,6 +197,10 @@ SUBSET="AUS_372_biallelic.maf0.5.miss0.9.nomiss_500bp_SNPonly"
 
 vcftools --vcf ${OUT_NOMISS}.recode.vcf --remove-indels --thin 500 --recode --out ${SUBSET}
 ```
+
+
+----- Done up until here
+
 
 ## Make PCA file for Nannan with only 25 isolates that group together with Lorikeet Hamilton isolates
 ### Subset AUS_375.biallelic VCF down to the 25 isolates which group together with the Hamilton Lorikeet isolates
