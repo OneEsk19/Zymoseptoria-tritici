@@ -12,23 +12,22 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## FILTER all sites with filter flag
-Set up conda environment variables for downstream analyses
-vcftools in installed in my gatk4 conda environment
+This removes variants (rows).
 
+All variants with anything other than "PASS" in the FILTER field are excluded and recoded into new vcf.
 ```{bash}
-
-source activate gatk4
-cd /Volumes/Solomon_Lab/Megan/ZYMO_GWAS/May2020_gadi_genotyping/joint_genotype/
-
+# input file
 VCF="Global_vcf_450.may2020.vcf"
+# output files
 OUTVCF="AUS_NZ_450.filtered1"
 
+# -remoove-filtered-all fairly self explanatory here
 vcftools --vcf $VCF --remove-filtered-all --recode --out $OUTVCF
 
 ```
 
-## GET AUS ISOLATES ONLY
-use keepfile to filter out NZ isolates from our big VCF file
+## 2) GET AUS ISOLATES ONLY
+This removes samples/isolates (columns).
 ```{bash}
 # input vcf
 BASE_VCF="AUS_NZ_450.filtered1"
@@ -38,55 +37,81 @@ OUT_VCF="AUS_375.biallelic"
 KEEP_FILE="AUS_names.txt"
 
 vcftools --vcf ${BASE_VCF}.recode.vcf --min-alleles 2 --max-alleles 2 --keep ${KEEP_FILE} --recode --out ${OUT_VCF}
-# min alleles 2 means keep observations where there is at least the ref allele and alt allele
-# max-alleles is 2 because this is haploid, should there should only be one alt allele.
+
+# 1) min alleles 2 means keep variants where there is at least the ref allele and one alt allele
+# 2) max-alleles is 2 which restricts variants to biallelic only
+# QUESTION 1: Do we want biallelic because they are haploid organisms, or because a second alternate allele is extremely unlikely or both? 
 ```
 
-## FILTER FOR BIALLELIC SITES AND INDELS AUS only
+## 3) FILTER FOR BIALLELIC SITES AND INDELS AUS only
+This removes samples/isolates (columns).
+
 Get Info on isolates that are missing too much data
 ```{bash}
 OUT_VCF="AUS_375.biallelic"
 
-## --missing-indv Generates a file reporting the missingness on a per-individual basis.
+## --missing-indv Generates a file reporting the missingness on a per-individual (sample/isolate) basis.
 vcftools --vcf ${OUT_VCF}.recode.vcf --missing-indv
 ls
-less out.imiss # reads it. I use more, but I guess less is more :D
+less out.imiss # reads it.
+```
+N_MISS column is the number of variants that the isolate has no data for
+F_MISS column is the frequency of missing data for the isolate, calculated as : N_MISS / TOTAL SITES.
 
-#_________________________________________________________ 
+```{bash}
 # Calculate missing XX% of the total genotypes for each isolate
 awk '{printf "%.1f\n", $5}' out.imiss | sort | uniq -c | sort -nrk2,2
-######## AM UNCLEAR ON WHAT THIS ^ INPUT MEANS ##########
-###### THEREFORE UNCLEAR ON OUTPUT TOO###
-# Which was:
-#  2 0.6
-#  1 0.5
-#  94 0.2
-#  278 0.1
-#   1 0.0
+```
+%.1f means to print the value of a float number to one decimal place  
+$5 is column5  
+first sort sorts col 5 (descending?)  
+uniq finds unique values  
+second sort sorts the unique values (i think descending)  
 
-#__________________________________________________________
+Output was:  
+2 0.6  
+1 0.5  
+94 0.2  
+278 0.1  
+1 0.0  
+
+I think this means that there were 2 isolates with 60% missing snips, one with 50%, 94 with 20%, 278 with 10% and only one with < 10% missing.  
+
 
 # Make list of isolates missing 10% of their genotypes
-
+```{bash}
 awk '$5 >  0.05{print $1}' out.imiss > Ten_percent.missing.indv
 cat Ten_percent.missing.indv
 ######## ten percent missing what? ##### SNP calls?
 # rm out.imiss
 # rm out.log
 # rm Ten_percent.missing.indv
-# __________________________________________________________
 
 ## Didn't quite work as expected because without filtering the MAF and MISSING SNPs first then there are too many isolates with missing data
 
 ## So filtered SNPs based on MAF and missingness first. Then filtered out isolates with too much missing data (WAI1857, WAI1881, WAI1883)
-# __________________________________________________________
-FINAL_VCF="AUS372.biallelic.maf0.5.miss0.9"
-# --max-missing-count <integer>
-# Exclude sites with more than this number of missing genotypes over all individuals.
+```
+awk '$5 >  0.05{print $1}' out.imiss > Ten_percent.missing.indv  
+means:  
+write in file: column one where the values in column 5 are greater than 0.05  
+cat then outputs the file
+I won't paste the output, but wc reports 376 isolates  
 
-# maf is the frequency at which the second most common allele occurs in a given population
-# maf Include only sites with a Minor Allele Frequency greater than or equal to the "--maf" value 
+Question: Is this wrong?  It's meant to be 10% missingness, but the awk command asked for greater than 5%.
+
+
+This removes variants (rows).
+```{bash}
+FINAL_VCF="AUS372.biallelic.maf0.5.miss0.9"
+# --max-missing-count <integer> excludes sites with more than this number of missing genotypes over all individuals.
+# maf is the frequency at which the second most common allele occurs in a given population 
+# --maf includes only sites with a Minor Allele Frequency greater than or equal to the stated value.
+
 vcftools --vcf ${OUT_VCF}.recode.vcf --max-missing 0.9 --maf 0.05 --recode --out ${FINAL_VCF}
+
+# so if more than 90% of genotypes are missing across isolates, that variant is removed
+# If a minor/ alt allele occurs less than 5% of the time across isolates, that allele is removed from the vcf.
+
 
 ## Regenerate out.imiss
 vcftools --vcf ${FINAL_VCF}.recode.vcf --missing-indv
@@ -105,6 +130,8 @@ cat high.missing.indv
 # WAI1857
 # WAI1881
 # WAI1883
+
+#########################################################################################
 
 # Exclude isolates missing 10% or more of the genotype calls
 
