@@ -7,4 +7,12 @@ Goals:
 2) Basic understanding of VCF filtering and getting rid of low quality SNPs and low quality individuals.  
 
 Actions:
-1) 
+- Completed goal 2
+- Exploring metadata
+- Working on goal 1
+
+Questions:
+1) Why are there extra samples in "all isolates" compared to "isolate list"?
+
+
+#### Week 2: 11th - 18th May

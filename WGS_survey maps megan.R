@@ -114,12 +114,12 @@ ditch_the_axes <- theme(
 
 
 #plot the all survey points 
-p2 <- p + geom_point(aes(x=Longitude, y=Latitude, size= 1, colour = as.factor(COL_YEAR)),data=df,
+p2 <- p + geom_point(aes(x=Longitude, y=Latitude, size= 1, colour = as.factor(COL_YEAR)),data=all_isolates,
                      alpha =0.8)+
   #scale_shape_manual(values=c(18,17,16))+                           #you can set shapes and colour scales etc using these functions
   #scale_color_manual(values=c('blue','red', 'yellow', 'green'))+
   scale_size(range=c(2))+
-  ditch_the_axes#run the function above
+  ditch_the_axes #run the function above
 p2
 
 

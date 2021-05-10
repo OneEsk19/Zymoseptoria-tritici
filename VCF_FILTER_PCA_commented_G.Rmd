@@ -40,8 +40,9 @@ vcftools --vcf ${BASE_VCF}.recode.vcf --min-alleles 2 --max-alleles 2 --keep ${K
 
 # 1) min alleles 2 means keep variants where there is at least the ref allele and one alt allele
 # 2) max-alleles is 2 which restricts variants to biallelic only
-# QUESTION 1: Do we want biallelic because they are haploid organisms, or because a second alternate allele is extremely unlikely or both? 
 ```
+
+QUESTION 1: Do we want biallelic because they are haploid organisms, or because a second alternate allele is extremely unlikely or both? 
 
 ## 3) FILTER FOR BIALLELIC SITES AND INDELS AUS only
 This removes samples/isolates (columns).
@@ -283,6 +284,8 @@ ggsave("PCA_AUS25.pdf", PCA_AUS25, height = 12,width=16,dpi=300,units = "cm")
 interactive_AUS25<-ggplotly(PCA_AUS25)
 interactive_AUS25
 ```
+So this was for isolates from 2017
+- this will be useful for looking at different drought status subsets.
 
 ## Make VCF file for 109 isolates with Phenotyping data
 (actually 105 if you exlcude isolates whose sequencing failed)
@@ -299,6 +302,7 @@ vcftools --vcf ${FULLAUS_VCF}.recode.vcf --keep ../Isolate_details/AUS_Pheno102.
 ## run proper filter for biallelic SNPs only with maf >= 0.05 and SNPs not missing in >90% of isolates
 SUBSET_MAF="AUS102_phenotyped.biallelicSNP.maf0.5.miss0.9"
 vcftools --vcf $SUBSET_LIST.recode.vcf --min-alleles 2 --max-alleles 2 --maf 0.05 --max-missing 0.9 --recode --out $SUBSET_MAF
+# After filtering, kept 382512 out of a possible 1106434 Sites
 
 ## make a AUS_102_popyear.txt file from the big set so that you can nicely plot population in PCA below
 for file in `cat ../Isolate_details/AUS_Pheno102.txt `; do  echo ${file} | grep -f /dev/stdin ../Isolate_details/AUS372_popfile.txt >> ../Isolate_details/AUS_102_popyear.txt; done
@@ -320,15 +324,16 @@ AUS102_pca1<-snpgdsPCA(genofile102, autosome.only=F)
 #     # of principal components: 32
 # PCA:    the sum of all selected genotypes (0,1,2) = 15540375
 # CPU capabilities: Double-Precision SSE2
-# Sun May  9 21:49:51 2021    (internal increment: 9556)
+
 sample.IDs<-read.table("../Data/May2020_gadi_genotyping/Isolate_details/AUS_102_popyear.txt", header=T)
 
 AUS102_pca1$sample <-sample.IDs$pop[which(AUS102_pca1$sample == sample.IDs$sample)]
 
-################################################################################################################
-
 AUS102_pca1$sample
 AUS102_pca1$sample.id
+
+################################################################################################################  
+
 pca.dat1 <- data.frame(eigen1=AUS102_pca1$eigenvect[,1],eigen2=AUS102_pca1$eigenvect[,2], pop=AUS102_pca1$sample, samplename=AUS102_pca1$sample.id)
 
 PCA_AUS102<-ggplot(pca.dat1, aes(x=eigen1, y=eigen2, color=pop)) +geom_point(size=0.01)+ geom_text(aes(label=samplename))

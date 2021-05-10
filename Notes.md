@@ -41,7 +41,10 @@ To move forward you can use either “Global_vcf_450.may2020.vcf” OR “Global
  
 
 To actually REMOVE low quality flagged SNPs I use VCF tools. You can see how I did this in the attached Rmd called “Generalized_VCF_filter_PCA.Rmd”. You may already have this script but I attach it here just in case.
-
+**DONE** 
+* Re-ran everything in the file and made notes. I *think* I have understood, what and why these things have been done and what they can be used for:
+1) Creating different subsets from the vcf while retaining the format
+2) Seeing how different isolates cluster.
 
 ### Map and code
 Files:  
@@ -50,6 +53,8 @@ Files:
 
 
 See if you can re-create and maybe improve. One suggestion would be dots of different sizes to represent the number of samples from a particular location?
+**WORK IN PROGRESS** 
+- currently exploring map packages and methods.
 
 > maybe helpful: https://ggplot2.tidyverse.org/reference/scale_size.html 
 
