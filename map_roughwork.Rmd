@@ -1,0 +1,99 @@
+---
+title: "map_plot"
+author: "Georgina Robertson"
+date: "10/05/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 
+
+```{r}
+# require(XLConnect)
+# require(asreml) #opens multiple packages asreml, latice (graps package)
+# 
+# require(lattice)
+# require(latticeExtra)
+# require(directlabels)
+# require(RColorBrewer)
+# require(ggplot2)
+# require(reshape2)
+# #require(drc)
+# require(plyr)
+# require(GGally)
+# require(scatterplot3d)
+# require(dplyr)
+
+library(ggmap)
+# library(gdata)
+# 
+# library("FactoMineR")
+# library("factoextra")
+```
+
+The data
+```{r}
+library("readxl")
+packageVersion("readxl")
+```
+
+```{r}
+all_isolates<- read_excel("WGS_STB_Populations.xlsx", sheet = 1)
+summary_pops <- read_excel("WGS_STB_Populations.xlsx", sheet = 2)
+isolate_list <- read_excel("WGS_STB_Populations.xlsx", sheet = 3)
+```
+
+Rename the lat and long to single words
+
+https://www.r-graph-gallery.com/map.html
+https://www.r-graph-gallery.com/bubble-map.html
+
+```{r}
+range(all_isolates$`Specific Latitude`)
+```
+```{r}
+range(all_isolates$`Specific Longitude`)
+```
+```{r}
+all_isolates$Latitude <- all_isolates$`Specific Latitude`
+all_isolates$Longitude <- all_isolates$`Specific Longitude`
+```
+
+
+```{r}
+map <- get_stamenmap( bbox = c(left = 133, bottom = -43, right = 150, top = -31), zoom = 4, maptype = "terrain-background")
+ggmap(map) + 
+  theme_void() + 
+  theme(
+    plot.title = element_text(colour = "orange"), 
+    panel.border = element_rect(colour = "grey", fill=NA, size=2)
+  )
+```
+
+```{r}
+mapplot <- map + geom_point(aes(x=Longitude, y=Latitude, size= 1, colour = as.factor(COL_YEAR)), data=all_isolates, alpha =0.8)+
+  #scale_shape_manual(values=c(18,17,16))+                           #you can set shapes and colour scales etc using these functions
+  #scale_color_manual(values=c('blue','red', 'yellow', 'green'))+
+  scale_size(range=c(2))
+  # ditch_the_axes #run the function above
+p2
+```
+```{r}
+library(maps)
+```
+https://medium.com/analytics-vidhya/mapping-australia-in-r-6ce092c48b49
+```{r}
+
+```
+
+
+```{r}
+ggplot() +
+  geom_polygon(data = Aus, aes(x=long, y = lat, group = group), fill="grey", alpha=0.3) +
+  geom_point( data=data, aes(x=long, y=lat)) +
+  theme_void() + ylim(50,59) + coord_map() 
+```
+

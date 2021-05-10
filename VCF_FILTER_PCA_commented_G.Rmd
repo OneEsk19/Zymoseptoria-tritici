@@ -131,8 +131,6 @@ cat high.missing.indv
 # WAI1881
 # WAI1883
 
-#########################################################################################
-
 # Exclude isolates missing 10% or more of the genotype calls
 
 #Now filter for Minor Allele Frequency and site missingness
@@ -186,6 +184,8 @@ snpgdsVCF2GDS("joint_genotype/AUS372.biallelic.maf0.5.miss0.9.nomiss.recode.vcf"
 genofile1<-openfn.gds("AUS_372.gds")
 
 AUS372_pca1<-snpgdsPCA(genofile1, autosome.only=F)
+# autosome = non-sex chromosome. Not sure if this organism has any, but it's switched off anyway.
+
 # Principal Component Analysis (PCA) on genotypes:
 # Excluding 0 SNP (monomorphic: TRUE, MAF: NaN, missing rate: NaN)
 #     # of samples: 372
@@ -214,7 +214,7 @@ OUT_NOMISS="AUS372.biallelic.maf0.5.miss0.9.nomiss"
 SUBSET="AUS_372_biallelic.maf0.5.miss0.9.nomiss_500bp"
 
 vcftools --vcf ${OUT_NOMISS}.recode.vcf --thin 500 --recode --out ${SUBSET}
-
+# --thin <integer> = Thin sites so that no two sites are within the specified distance from one another.
 ```
 
 
@@ -223,10 +223,8 @@ OUT_NOMISS="AUS372.biallelic.maf0.5.miss0.9.nomiss"
 SUBSET="AUS_372_biallelic.maf0.5.miss0.9.nomiss_500bp_SNPonly"
 
 vcftools --vcf ${OUT_NOMISS}.recode.vcf --remove-indels --thin 500 --recode --out ${SUBSET}
+# remove indels, self exaplanatory
 ```
-
-
------ Done up until here
 
 
 ## Make PCA file for Nannan with only 25 isolates that group together with Lorikeet Hamilton isolates
@@ -234,7 +232,7 @@ vcftools --vcf ${OUT_NOMISS}.recode.vcf --remove-indels --thin 500 --recode --ou
 
 Need to start back at pretty much the unfiltered AUS_375.biallelic vcf to get the correct SNPs in the final filtered VCF
 You will lose a lot of info if you start at your filtered biallelic.maf0.5.miss0.9 vcf.
-This
+Makes sense!
 ```{bash}
 #set output file names
 FULLAUS_VCF="AUS_375.biallelic"
@@ -248,7 +246,7 @@ SUBSET_MAF="AUS25_Lorikeet.biallelicSNP.maf0.5.miss0.9"
 vcftools --vcf $SUBSET_LIST.recode.vcf --min-alleles 2 --max-alleles 2 --maf 0.05 --max-missing 0.9 --recode --out $SUBSET_MAF
 
 ## make a AUS_25_popyear.txt file from the big set so that you can nicely plot population in PCA below
-for file in `cat ./Isolate_details/avrstb19.keep `; do  echo ${file} | grep -f /dev/stdin ./Isolate_details/AUS372_popfile.txt >> ./Isolate_details/AUS_25_popyear.txt; done
+for file in `cat ../Isolate_details/avrstb19.keep `; do  echo ${file} | grep -f /dev/stdin ../Isolate_details/AUS372_popfile.txt >> ../Isolate_details/AUS_25_popyear.txt; done
 
 ```
 
@@ -256,13 +254,23 @@ for file in `cat ./Isolate_details/avrstb19.keep `; do  echo ${file} | grep -f /
 This code reads in our filtered vcf with only 25 isolates and makes a small PCA with that VCF file
 
 ```{r}
-getwd()
-setwd("/Volumes/Solomon_Lab/Megan/ZYMO_GWAS/May2020_gadi_genotyping/")
-snpgdsVCF2GDS("./joint_genotype/AUS25_Lorikeet.biallelicSNP.maf0.5.miss0.9.recode.vcf", "AUS_25.gds")
+
+# getwd()
+# setwd("/Volumes/Solomon_Lab/Megan/ZYMO_GWAS/May2020_gadi_genotyping/")
+snpgdsVCF2GDS("../Data/May2020_gadi_genotyping/joint_genotype/AUS25_Lorikeet.biallelicSNP.maf0.5.miss0.9.recode.vcf", "AUS_25.gds")
+
 genofile25<-openfn.gds("AUS_25.gds")
 
 AUS25_pca1<-snpgdsPCA(genofile25, autosome.only=F)
-sample.IDs<-read.table("./Isolate_details/AUS_25_popyear.txt", header=T)
+# Principal Component Analysis (PCA) on genotypes:
+# Excluding 0 SNP (monomorphic: TRUE, MAF: NaN, missing rate: NaN)
+#     # of samples: 25
+#     # of SNPs: 373
+#     using 1 thread
+#     # of principal components: 32
+# PCA:    the sum of all selected genotypes (0,1,2) = 5267
+# CPU capabilities: Double-Precision SSE2
+sample.IDs<-read.table("../Data/May2020_gadi_genotyping/Isolate_details/AUS_25_popyear.txt", header=T)
 
 AUS25_pca1$sample <-sample.IDs$pop[which(AUS25_pca1$sample == sample.IDs$sample)]
 
@@ -270,7 +278,7 @@ pca.dat1 <- data.frame(eigen1=AUS25_pca1$eigenvect[,1],eigen2=AUS25_pca1$eigenve
 
 PCA_AUS25<-ggplot(pca.dat1, aes(x=eigen1, y=eigen2, color=pop)) +geom_point(size=0.01)+ geom_text(aes(label=samplename))
 PCA_AUS25
-ggsave("/Volumes/Solomon_Lab/Megan/ZYMO_GWAS/May2020_gadi_genotyping/01_VCF_quality_check/PCA_AUS25.pdf", PCA_AUS25, height = 12,width=16,dpi=300,units = "cm")
+ggsave("PCA_AUS25.pdf", PCA_AUS25, height = 12,width=16,dpi=300,units = "cm")
 
 interactive_AUS25<-ggplotly(PCA_AUS25)
 interactive_AUS25
@@ -293,22 +301,32 @@ SUBSET_MAF="AUS102_phenotyped.biallelicSNP.maf0.5.miss0.9"
 vcftools --vcf $SUBSET_LIST.recode.vcf --min-alleles 2 --max-alleles 2 --maf 0.05 --max-missing 0.9 --recode --out $SUBSET_MAF
 
 ## make a AUS_102_popyear.txt file from the big set so that you can nicely plot population in PCA below
-for file in `cat ./Isolate_details/AUS_Pheno102.txt `; do  echo ${file} | grep -f /dev/stdin ./Isolate_details/AUS372_popfile.txt >> ./Isolate_details/AUS_102_popyear.txt; done
+for file in `cat ../Isolate_details/AUS_Pheno102.txt `; do  echo ${file} | grep -f /dev/stdin ../Isolate_details/AUS372_popfile.txt >> ../Isolate_details/AUS_102_popyear.txt; done
 ```
 
 ## Come back to R and generate PCA from VCF file
 This code reads in our filtered vcf with only 105 isolates and makes a small PCA with that VCF file
 
 ```{r}
-getwd()
-setwd("/Volumes/Solomon_Lab/Megan/ZYMO_GWAS/May2020_gadi_genotyping/")
-snpgdsVCF2GDS("./joint_genotype/AUS102_phenotyped.biallelicSNP.maf0.5.miss0.9.recode.vcf", "AUS_102.gds")
+snpgdsVCF2GDS("../Data/May2020_gadi_genotyping/joint_genotype/AUS102_phenotyped.biallelicSNP.maf0.5.miss0.9.recode.vcf", "AUS_102.gds")
 genofile102<-openfn.gds("AUS_102.gds")
 
 AUS102_pca1<-snpgdsPCA(genofile102, autosome.only=F)
-sample.IDs<-read.table("./Isolate_details/AUS_102_popyear.txt", header=T)
+# Principal Component Analysis (PCA) on genotypes:
+# Excluding 0 SNP (monomorphic: TRUE, MAF: NaN, missing rate: NaN)
+#     # of samples: 102
+#     # of SNPs: 346,574
+#     using 1 thread
+#     # of principal components: 32
+# PCA:    the sum of all selected genotypes (0,1,2) = 15540375
+# CPU capabilities: Double-Precision SSE2
+# Sun May  9 21:49:51 2021    (internal increment: 9556)
+sample.IDs<-read.table("../Data/May2020_gadi_genotyping/Isolate_details/AUS_102_popyear.txt", header=T)
 
 AUS102_pca1$sample <-sample.IDs$pop[which(AUS102_pca1$sample == sample.IDs$sample)]
+
+################################################################################################################
+
 AUS102_pca1$sample
 AUS102_pca1$sample.id
 pca.dat1 <- data.frame(eigen1=AUS102_pca1$eigenvect[,1],eigen2=AUS102_pca1$eigenvect[,2], pop=AUS102_pca1$sample, samplename=AUS102_pca1$sample.id)
