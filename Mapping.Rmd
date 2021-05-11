@@ -1,0 +1,98 @@
+---
+title: "map_plot"
+author: "Georgina Robertson"
+date: "10/05/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 
+
+```{r}
+# require(XLConnect)
+# require(asreml) #opens multiple packages asreml, latice (graps package)
+# 
+# require(lattice)
+# require(latticeExtra)
+# require(directlabels)
+# require(RColorBrewer)
+# require(ggplot2)
+# require(reshape2)
+# #require(drc)
+# require(plyr)
+# require(GGally)
+# require(scatterplot3d)
+# require(dplyr)
+
+library(ggmap)
+# library(gdata)
+# 
+# library("FactoMineR")
+# library("factoextra")
+```
+
+The data
+```{r}
+mapgraphing <- read.csv("mapgraphing_table.csv", header = T)
+mapgraphing
+```
+
+https://www.r-graph-gallery.com/map.html
+https://www.r-graph-gallery.com/bubble-map.html
+https://medium.com/analytics-vidhya/mapping-australia-in-r-6ce092c48b49
+
+
+_______________________________________________________________________________
+
+```{r}
+if(!requireNamespace("devtools")) install.packages("devtools")
+devtools::install_github("dkahle/ggmap", ref = "tidyup")
+library(ggmap)
+register_google(key = "AIzaSyCX8w-wvuSqNRvzF14PFs3XY1S60zTbRdk") 
+```
+```{r}
+p <- ggmap(get_googlemap(center = c(lon = 142.31443124884743, lat = -37.55279466696095), #Mortlake, Vic
+                         zoom = 6, scale = 2,
+                         maptype ='terrain',
+                         color = 'bw'))
+p
+
+```
+```{r}
+ditch_the_axes <- theme(
+  axis.text = element_blank(),
+  axis.line = element_blank(),
+  axis.ticks = element_blank(),
+  panel.border = element_blank(),
+  panel.grid = element_blank(),
+  axis.title = element_blank()
+)
+```
+
+```{r}
+mapgraphing$Year <-  as.factor(mapgraphing$Year)
+str(mapgraphing)
+```
+
+
+
+```{r}
+p2 <- p + geom_point(aes(x=Longitude, y=Latitude, size= PopSize, colour = Year),data=mapgraphing,
+                     alpha =0.8)+
+  #scale_shape_manual(values=c(18,17,16))+                           #you can set shapes and colour scales etc using these functions
+  #scale_color_manual(values=c('blue','red', 'yellow', 'green'))+
+  # scale_size(range=c(2))+
+  ditch_the_axes #run the function above
+p2
+```
+```{r}
+#save the map
+png(file="Pop_size_location.png", width=4800, height=4800, units="px", res=600, pointsize=10)
+    # type="cairo", antialias="cleartype")
+print(p2)
+dev.off()
+```
+

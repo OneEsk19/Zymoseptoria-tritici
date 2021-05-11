@@ -87,10 +87,13 @@ What years do we have?
 unique(all_isolates$COL_YEAR)
 ```
 So pre-drought in our data: 1980
-During drought: 2001
+During drought: 2001 **
+** this population clusters with pre-drought in PCA, so can be treated as pre-drought.
+
+The intervening time between pre and post, there were NO populations of Z. tritici
 Post drought: 2011, 2012, 2013, 2014, 2016, 2017, 2018
 
-Which isolates are pre-dought?
+Which isolates are pre-drought?
 ```{r}
 preDisolates <- all_isolates[all_isolates$COL_YEAR == 1980, ]
 preDisolates
@@ -134,21 +137,38 @@ _______________________________________________________________
 Will see if this table should be updated, and if so with what data.
 ________________________________________________________________________
 
-I want a new data data for easy plotting of number of isolates per geographical site
+I want a new data data for easy plotting of number of isolates per geographical site.
+What variables are available?
 ```{r}
 colnames(all_isolates)
 ```
+How any isolates are in each population?
 ```{r}
 location_count <- as.data.frame(table(all_isolates$Population_name))
 # the dimensions match the summary_pops" df
 ```
-
+Subsetting some data into a table for map graphing
 ```{r}
 library(dplyr)
 ```
 ```{r}
-test <- summarise(all_isolates, groups())
-```
+# creating subset
+test <- select(all_isolates, COL_YEAR,"Specific Latitude", "Specific Longitude", Population_name, Locality)
 
+# renaming cols
+colnames(test) <- c("Year", "Latitude", "Longitude", "Population_name", "Location")
+
+# aggregating duplicatess and getting count of isolates per pop and adding as variable
+mapgraphing <- test %>% group_by(Year, Latitude, Longitude, Population_name, Location) %>% summarize((n()))
+
+# renaming new variable
+colnames(mapgraphing)[6] <- "PopSize"
+
+# clean up
+rm(test)
+
+# writing data to file for future calls
+write.csv(mapgraphing, file = "mapgraphing_table.csv")
+```
 
 
