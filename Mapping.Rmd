@@ -53,6 +53,7 @@ devtools::install_github("dkahle/ggmap", ref = "tidyup")
 library(ggmap)
 register_google(key = "AIzaSyCX8w-wvuSqNRvzF14PFs3XY1S60zTbRdk") 
 ```
+
 ```{r}
 p <- ggmap(get_googlemap(center = c(lon = 142.31443124884743, lat = -37.55279466696095), #Mortlake, Vic
                          zoom = 6, scale = 2,
