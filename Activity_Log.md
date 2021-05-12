@@ -9,10 +9,15 @@ Goals:
 Actions:
 - Completed goal 2
 - Exploring metadata
-- Working on goal 1
+- Completed goal 1
 
 Questions:
-1) Why are there extra samples in "all isolates" compared to "isolate list"?
+See rmd
 
 
 #### Week 2: 11th - 18th May
+
+Goals:
+1) Continue to explore the data
+2) Consider which populations to use
+3) Look into FST, particularly sliding window FST
