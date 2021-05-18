@@ -1,0 +1,121 @@
+---
+title: "Data_Wrangling"
+author: "Georgina Robertson"
+date: "05/05/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Reading in the metadata
+
+Read in the excel sheets
+```{r}
+library("readxl")
+packageVersion("readxl")
+```
+```{r}
+all_isolates<- read_excel("WGS_STB_Populations.xlsx", sheet = 1)
+summary_pops <- read_excel("WGS_STB_Populations.xlsx", sheet = 2)
+isolate_list <- read_excel("WGS_STB_Populations.xlsx", sheet = 3)
+```
+### Exploring the metadata
+
+What are the variables in all_isolates?
+```{r}
+colnames(all_isolates)
+```
+Check if there are any variables where all obs are NA
+```{r}
+all(is.na(all_isolates[,1:37]))
+```
+
+There were more observations in "all isolates" compared to isolate_list: 394 vs 373
+```{r}
+# find the difference
+diffbetweenALLandLIST <- setdiff(all_isolates$ID, isolate_list$ID)
+diffbetweenALLandLIST
+```
+```{r}
+# having a look at these
+all_isolates[all_isolates$ID %in% unlist(diffbetweenALLandLIST),]
+# These seem to be one particular population: 	Lockhart__2001_1
+table(all_isolates$Population_name) ## THIS WILL BE USEFUL FOR THE MAP
+# athere are 23 "Lockhart__2001_1" in all_isolates, 21 of which are not in "isolate_details"
+lockhart2001pop <- all_isolates[all_isolates$Population_name =="Lockhart__2001_1", 2]
+lockhart2001pop
+# these two are
+# WAI326				
+# WAI329
+```
+Why are these two lists different?
+
+____________________________________________________________________________
+### Comparing metadata with VCF contents.
+
+To compare what's in the excel sheet to what ended up in the VCF after filtering, this template can be used to query the vcf file:
+
+Template to extract sample ID using vcftools:
+```{bash eval=FALSE, include=TRUE}
+# for AUS/NZ
+cd ./Data/May2020_gadi_genotyping/joint_genotype
+
+SOURCEVCF="filename.vcf" 
+
+vcf-query -l $SOURCEVCF > samples_after_some_filters.txt
+```
+
+```{r}
+IDsfromVCF <- read.table("samples_after_some_filters.txt")
+colnames(IDsfromVCF) <- "ID"
+```
+
+_____________________________________________________________________________
+### Drought population subsetting
+
+The millennium drought occurred from late 1996 to mid-2010 according to:
+http://www.bom.gov.au/climate/updates/articles/a010-southern-rainfall-decline.html
+
+It would be nice to add a new categorical indicating drought status for each isolate.  Which data to add this info to.... not sure yet. Probably the main one: "all isolates"
+
+What years do we have?
+```{r}
+unique(all_isolates$COL_YEAR)
+```
+So pre-drought in our data: 1980
+During drought: 2001 **
+** this population clusters with pre-drought in PCA, so can be treated as pre-drought.
+
+The intervening time between pre and post, there were NO populations of Z. tritici
+Post drought: 2011, 2012, 2013, 2014, 2016, 2017, 2018
+
+Which isolates are pre-drought?
+```{r}
+preDisolates <- all_isolates[all_isolates$COL_YEAR == c(1980,2001), ]
+preDisolates
+write(preDisolates$ID, "bfDrought_isolate_list.txt")
+```
+
+All the other isolates are post drought:
+
+```{r}
+postDisolates <- all_isolates[all_isolates$COL_YEAR != c(1980, 2001),]
+write(postDisolates$ID, "afDrought_isolate_list.txt")
+```
+
+380 isolates. This is the largest group by far, so it shouldn't matter too much if some are removed by filtering.
+
+__________________________________________________________________________________
+
+AUS_25 PCA list
+Varieties: Lorikeet https://link.springer.com/article/10.1007/s00122-018-3189-0 and 
+```{r}
+aus25PCAlist <- read.csv("../Data/May2020_gadi_genotyping/Isolate_details/avrstb19.keep", sep = "", header = F)
+
+aus25PCAset <- all_isolates[all_isolates$ID %in% aus25PCAlist$V1, ]
+```
+
+
+
