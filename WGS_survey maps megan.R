@@ -7,7 +7,7 @@
 #sTART WITH SURVEY SITES BY CROP TYPE to check data
 #####
 
-setwd("D:/Shared drives/DPI   Plant Pathology   Cereal Pathology/Culture collection details/WGS STB Megan list 2020/")
+# setwd("D:/Shared drives/DPI   Plant Pathology   Cereal Pathology/Culture collection details/WGS STB Megan list 2020/")
 
 require(XLConnect)
 require(asreml) #opens multiple packages asreml, latice (graps package)

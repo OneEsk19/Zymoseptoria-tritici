@@ -1,4 +1,4 @@
-## trying to replace multiple "FILTERx" with just one "FILETERED"
+## trying to replace multiple "FILTERx" with just one "FILTERED"
 
 thefile <- tabfile
 

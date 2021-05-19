@@ -1,13 +1,13 @@
 ---
 title: "Data_Wrangling"
 author: "Georgina Robertson"
-date: "05/05/2021"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+# This is mostly rough work
 
 ### Reading in the metadata
 
@@ -17,9 +17,9 @@ library("readxl")
 packageVersion("readxl")
 ```
 ```{r}
-all_isolates<- read_excel("WGS_STB_Populations.xlsx", sheet = 1)
-summary_pops <- read_excel("WGS_STB_Populations.xlsx", sheet = 2)
-isolate_list <- read_excel("WGS_STB_Populations.xlsx", sheet = 3)
+all_isolates<- read_excel("data_sheets/WGS_STB_Populations.xlsx", sheet = 1)
+summary_pops <- read_excel("data_sheets/WGS_STB_Populations.xlsx", sheet = 2)
+isolate_list <- read_excel("data_sheets/WGS_STB_Populations.xlsx", sheet = 3)
 ```
 ### Exploring the metadata
 
@@ -74,6 +74,9 @@ colnames(IDsfromVCF) <- "ID"
 
 _____________________________________________________________________________
 ### Drought population subsetting
+
+> UPDATED VERSION WITH FINAL FILES IN:
+  drought_status_pops.Rmd
 
 The millennium drought occurred from late 1996 to mid-2010 according to:
 http://www.bom.gov.au/climate/updates/articles/a010-southern-rainfall-decline.html
