@@ -9,59 +9,95 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## 
+# Generating a location map of sample populations
 
+I want a new dataframe for easy plotting of number of isolates per geographical site.
+
+### Inputting and checking the metadata
+Read in the excel sheets
 ```{r}
-# require(XLConnect)
-# require(asreml) #opens multiple packages asreml, latice (graps package)
-# 
-# require(lattice)
-# require(latticeExtra)
-# require(directlabels)
-# require(RColorBrewer)
-# require(ggplot2)
-# require(reshape2)
-# #require(drc)
-# require(plyr)
-# require(GGally)
-# require(scatterplot3d)
-# require(dplyr)
-
-library(ggmap)
-# library(gdata)
-# 
-# library("FactoMineR")
-# library("factoextra")
+library("readxl")
+packageVersion("readxl")
+```
+```{r}
+all_isolates<- read_excel("data_sheets/WGS_STB_Populations.xlsx", sheet = 1)
+summary_pops <- read_excel("data_sheets/WGS_STB_Populations.xlsx", sheet = 2)
+isolate_list <- read_excel("data_sheets/WGS_STB_Populations.xlsx", sheet = 3)
 ```
 
-The data
+What variables are available?
 ```{r}
-mapgraphing <- read.csv("mapgraphing_table.csv", header = T)
+colnames(all_isolates)
+```
+
+How any isolates are in each population?
+```{r}
+location_count <- as.data.frame(table(all_isolates$Population_name))
+# the dimensions match the summary_pops" df
+```
+
+
+###  Creating new dataframe fro easy mapping.
+
+Subsetting some data into a table for map graphing
+```{r}
+library(dplyr)
+```
+
+```{r}
+# creating subset
+test <- select(all_isolates, COL_YEAR,"Specific Latitude", "Specific Longitude", Population_name, Locality)
+
+# renaming cols
+colnames(test) <- c("Year", "Latitude", "Longitude", "Population_name", "Location")
+
+# aggregating duplicatess and getting count of isolates per pop and adding as variable
+mapgraphing <- test %>% group_by(Year, Latitude, Longitude, Population_name, Location) %>% summarize((n()))
+
+# renaming new variable
+colnames(mapgraphing)[6] <- "PopSize"
+
+# clean up
+rm(test)
+
+# writing data to file for future calls
+write.csv(mapgraphing, file = "data_sheets/mapgraphing_table.csv")
+```
+
+__________________________________________________________________________________
+Inputting above subset from file for future reference:
+```{r}
+mapgraphing <- read.csv("data_sheets/mapgraphing_table.csv", header = T)
 mapgraphing
 ```
+__________________________________________________________________________________
 
+Just some urls for map graphing methods:
 https://www.r-graph-gallery.com/map.html
 https://www.r-graph-gallery.com/bubble-map.html
 https://medium.com/analytics-vidhya/mapping-australia-in-r-6ce092c48b49
 
-
 _______________________________________________________________________________
 
+### Creating the data map
+
+Load the required packages:
 ```{r}
 if(!requireNamespace("devtools")) install.packages("devtools")
 devtools::install_github("dkahle/ggmap", ref = "tidyup")
 library(ggmap)
 register_google(key = "AIzaSyCX8w-wvuSqNRvzF14PFs3XY1S60zTbRdk") 
 ```
-
+Test to see if the correct map is displayed:
 ```{r}
 p <- ggmap(get_googlemap(center = c(lon = 142.31443124884743, lat = -37.55279466696095), #Mortlake, Vic
                          zoom = 6, scale = 2,
                          maptype ='terrain',
                          color = 'bw'))
 p
-
 ```
+
+Function to remove all axes text and girdlines etc
 ```{r}
 ditch_the_axes <- theme(
   axis.text = element_blank(),
@@ -73,27 +109,34 @@ ditch_the_axes <- theme(
 )
 ```
 
+
+Set the year as a factor so it can be used in aesthetics
 ```{r}
 mapgraphing$Year <-  as.factor(mapgraphing$Year)
 str(mapgraphing)
 ```
 
-
-
+Draw the map with the data:
 ```{r}
 p2 <- p + geom_point(aes(x=Longitude, y=Latitude, size= PopSize, colour = Year),data=mapgraphing,
                      alpha =0.8)+
-  #scale_shape_manual(values=c(18,17,16))+                           #you can set shapes and colour scales etc using these functions
-  #scale_color_manual(values=c('blue','red', 'yellow', 'green'))+
-  # scale_size(range=c(2))+
   ditch_the_axes #run the function above
 p2
 ```
+
+Save the map to file:
 ```{r}
-#save the map
-png(file="Pop_size_location.png", width=4800, height=4800, units="px", res=600, pointsize=10)
+png(file="IMGS/Pop_size_location.png", width=4800, height=4800, units="px", res=600, pointsize=10)
     # type="cairo", antialias="cleartype")
 print(p2)
 dev.off()
 ```
+
+Clean up env:
+```{r}
+rm(p1)
+rm(p2)
+rm()
+```
+
 

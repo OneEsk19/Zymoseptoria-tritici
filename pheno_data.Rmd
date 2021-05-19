@@ -1,0 +1,161 @@
+---
+title: "Phenotype_data"
+author: "Georgina Robertson"
+date: "18/05/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Phenotyping data
+
+Ones with "phenotyping data"
+```{r}
+
+ausPhenolist <- read.csv("data_sheets/AUS_Pheno109.txt", sep = "", header = F)
+```
+
+```{r}
+library("readxl")
+all_isolates<- read_excel("data_sheets/WGS_STB_Populations.xlsx", sheet = 1)
+
+ausPhenoset <- all_isolates[all_isolates$ID %in% ausPhenolist$V1, ]
+```
+
+Here's the phenotyping data!
+```{r}
+phen <-read.csv("data_sheets/DFFSET_summary_2020.csv", header = T)
+dim(phen)
+colnames(phen)
+```
+
+lets see if any rows can be immediately eliminated, as this is a huge file.
+```{r}
+phensmaller <- phen[phen$SpeciesName %in% all_isolates$ID,]
+dim(phensmaller)
+# size reduced by 800
+a <- unique(phensmaller$SpeciesName)
+# 104
+```
+Chcking the difference between listed isolates
+```{r}
+checkdiff <- setdiff(a, ausPhenolist$V1)
+checkdiff
+```
+```{r}
+checkdiff2 <- setdiff(a, ausPhenoset$ID)
+checkdiff2
+```
+```{r}
+str(phensmaller)
+```
+
+The most important ones are
+ID: wheat cultivars
+SpeciesName: WAI isolate name
+Nec: percent necrosis
+Pyc: percent pycnidia
+STB: stb disease severity score from 1 to 5
+
+Reducing further
+```{r}
+pheno_data <- phensmaller[,c(3,7,8,12,13,18,19,20)]
+colnames(pheno_data) <- c("w_cultivar", "ID", "Year", "REP", "TRT", "percent_necrosis", "percent_pycnidia", "disease_severity")
+```
+
+I see some NAs in the phenotype measurements, there is no point having these observations, so will find out where they nare and remove them.
+```{r}
+test <- pheno_data
+test2 <- which(is.na(pheno_data$disease_severity & pheno_data$percent_necrosis & pheno_data$percent_pycnidia))
+test3 <- test[-test2,]
+pheno_data <- test3
+write.csv(pheno_data, "data_sheets/phenotype_table.csv")
+```
+
+```{r}
+rm(test)
+rm(test2)
+```
+
+
+```{r}
+rm(test3)
+```
+
+Is it worth getting an average of phenotype for each isolate?
+Or for each cultivar?
+```{r}
+pheno_data %>%
+group_by(ID) %>%
+  summarise(avg = mean(disease_severity)) %>%
+  arrange(avg)
+```
+```{r}
+all_isolates[all_isolates$ID =="WAI1852",]
+```
+
+```{r}
+all_isolates[all_isolates$ID == "WAI1658",]
+```
+Both the highest and the lowest cluster together on the PCA of all isolates.
+Averaging disease per isolate is probably not meaningful
+
+Now trying the same thing but per cultivar
+```{r}
+plantdisease <- pheno_data %>%
+group_by(w_cultivar) %>%
+  summarise(avg = mean(disease_severity)) %>%
+  arrange(avg) %>% na.omit()
+```
+
+note: not saved/uploaded any of the following plots yet. Probably not that useful anyway
+```{r}
+library(ggplot2)
+library(RColorBrewer)
+
+ggplot(plantdisease, aes(x=w_cultivar, y=avg))+
+  geom_bar(stat = "identity", na.rm = T, fill="steelblue")+
+  ylab("Average Disease Severity")+
+  xlab("Wheat cultivar") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+```
+```{r}
+lorikeet_disease <- pheno_data %>%
+  filter(w_cultivar=="Lorikeet") %>%
+  group_by(ID) %>%
+  summarise(avg1=mean(disease_severity))%>%
+  arrange(avg1)
+
+
+ggplot(lorikeet_disease, aes(x=ID, y=avg1))+
+  geom_bar(stat = "identity", na.rm = T, fill="steelblue")+
+  ylab("Average Disease Severity")+
+  xlab("Z. tritici isolate") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+Interesting. Why the huge difference? Lets check the location of these.
+
+```{r}
+lori_high_D <- lorikeet_disease[lorikeet_disease$avg1 >=3, ]
+lori_high_D$ID
+
+a <- all_isolates[all_isolates$ID %in% lori_high_D$ID,]
+dim(a)
+a$avg_disease <- rep("high", 20)
+```
+
+```{r}
+lori_low_D <- lorikeet_disease[lorikeet_disease$avg1 <3, ]
+
+b <- all_isolates[all_isolates$ID %in% lori_low_D$ID,]
+dim(b)
+b$avg_disease <- rep("low", 84)
+```
+
+```{r}
+lorikeet <- rbind(a, b)
+lorikeet
+```
