@@ -141,6 +141,8 @@ plot(x, option = "scores", pop = poplist.names)
 
 #### saved as Dpops_PCA_1_2.png in IMGS folder  
 
+**Note 1**
+
 Hmm, some of the "post" are clustering with the "pre". This doesn't seem right, i will double-check how I designated the two populations:
 
 Referring to the document [drought_status_pops.rmd]
@@ -157,8 +159,99 @@ Projection onto PCs 2 and 3 == worse
 plot(x, option = "scores", i = 2, j = 3, pop = poplist.names)
 ```
 
+Will see if i can get the names on the PCA so i can see which post isolates are in the left cluster and compare them to the above.
 
 
+```{r}
+library(plotly)
+```
+
+```{r}
+interative_drought_PCA <- plot(x, option = "scores", pop = poplist.names, plt.pkg = "plotly")
+# static version saved as Dpops_PCA_1_2.png in IMGS folder
+```
+
+Reading them off the chart...
+> Index values:
+18, 19, 20, 21, 29, 186, 200, 209, 211, 212, 320, 321
+
+get sample list directly from VCF
+```{bash}
+SOURCEVCF="drought_pops_sorted.vcf" 
+
+vcf-query -l $SOURCEVCF > samples_from_vcf_doublecheck.txt
+```
+
+```{r}
+samples_from_vcf <- read.csv("FST/samples_from_vcf_doublecheck.txt", sep = "", header = F)
+```
+
+```{r}
+query_samples <- samples_from_vcf[c(18, 19, 20, 21, 29, 186, 200, 209, 211, 212, 320, 321),]
+
+print(query_samples)
+```
+>[1] "SRR3740308"       
+ [2] "SRR3740319"       
+ [3] "SRR3740330"       
+ [4] "SRR3740341"       
+ [5] "WAI147_SRR2866536"
+ [6] "WAI320"           
+ [7] "WAI324"           
+ [8] "WAI326"           
+ [9] "WAI328"           
+[10] "WAI329"           
+[11] "WAI55_SRR2866532" 
+[12] "WAI56_SRR2866534" 
+
+So it's none of these from **Note 1**
+[1] "WAI1857"  "WAI1881"  "WAI1883"  "WAI1970D" "WAI2210"  "WAI2216" 
+[7] "WAI2911R" "WAI3628b"
+Which means they were assigned correctly.
+So i can forget about these!
+
+Will now get additional info on query_samples
+```{r}
+library(readxl)
+
+all_isolates<- read_excel("data_sheets/WGS_STB_Populations.xlsx", sheet = 1)
+```
+Query samples in excel sheet
+```{r}
+query_samples_info <- all_isolates[all_isolates$ID %in% query_samples,]
+
+print(query_samples_info$ID)
+```
+> [1] "WAI320"     "WAI326"    
+[3] "WAI329"     "SRR3740308"
+[5] "SRR3740319" "SRR3740330"
+[7] "SRR3740341" "WAI328"    
+
+Query samples NOT in excel sheet
+```{r}
+print(setdiff(query_samples,query_samples_info$ID))
+```
+>[1] "WAI147_SRR2866536"
+[2] "WAI324"           
+[3] "WAI55_SRR2866532" 
+[4] "WAI56_SRR2866534" 
+
+I think these are some of the ones collected by another researcher. I failed to note down more details, will double-check.
+
+First will check the year on the ones we do know about:
+```{r}
+print(query_samples_info[, c("ID", "COL_YEAR", "Population_name")])
+```
 
 
-
+> ID            COL_YEAR Population_name
+<chr>           <dbl>     <chr>
+WAI320	        1980	Wagga Wagga__1980_1		
+WAI326	        2001	Lockhart__2001_1		
+WAI329	        2001	Lockhart__2001_1		
+SRR3740308	2001	Lockhart__2001_1		
+SRR3740319	2001	Lockhart__2001_1		
+SRR3740330	2001	Lockhart__2001_1		
+SRR3740341	2001	Lockhart__2001_1		
+WAI328	        2012	Inverleigh__2012_1		
+8 rows
