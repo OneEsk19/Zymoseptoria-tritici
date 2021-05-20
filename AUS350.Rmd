@@ -1,0 +1,120 @@
+---
+title: "removingHamilton25cluster"
+author: "Georgina Robertson"
+date: "13/05/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Make VCF subset and PCA file for the pre and post drought subsets exclusing the upper cluster of hamilton /lorikeet 25
+
+### Subset AUS_375.biallelic VCF to exclude the isolates in the upper cluster on the all AUS PCA (hamilton 25 cluster)
+
+
+```{bash}
+# starting with the original biallelic vcf
+SOURCEVCF="AUS_375.biallelic.recode.vcf"
+
+# get a list of the isolates in this set
+vcf-query -l $SOURCEVCF > aus375_samples.txt
+```
+
+Using R to create a keep file for filtering out Hamil/Lorikeet cluster.
+```{r}
+a <- read.table("../Data/May2020_gadi_genotyping/joint_genotype/aus375_samples.txt", sep = "", header = F)
+
+b <- read.table("../Data/May2020_gadi_genotyping/Isolate_details/avrstb19.keep", sep = "",header = F)
+
+c <- setdiff(a$V1, b$V1)
+
+
+write(c, file = "data_sheets/excl_hamil_cluster.keep", ncolumns = 1)
+
+rm(a)
+rm(b)
+rm(c)
+```
+
+
+Starting back at the unfiltered AUS_375.biallelic vcf to get the correct SNPs in the final filtered VCF
+Then filtering based on maf and missingness
+
+```{bash}
+#set output file names
+FULLAUS_VCF="AUS_375.biallelic"
+SUBSET_LIST="EXCL_HAMIL_CLUS"
+
+## first filter based on isolates alone
+vcftools --vcf ${FULLAUS_VCF}.recode.vcf --keep ../Isolate_details/excl_hamil_cluster.keep --recode --out ${SUBSET_LIST}
+
+## run proper filter for biallelic SNPs only with maf >= 0.05 and SNPs not missing in >90% of isolates
+SUBSET_MAF="EXCL_HAMIL_CLUS.biallelicSNP.maf0.5.miss0.9"
+
+vcftools --vcf $SUBSET_LIST.recode.vcf --min-alleles 2 --max-alleles 2 --maf 0.05 --max-missing 0.9 --recode --out $SUBSET_MAF
+
+# THIS KEPT 350 individuals, so might rename the vcf to 350.biallelic....
+
+## make the popyear.txt file from the big set so that you can nicely plot population in PCA below
+for file in `cat data_sheets/excl_hamil_cluster.keep `; do  echo ${file} | grep -f /dev/stdin ../Isolate_details/AUS372_popfile.txt >> ../Isolate_details/EXCL_HAMIL_CLUST_popyear.txt; done
+```
+
+```{r}
+library("ggplot2")
+library("SNPRelate")
+# SNPRelate: Parallel computing toolset for relatedness and principal component analysis of SNP data
+# https://www.rdocumentation.org/packages/SNPRelate/versions/1.6.4
+library("plotly")
+```
+
+```{r}
+# getwd()
+# setwd("/Volumes/Solomon_Lab/Megan/ZYMO_GWAS/May2020_gadi_genotyping/")
+snpgdsVCF2GDS("../Data/May2020_gadi_genotyping/joint_genotype/EXCL_HAMIL_CLUS.biallelicSNP.maf0.5.miss0.9.recode.vcf", "EXCL_HAM.gds")
+
+genofile350<-openfn.gds("EXCL_HAM.gds")
+
+AUS350_pca1<-snpgdsPCA(genofile350, autosome.only=F)
+# Principal Component Analysis (PCA) on genotypes:
+# Excluding 6,365 SNPs (monomorphic: TRUE, MAF: NaN, missing rate: NaN)
+#     # of samples: 350
+#     # of SNPs: 997,843
+#     using 1 thread
+#     # of principal components: 32
+# PCA:    the sum of all selected genotypes (0,1,2) = 223132245
+# CPU capabilities: Double-Precision SSE2
+
+sample.IDs<-read.table("../Data/May2020_gadi_genotyping/Isolate_details/EXCL_HAMIL_CLUST_popyear.txt", header=T)
+
+AUS350_pca1$sample <-sample.IDs$pop[which(AUS350_pca1$sample == sample.IDs$sample)]
+
+pca.dat1 <- data.frame(eigen1=AUS350_pca1$eigenvect[,1],eigen2=AUS350_pca1$eigenvect[,2], pop=AUS350_pca1$sample, samplename=AUS350_pca1$sample.id)
+
+PCA_AUS372<-ggplot(pca.dat1, aes(x=eigen1, y=eigen2, color=pop)) +geom_point(size=0.01)+ geom_text(aes(label=samplename),position = "jitter")+theme(legend.position = "None")
+ggsave("./01_VCF_quality_check/PCA_AUS372.pdf", PCA_AUS372, height = 12,width=16,dpi=300,units = "cm")
+# Above file moves to IMGS folder
+
+interactive_AUS372<-ggplotly(PCA_AUS372)
+interactive_AUS372
+
+
+```
+
+THIS TURNED OUT WIERD!! LETS TRY IT SO THAT LOCATION INSTEAD OF ID IS PLOTTED LIKE IN THE FIRST PCA
+
+AUS350_pca1$sample <-sample.IDs$pop[which(AUS350_pca1$sample == sample.IDs$sample)]
+# AUS372_pca1$sample <-sample.IDs$pop[which(AUS372_pca1$sample == sample.IDs$sample)]
+
+
+pca.dat1 <- data.frame(eigen1=AUS350_pca1$eigenvect[,1],eigen2=AUS350_pca1$eigenvect[,2], pop=AUS350_pca1$sample, samplename=AUS350_pca1$sample.id)
+# pca.dat1 <- data.frame(eigen1=AUS372_pca1$eigenvect[,1],eigen2=AUS372_pca1$eigenvect[,2], pop=AUS372_pca1$sample, samplename=AUS372_pca1$sample.id)
+
+PCA_AUS350<-ggplot(pca.dat1, aes(x=eigen1, y=eigen2, color=pop)) +geom_point(size=0.01)+ geom_text(aes(label=samplename),position = "jitter") +theme(legend.position = "None")
+PCA_AUS350
+ggsave("PCA_AUS350.pdf", PCA_AUS350, height = 12,width=16,dpi=300,units = "cm")
+
+interactive_AUS350<-ggplotly(PCA_AUS350)
+interactive_AUS350
+
