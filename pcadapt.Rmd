@@ -255,3 +255,7 @@ SRR3740330	2001	Lockhart__2001_1
 SRR3740341	2001	Lockhart__2001_1		
 WAI328	        2012	Inverleigh__2012_1		
 8 rows
+
+So the SRR isolates should all be labeled as pre-drought..WAI324, 326 and 329 come from the Wagga 2001 field population, which I would also classify as “pre-drought” although I know this is borderline
+
+delete  WAI327  WAI328

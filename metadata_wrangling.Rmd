@@ -120,5 +120,11 @@ aus25PCAlist <- read.csv("../Data/May2020_gadi_genotyping/Isolate_details/avrstb
 aus25PCAset <- all_isolates[all_isolates$ID %in% aus25PCAlist$V1, ]
 ```
 
+_____________________________________________
 
+
+
+```{r}
+
+```
 
