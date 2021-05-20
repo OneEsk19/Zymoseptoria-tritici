@@ -1,9 +1,13 @@
-
 ---
 title: "pcadapt"
 author: "Georgina Robertson"
+date: "19/05/2021"
+output: html_document
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 ## First step
 As i ran into problems before with population labelling, am starting again with the following step.
 
@@ -14,8 +18,10 @@ Read in the relevant data:
 ```{r}
 # pre-drought subset
 pre <- read.csv("data_sheets/preDsamples.txt", sep = "", header = F)
+
 # post drought subset
 post <- read.csv("data_sheets/postDsamples.txt", sep = "", header = F)
+
 # this is all the isolates in the order they appear in the VCF file
 all <- read.csv("data_sheets/excl_hamil_cluster.txt", sep = "", header = F)
 ```
@@ -26,6 +32,7 @@ match(pre$V1,all$V1)
 ```
 > [1] 186 209   1   3   5   7   9  11  13  15  17  19  21 320 321
 [16]  29 200
+
 And here
 ```{r}
 match(post$V1,all$V1)
@@ -53,6 +60,7 @@ match(post$V1,all$V1)
 [301] 288 289 290 291 292 293 294 295 298 299 300 301 307 308 309
 [316] 310 311 312 313 314 315 316 317 318 319  56  65  67  85 104
 [331] 105 124 252
+
 So I will make a new sample list and use it to re-order the vcf file.
 ```{r}
 sortedsamples <- rbind(pre, post)
@@ -63,6 +71,7 @@ write(sortedsamples$V1, "data_sheets/sorted_samples.txt", sep = "")
 Then:
 ```{bash}
 $ bcftools query -l EXCL_HAMIL_CLUS.biallelicSNP.maf0.5.miss0.9.recode.vcf| sort > sorted_samples.txt
+
 $ bcftools view -S sorted_samples.txt EXCL_HAMIL_CLUS.biallelicSNP.maf0.5.miss0.9.recode.vcf > drought_pops_sorted.vcf
 ```
 
@@ -81,12 +90,14 @@ filename <- read.pcadapt(path_to_file, type = "vcf")
 ```
 Didn't work, message was:
 > Error in check_file_size(input) : It seems that the input file is quite large. For large 'vcf' or 'ped' files, please use PLINK (>= 1.9) to convert them to 'bed' format.
+
 So moving to PLINK to do what it said to do
 ```{bash}
 plink2 --vcf drought_pops_sorted.vcf --make-bed --out drought_pop_final
 ```
 > Error: Invalid chromosome code 'WAI332_chr_01' on line 67 of --vcf file.
 (Use --allow-extra-chr to force it to be accepted.)
+
 So:
 ```{bash}
 plink2 --vcf drought_pops_sorted.vcf --make-bed --allow-extra-chr --out drought_pop_final
@@ -130,6 +141,8 @@ plot(x, option = "scores", pop = poplist.names)
 
 #### saved as Dpops_PCA_1_2.png in IMGS folder  
 
+**Note 1**
+
 Hmm, some of the "post" are clustering with the "pre". This doesn't seem right, i will double-check how I designated the two populations:
 
 Referring to the document [drought_status_pops.rmd]
@@ -145,3 +158,100 @@ Projection onto PCs 2 and 3 == worse
 ```{r}
 plot(x, option = "scores", i = 2, j = 3, pop = poplist.names)
 ```
+
+Will see if i can get the names on the PCA so i can see which post isolates are in the left cluster and compare them to the above.
+
+
+```{r}
+library(plotly)
+```
+
+```{r}
+interative_drought_PCA <- plot(x, option = "scores", pop = poplist.names, plt.pkg = "plotly")
+# static version saved as Dpops_PCA_1_2.png in IMGS folder
+```
+
+Reading them off the chart...
+> Index values:
+18, 19, 20, 21, 29, 186, 200, 209, 211, 212, 320, 321
+
+get sample list directly from VCF
+```{bash}
+SOURCEVCF="drought_pops_sorted.vcf" 
+
+vcf-query -l $SOURCEVCF > samples_from_vcf_doublecheck.txt
+```
+
+```{r}
+samples_from_vcf <- read.csv("FST/samples_from_vcf_doublecheck.txt", sep = "", header = F)
+```
+
+```{r}
+query_samples <- samples_from_vcf[c(18, 19, 20, 21, 29, 186, 200, 209, 211, 212, 320, 321),]
+
+print(query_samples)
+```
+>[1] "SRR3740308"       
+ [2] "SRR3740319"       
+ [3] "SRR3740330"       
+ [4] "SRR3740341"       
+ [5] "WAI147_SRR2866536"
+ [6] "WAI320"           
+ [7] "WAI324"           
+ [8] "WAI326"           
+ [9] "WAI328"           
+[10] "WAI329"           
+[11] "WAI55_SRR2866532" 
+[12] "WAI56_SRR2866534" 
+
+So it's none of these from **Note 1**
+[1] "WAI1857"  "WAI1881"  "WAI1883"  "WAI1970D" "WAI2210"  "WAI2216" 
+[7] "WAI2911R" "WAI3628b"
+Which means they were assigned correctly.
+So i can forget about these!
+
+Will now get additional info on query_samples
+```{r}
+library(readxl)
+
+all_isolates<- read_excel("data_sheets/WGS_STB_Populations.xlsx", sheet = 1)
+```
+Query samples in excel sheet
+```{r}
+query_samples_info <- all_isolates[all_isolates$ID %in% query_samples,]
+
+print(query_samples_info$ID)
+```
+> [1] "WAI320"     "WAI326"    
+[3] "WAI329"     "SRR3740308"
+[5] "SRR3740319" "SRR3740330"
+[7] "SRR3740341" "WAI328"    
+
+Query samples NOT in excel sheet
+```{r}
+print(setdiff(query_samples,query_samples_info$ID))
+```
+>[1] "WAI147_SRR2866536"
+[2] "WAI324"           
+[3] "WAI55_SRR2866532" 
+[4] "WAI56_SRR2866534" 
+
+I think these are some of the ones collected by another researcher. I failed to note down more details, will double-check.
+
+First will check the year on the ones we do know about:
+```{r}
+print(query_samples_info[, c("ID", "COL_YEAR", "Population_name")])
+```
+
+
+> ID            COL_YEAR Population_name
+<chr>           <dbl>     <chr>
+WAI320	        1980	Wagga Wagga__1980_1		
+WAI326	        2001	Lockhart__2001_1		
+WAI329	        2001	Lockhart__2001_1		
+SRR3740308	2001	Lockhart__2001_1		
+SRR3740319	2001	Lockhart__2001_1		
+SRR3740330	2001	Lockhart__2001_1		
+SRR3740341	2001	Lockhart__2001_1		
+WAI328	        2012	Inverleigh__2012_1		
+8 rows
