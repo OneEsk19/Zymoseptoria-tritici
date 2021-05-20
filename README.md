@@ -42,8 +42,21 @@ Files:
   - script that modified GATK output VCF
   - used in PlotFilteredSNPs.rmd
 
+* drought_status_pop.Rmd
+  - pipeline for indicating drought status per isolate and re-ordering the VCF file accordingly
+
 * metadata_wrangling
   - various bits and bobs to aid with my understanding of the dataset
+
+* pcadapt.Rmd
+  - Using package pcadapt to perform genome scans for selection based on principal component analysis 
+  - refs: https://bcm-uga.github.io/pcadapt/articles/pcadapt.html , https://onlinelibrary.wiley.com/doi/10.1111/1755-0998.12592
+
+* pheno_data
+  - playing around with the phenotyped samples
+
+* readabe_pcadapt.md
+  - as  pcadapt.Rmd, but more readable here.
 
 * readformat_VCF_FILTER_PCA_commented_G.md
   - this is the "Generalised_VCF_filter_PCA" modified and commented by me
