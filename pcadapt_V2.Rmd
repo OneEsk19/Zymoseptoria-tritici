@@ -1,0 +1,158 @@
+---
+title: "pcadapt"
+author: "Georgina Robertson"
+date: "19/05/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## First step
+1) Deleted samples WAI327  WAI328 from sample_names (used as keepfile) and recoded vcf
+```{bash}
+BASE_VCF="EXCL_HAMIL_CLUS.biallelicSNP.maf0.5.miss0.9"
+OUT_VCF="drought_pops"
+KEEP_FILE="sample_names.txt"
+
+vcftools --vcf ${BASE_VCF}.recode.vcf --keep ${KEEP_FILE} --recode --out ${OUT_VCF}
+```
+> Keeping individuals in 'keep' list
+After filtering, kept 349 out of 350 Individuals
+
+
+2) Make sure it worked:
+```{bash}
+vcf-query -l drought_pops.recode.vcf > sample_names_check.txt
+```
+Yep
+
+3) Made changes to the assignment of some unknown samples to appropriate drought-pop - edited the source files directly in text editor.
+
+Our populations.
+Read in the relevant data:
+```{r}
+# pre-drought subset
+pre <- read.csv("data_sheets/preDsamples.txt", sep = "", header = F)
+#28
+# post drought subset
+post <- read.csv("data_sheets/postDsamples.txt", sep = "", header = F)
+#321
+# total=349
+
+# this is all the isolates in the VCF
+all_in_vcf <- read.csv("FST/sample_names_check.txt", sep = "", header = F)
+# total=349
+```
+Good
+
+4) Need to get exact order of samples in vcf file and get the index value for each member of the two drought-pops
+
+Get the index of the pre-drought samples
+```{r}
+pre_idx <- match(pre$V1,all_in_vcf$V1)
+pre_idx
+```
+Get the index of the post drought samples
+```{r}
+post_idx <- match(post$V1,all_in_vcf$V1)
+post_idx
+```
+
+Create drought status identifier for each pop.
+Turn each into a dataframe.
+Assign column names
+```{r}
+pre_idx 
+pop <- rep("pre", length(pre_idx))
+preD <- cbind(pre_idx, pop)
+preD_df <- data.frame(preD)
+colnames(preD_df) <- c("VCFindex", "popID")
+
+post_idx
+pop <- rep("post", length(post_idx))
+postD <- cbind(post_idx, pop)
+postD_df <- data.frame(postD)
+colnames(postD_df) <- c("VCFindex", "popID")
+```
+Combine both pops into one dataframe
+Change index value to numeric for...
+Sorting by index value (ascending)
+```{r}
+allD <- rbind(preD_df, postD_df)
+allD
+
+
+allD[, 1] <- lapply(1, function(x) as.numeric(allD[[x]]))
+str(allD)
+
+pop_order_index <- allD[order(allD$VCFindex),]
+head(pop_order_index)
+
+popIDs_ordered <- pop_order_index$popID
+popIDs_ordered
+```
+
+# Using pcadapt to detect local adaptation
+Following the walkthrough from:
+https://bcm-uga.github.io/pcadapt/articles/pcadapt.html
+```{r}
+# install.packages("pcadapt")
+library(pcadapt)
+```
+
+## Read in data
+Make bed file from vcf
+```{bash}
+plink2 --vcf drought_pops.recode.vcf --make-bed --allow-extra-chr --out drought_pops_pcadapt
+## WORKED
+```
+
+Read data into R:
+```{r}
+path_to_file <- "FST/drought_pops_pcadapt.bed"
+filename <- read.pcadapt(path_to_file, type = "bed")
+```
+
+## Choosing number of PCs (K)
+Perform PCA:
+```{r}
+x <- pcadapt(input = filename, ploidy = 1, K =20)
+```
+
+Scree plots:
+```{r}
+plot(x, option = "screeplot")
+# saved as scree_plot_k20 in IMGS folder
+```
+Looks like first two PCs explain most of variance, confirmed below too.
+```{r}
+plot(x, option = "screeplot", K=10)
+# saved as scree_plot_k10 in IMGS folder
+```
+
+## Score Plot
+
+So now the preparation was done in reordering the population ID indexes I can now use that variable to assign them to the vcf/bed isolates.
+
+```{r}
+poplist.names <- c(popIDs_ordered)
+```
+```{r}
+plot(x, option = "scores", pop = poplist.names)
+# saved as Dpops_PCA_1_2.png in IMGS folder
+```
+
+#### saved as Dpops_PCA_1_2.png in IMGS folder  
+
+
+Make an interactive plot for closer examination
+```{r}
+library(plotly)
+```
+
+```{r}
+interative_drought_PCA <- plot(x, option = "scores", pop = poplist.names, plt.pkg = "plotly")
+# static version saved as Dpops_PCA_1_2.png in IMGS folder
+```
+
