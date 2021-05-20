@@ -14,7 +14,8 @@ As i ran into problems before with population labelling, am starting again with 
 Put the isolates in population order in the VCF file.
 
 Our populations.
-Read in the relevant data:
+Read in the relevant data:  
+note: the making of these subset text files is detailed in: "drought_status_pops.rmd"
 ```{r}
 # pre-drought subset
 pre <- read.csv("data_sheets/preDsamples.txt", sep = "", header = F)
