@@ -1,0 +1,117 @@
+---
+title: "slidingFST"
+author: "Georgina Robertson"
+date: "17/05/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Sliding window FST
+
+Choose 10k as indicated here:
+https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0214201
+
+Web based version here:
+http://swav.popgenetics.net/
+
+The following fst pipeline is based on this:
+https://wurmlab.github.io/genomicscourse/2016-SIB/practicals/population_genetics/popgen
+
+### Need to make some files
+
+1) make snp matrix from "drought_pops.recode.vcf" in /FST directory
+```{bash}
+bcftools query drought_pops.recode.vcf -f '%CHROM\t%POS[\t%GT]\n' > snp_matrix.txt
+
+# get sample names
+bcftools query -l drought_pops.recode.vcf > sample_names_Dpops.txt
+
+```
+
+
+2) Input the SNP data and the sample names
+```{r}
+snp_matrix  <- read.table("FST/snp_matrix.txt")
+```
+
+3) Here i am going to make it so that there is a prefix identifier 
+```{r}
+# already have identifiers in order
+popID <- read.delim("data_sheets/populationIDs_for_droughtpopsVCF.txt", sep = "", header = F)
+
+
+isolate_names <- read.delim("FST/sample_names_Dpops.txt", sep = "", header = F)
+
+popID <- data.frame(popID)
+isolate_names <- data.frame(isolate_names)
+
+IDs_names <- cbind(popID, isolate_names)
+colnames(IDs_names) <- c("pop", "ID")
+head(IDs_names)
+
+```
+4)
+```{r}
+IDs_names$popname <- with(IDs_names, paste0(pop, ID))
+head(IDs_names)
+write.csv(IDs_names, "data_sheets/Dpop_ID_popname.csv")
+```
+
+5) Ready the sample names
+```{r}
+sample_names <- IDs_names$popname
+```
+
+___________________________________________________________________
+In future can skip steps 3, 4 and 5, and just use this:
+```{r}
+temp <- read.csv("data_sheets/Dpop_ID_popname.csv", header = T)
+sample_names <- temp$popname
+```
+___________________________________________________________________
+
+6) Keep the position of the loci
+```{r}
+loci <- snp_matrix[,1:2]
+colnames(loci) <- c("scaffold", "position")
+```
+
+7) Transpose matrix (rows = individuals, columns = loci)
+```{r}
+snp_matrix <- snp_matrix[,3:ncol(snp_matrix)]
+snp_matrix <- t(snp_matrix)
+```
+__________________________________________________________________________________
+
+OK so now we have the two populations, it seems we need to order the rows by population.
+
+```{r}
+# add sample names to snp matrix
+row.names(snp_matrix) <- sample_names
+
+# reorder the rows by population
+beforeD <- sample_names[grep("pre", sample_names)]
+afterD <- sample_names[grep("post", sample_names)]
+
+snp_matrix <- snp_matrix[c(beforeD, afterD),]
+```
+_______________________________________________________________________
+
+### Save this matrix for future use!
+```{r}
+write.csv(snp_matrix, "FST/snp_matrix.csv")
+```
+
+
+```{r}
+rm(popID)
+rm(isolate_names)
+rm(IDs_names)
+rm(temp)
+rm(beforeD)
+rm(afterD)
+```
+

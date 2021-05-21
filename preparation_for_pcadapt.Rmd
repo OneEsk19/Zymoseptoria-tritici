@@ -101,4 +101,16 @@ Make bed file from vcf
 plink2 --vcf drought_pops.recode.vcf --make-bed --allow-extra-chr --out drought_pops_pcadapt
 ## WORKED
 ```
+```{r}
+rm(pre)
+rm(post)
+rm(pre_idx)
+rm(post_idx)
+rm(preD)
+rm(preD_df)
+rm(postD)
+rm(postD_df)
+```
+
+
 ## Proceed to pcadapt_workflow.rmd
