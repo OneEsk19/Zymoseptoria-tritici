@@ -8,6 +8,9 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+# First try. Detailing issued faced for future reference.
+# Working workflow = pcadatp_workflow.Rmd
+
 ## First step
 As i ran into problems before with population labelling, am starting again with the following step.
 
