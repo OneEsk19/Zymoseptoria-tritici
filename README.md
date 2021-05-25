@@ -41,6 +41,9 @@
 * Run_filter_may2020.sh
   - GATK pipeline
 
+* WGS_survey_maps_megan.R
+  - Megan's map plot as a baseline to work from
+
 * amendingfile.R
   - script that modified GATK output VCF
   - used in PlotFilteredSNPs.rmd
@@ -51,12 +54,20 @@
 * metadata_wrangling
   - various bits and bobs to aid with my understanding of the dataset
 
-* pcadapt.Rmd
+* pcadapt_first_try.Rmd
+  - First attempt at using this package.
+  - Ran into problems
+  - Retained this file simply to document problems encountered.
+
+* pcadapt_workflow.Rmd
   - Using package pcadapt to perform genome scans for selection based on principal component analysis 
   - refs: https://bcm-uga.github.io/pcadapt/articles/pcadapt.html , https://onlinelibrary.wiley.com/doi/10.1111/1755-0998.12592
 
 * pheno_data
   - playing around with the phenotyped samples
+
+* preparation_for_pcadapt.Rmd
+  - assigning population group identifiers to samples as ordered in VCF
 
 * readabe_pcadapt.md
   - as  pcadapt.Rmd, but more readable here.
@@ -64,3 +75,6 @@
 * readformat_VCF_FILTER_PCA_commented_G.md
   - this is the "Generalised_VCF_filter_PCA" modified and commented by me
   - in a nice readable format that displays well on github
+
+* snp_matrix
+  - workflow for producing and labelling a snp matrix
