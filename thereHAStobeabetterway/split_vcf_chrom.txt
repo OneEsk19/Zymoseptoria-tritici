@@ -1,0 +1,22 @@
+
+vcftools --gzvcf drought_pops.recode.vcf --chr WAI332_chr_01 --recode --out WAI332_chr_01 ; 
+vcftools --gzvcf drought_pops.recode.vcf --chr WAI332_chr_02 --recode --out WAI332_chr_02 ; 
+vcftools --gzvcf drought_pops.recode.vcf --chr WAI332_chr_03 --recode --out WAI332_chr_03 ; 
+vcftools --gzvcf drought_pops.recode.vcf --chr WAI332_chr_04 --recode --out WAI332_chr_04 ; 
+vcftools --gzvcf drought_pops.recode.vcf --chr WAI332_chr_05 --recode --out WAI332_chr_05 ; 
+vcftools --gzvcf drought_pops.recode.vcf --chr WAI332_chr_06 --recode --out WAI332_chr_06 ; 
+vcftools --gzvcf drought_pops.recode.vcf --chr WAI332_chr_07 --recode --out WAI332_chr_07 ; 
+vcftools --gzvcf drought_pops.recode.vcf --chr WAI332_chr_08 --recode --out WAI332_chr_08 ; 
+vcftools --gzvcf drought_pops.recode.vcf --chr WAI332_chr_09 --recode --out WAI332_chr_09 ; 
+vcftools --gzvcf drought_pops.recode.vcf --chr WAI332_chr_10 --recode --out WAI332_chr_10 ; 
+vcftools --gzvcf drought_pops.recode.vcf --chr WAI332_chr_11 --recode --out WAI332_chr_11 ; 
+vcftools --gzvcf drought_pops.recode.vcf --chr WAI332_chr_12 --recode --out WAI332_chr_12 ; 
+vcftools --gzvcf drought_pops.recode.vcf --chr WAI332_chr_13 --recode --out WAI332_chr_13 ; 
+vcftools --gzvcf drought_pops.recode.vcf --chr WAI332_chr_14 --recode --out WAI332_chr_14 ; 
+vcftools --gzvcf drought_pops.recode.vcf --chr WAI332_chr_15 --recode --out WAI332_chr_15 ; 
+vcftools --gzvcf drought_pops.recode.vcf --chr WAI332_chr_16 --recode --out WAI332_chr_16 ; 
+vcftools --gzvcf drought_pops.recode.vcf --chr WAI332_chr_17 --recode --out WAI332_chr_17 ; 
+vcftools --gzvcf drought_pops.recode.vcf --chr WAI332_chr_18 --recode --out WAI332_chr_18 ; 
+vcftools --gzvcf drought_pops.recode.vcf --chr WAI332_chr_19 --recode --out WAI332_chr_19 ; 
+vcftools --gzvcf drought_pops.recode.vcf --chr WAI332_chr_20 --recode --out WAI332_chr_20 ; 
+vcftools --gzvcf drought_pops.recode.vcf --chr WAI332_chr_21 --recode --out WAI332_chr_21
