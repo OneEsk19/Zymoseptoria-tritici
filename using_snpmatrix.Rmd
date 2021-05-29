@@ -13,27 +13,31 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Template to load them from file:
 ```{r}
-snp_matrix <- read.csv("Processed_SNP_matrices/snp_matrix_new.csv", header = T)
-snp_matrix <- snp_matrix[,-1]
+# Load processed snp matrix and remove the index column that is introduced into csv when R creates csv
+snp_matrix1 <- read.csv("Processed_SNP_matrices/chr1.csv", header = T)
+# snp_matrix <- snp_matrix[,-1]
+snp_matrix <- as.matrix(snp_matrix1)
 
-loci <- read.csv("Processed_SNP_matrices/loci.csv", header = T)
+# Load processed loci and remove the index column that is introduced into csv when R creates csv
+loci <- read.csv("Processed_SNP_matrices/chr1_loci.csv", header = T)
 loci <- loci[,2:3]
 
+# load the sample names
 temp <- read.csv("data_sheets/Dpop_ID_popname.csv", header = T)
 sample_names <- temp$popname
 ```
 
 ```{r}
-colnames(snp_matrix)
-# they are just V1, V2...Vn, is this how it should be?
-snp_matrix[1,]
+rm(snp_matrix1)
 ```
+
 _____________________________________________________
+
 ```{r}
 library(adegenet)
 ```
 
-```{r}
+```{r, message = FALSE, warning = FALSE}
 snp <- new("genlight",
            snp_matrix,
            chromosome=loci$scaffold,
@@ -42,18 +46,19 @@ snp <- new("genlight",
 ```
 
 ```{r}
-snp
-snp@ind.names
-snp@gen
+# snp
+# snp@ind.names
+# snp@gen
+# snp@chromosome
 ```
-```{r}
-snp@chromosome
-```
+
 ```{r}
 
 ## Heat map of genotype
-glPlot(snp)
+colours <- c("darkslategrey","darkcyan")
+glPlot(snp, col = colours, legend = F)
+# Can immediately see how different the pre-drought population are.
 ```
-
+colours: https://www.r-graph-gallery.com/42-colors-names_files/figure-html/thecode-1.png
 
 

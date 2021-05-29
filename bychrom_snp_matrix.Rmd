@@ -35,17 +35,18 @@ sample_names <- temp$popname
 
 
 2) Input the by chromosome SNP data: 
+############## CHANGE FILE NAME ###############
 ```{r}
 snp_matrix1  <- read.table("ByChrom/chr1_snp_matrix.txt")
 ```
 
 3) Create loci names: 
 This will be needed for each chromosome matrix
+############## CHANGE FILE NAME ###############
 ```{r}
-loci1 <- snp_matrix1[,1:2]
-colnames(loci1) <- c("scaffold", "position")
-
-write.csv(loci1, "Processed_SNP_matrices/chr1_loci.csv")
+loci <- snp_matrix1[,1:2]
+colnames(loci) <- c("scaffold", "position")
+write.csv(loci, "Processed_SNP_matrices/chr1_loci.csv")
 ```
 
 
@@ -60,8 +61,23 @@ snp_matrix1 <- t(snp_matrix1)
 row.names(snp_matrix1) <- sample_names
 ```
 
-### Save this matrix for future use!
+6) Reorder the rows by population
 ```{r}
-write.csv(snp_matrix1, "Processed_SNP_matrices/chr1.csv")
+beforeD <- sample_names[grep("pre", sample_names)]
+afterD <- sample_names[grep("post", sample_names)]
+
+snp_matrix1 <- snp_matrix1[c(beforeD, afterD),]
+```
+
+
+7) Save this matrix for future use!
+############## CHANGE FILE NAME ###############
+```{r}
+write.csv(snp_matrix1, "Processed_SNP_matrices/chr21.csv")
+```
+
+8) clean env
+```{r}
+rm(list=ls())
 ```
 
