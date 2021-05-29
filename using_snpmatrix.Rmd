@@ -1,0 +1,59 @@
+---
+title: "adegenet"
+author: "Georgina Robertson"
+date: "28/05/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Using the snp matrices
+
+Template to load them from file:
+```{r}
+snp_matrix <- read.csv("Processed_SNP_matrices/snp_matrix_new.csv", header = T)
+snp_matrix <- snp_matrix[,-1]
+
+loci <- read.csv("Processed_SNP_matrices/loci.csv", header = T)
+loci <- loci[,2:3]
+
+temp <- read.csv("data_sheets/Dpop_ID_popname.csv", header = T)
+sample_names <- temp$popname
+```
+
+```{r}
+colnames(snp_matrix)
+# they are just V1, V2...Vn, is this how it should be?
+snp_matrix[1,]
+```
+_____________________________________________________
+```{r}
+library(adegenet)
+```
+
+```{r}
+snp <- new("genlight",
+           snp_matrix,
+           chromosome=loci$scaffold,
+           position=loci$position,
+           pop=as.factor(c(rep("PRE",21), rep("POST",328))))
+```
+
+```{r}
+snp
+snp@ind.names
+snp@gen
+```
+```{r}
+snp@chromosome
+```
+```{r}
+
+## Heat map of genotype
+glPlot(snp)
+```
+
+
+

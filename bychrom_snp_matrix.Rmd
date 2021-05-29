@@ -1,0 +1,67 @@
+---
+title: "bychrom_snp_matrix"
+author: "Georgina Robertson"
+date: "29/05/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Per Chrom SNP Matrix Processing
+
+This document outlines how to create the appropriately formatted matrices for downstream analysis
+________________________________________________________________
+Creation of the files
+This has been done for ALL already, no need to repeat, here for reference.
+All files in /ByChrom folder (local, not on GH)
+```{bash}
+# split a chromosome off from big vcf
+vcftools --gzvcf drought_pops.recode.vcf --chr WAI332_chr_01 --recode --out WAI332_chr_01 
+
+#Create the snip matrix for one chrom
+bcftools query WAI332_chr_01.recode.vcf -f '%CHROM\t%POS[\t%GT]\n' > chr1_snp_matrix.txt
+```
+________________________________________________________________
+
+Assuming the isolate names are the same as those as in the big VCF, I won't bother making a separate sample_names file for each
+
+1) Input sample names:
+```{r}
+temp <- read.csv("data_sheets/Dpop_ID_popname.csv", header = T)
+sample_names <- temp$popname
+```
+
+
+2) Input the by chromosome SNP data: 
+```{r}
+snp_matrix1  <- read.table("ByChrom/chr1_snp_matrix.txt")
+```
+
+3) Create loci names: 
+This will be needed for each chromosome matrix
+```{r}
+loci1 <- snp_matrix1[,1:2]
+colnames(loci1) <- c("scaffold", "position")
+
+write.csv(loci1, "Processed_SNP_matrices/chr1_loci.csv")
+```
+
+
+4) Transpose matrix (rows = individuals, columns = loci)
+```{r}
+snp_matrix1 <- snp_matrix1[,3:ncol(snp_matrix1)]
+snp_matrix1 <- t(snp_matrix1)
+```
+
+5) add sample names to snp matrix
+```{r}
+row.names(snp_matrix1) <- sample_names
+```
+
+### Save this matrix for future use!
+```{r}
+write.csv(snp_matrix1, "Processed_SNP_matrices/chr1.csv")
+```
+

@@ -9,22 +9,16 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Sliding window FST
+# DEPRECATED. Improved process uses individual chromosomes
 
-Choose 10k as indicated here:
-https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0214201
+## This is for an snp_matrix of the whole dataset, VERY reource hungry! Pre-processing steps.
 
-Web based version here:
-http://swav.popgenetics.net/
-
-The following fst pipeline is based on this:
-https://wurmlab.github.io/genomicscourse/2016-SIB/practicals/population_genetics/popgen
 
 ### Need to make some files
 
 1) make snp matrix from "drought_pops.recode.vcf" in /FST directory
 ```{bash}
-bcftools query drought_pops.recode.vcf -f '%CHROM\t%POS[\t%GT]\n' > snp_matrix.txt
+bcftools query drought_pops.recode.vcf -f '%CHROM\t%POS[\t%GT]\n' > snp_matrix_ori.txt
 
 # get sample names
 bcftools query -l drought_pops.recode.vcf > sample_names_Dpops.txt
@@ -34,7 +28,7 @@ bcftools query -l drought_pops.recode.vcf > sample_names_Dpops.txt
 
 2) Input the SNP data and the sample names
 ```{r}
-snp_matrix  <- read.table("FST/snp_matrix.txt")
+snp_matrix  <- read.table("FST/snp_matrix_ori.txt")
 ```
 
 3) Here i am going to make it so that there is a prefix identifier 
@@ -77,6 +71,8 @@ ___________________________________________________________________
 ```{r}
 loci <- snp_matrix[,1:2]
 colnames(loci) <- c("scaffold", "position")
+
+write.csv(loci, "loci.csv")
 ```
 
 7) Transpose matrix (rows = individuals, columns = loci)
@@ -102,7 +98,7 @@ _______________________________________________________________________
 
 ### Save this matrix for future use!
 ```{r}
-write.csv(snp_matrix, "FST/snp_matrix.csv")
+write.csv(snp_matrix, "FST/snp_matrix_new.csv")
 ```
 
 
