@@ -35,3 +35,15 @@ Actions:
 3) Proceeding through the pcadapt (R package for population analysis) with correctly labelled samples (pcadapt_workflow.Rmd)
 4) Produced PCA showing separation of the two populations (IMGS/pre_post_drought_PCA.html)
 5) Ready to proceed once exams are over.
+
+#### Week 4: 25th May - 1st June
+
+Goals:
+Exam week, so no clear objectives other than to continue with workflows when time allows.
+
+Actions:
+1) Working with SNP matrix and PopGenome package
+- Snp matrix very large, using 10gb RAM in R, when heatmap attempted, memory requirements exceed what is avaiable (16Gb)
+2) Re-code main VCF on a per-chromosome basis to reduce size of data
+3) Produce SNP matrix for each new VCF
+4) Produce heatmaps for each snp matrix
