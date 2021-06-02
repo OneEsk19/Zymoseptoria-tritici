@@ -89,10 +89,9 @@ All of these elements are accessible using the $ symbol. For example, the p-valu
 ## Manhattan Plot
 displays −log10 of the p-values.
 ```{r}
-plot(x , option = "manhattan")
+plot(x , option = "manhattan", pch = 20, cex=1)
 ```
-I'll be honest, this doesn't look very meaningful to me.
-note: look into what this means
+In GWAS Manhattan plots, genomic coordinates are displayed along the X-axis, with the negative logarithm of the association p-value for each single nucleotide polymorphism (SNP) displayed on the Y-axis, meaning that each dot on the Manhattan plot signifies a SNP. Because the strongest associations have the smallest p-values (e.g., 10−15), their negative logarithms will be the greatest (e.g., 15). The different colors of each block usually show the extent of each chromosome. 
 
 ## Q-Q plot
 The expected uniform distribution of the p-values using a Q-Q plot
@@ -129,6 +128,7 @@ qval <- qvalue(x$pvalues)$qvalues
 alpha <- 0.1
 outliers <- which(qval < alpha)
 length(outliers)
+#  52614
 ```
 
 Benjamini-Hochberg Procedure
@@ -138,6 +138,7 @@ padj <- p.adjust(x$pvalues,method="BH")
 alpha <- 0.1
 outliers <- which(padj < alpha)
 length(outliers)
+#  52614
 ```
 
 Bonferroni correction
@@ -146,6 +147,7 @@ padj <- p.adjust(x$pvalues,method="bonferroni")
 alpha <- 0.1
 outliers <- which(padj < alpha)
 length(outliers)
+# 19868
 ```
 
 ## Linkage Disequilibrium (LD) thinning

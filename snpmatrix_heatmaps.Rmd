@@ -1,0 +1,64 @@
+---
+title: "adegenet"
+author: "Georgina Robertson"
+date: "28/05/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Using the snp matrices to produce heatmaps
+
+Template to load them from file:
+```{r}
+# Load processed snp matrix and remove the index column that is introduced into csv when R creates csv
+snp_matrix1 <- read.csv("Processed_SNP_matrices/chrom_21_processed_matrix.csv", header = T)
+# snp_matrix <- snp_matrix[,-1]
+snp_matrix <- as.matrix(snp_matrix1)
+
+# Load processed loci and remove the index column that is introduced into csv when R creates csv
+loci <- read.csv("Processed_SNP_matrices/chrom_21_loci.csv", header = T)
+loci <- loci[,2:3]
+
+# load the sample names
+temp <- read.csv("data_sheets/Dpop_ID_popname.csv", header = T)
+sample_names <- temp$popname
+```
+
+```{r}
+rm(snp_matrix1)
+```
+
+_____________________________________________________
+
+```{r}
+library(adegenet)
+```
+
+```{r, message = FALSE, warning = FALSE}
+snp <- new("genlight",
+           snp_matrix,
+           chromosome=loci$scaffold,
+           position=loci$position,
+           pop=as.factor(c(rep("PRE",21), rep("POST",328))))
+```
+
+```{r}
+# snp
+# snp@ind.names
+# snp@gen
+# snp@chromosome
+```
+
+```{r}
+
+## Heat map of genotype
+colours <- c("darkslategrey","burlywood3")
+glPlot(snp, col = colours, legend = F)
+# Can immediately see how different the pre-drought population are.
+```
+colours: https://www.r-graph-gallery.com/42-colors-names_files/figure-html/thecode-1.png
+
+
