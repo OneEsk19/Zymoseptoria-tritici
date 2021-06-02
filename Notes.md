@@ -136,13 +136,21 @@ The virulence genes for the fungus are referred to as “effectors” or “avir
 
 ### Questions and Answers regarding the VCF data:
 
-Q. Why biallelic?
-A. Mostly because its simpler, but also something to do with evolutionary theory.
-Also, low MAF indicates high LD and/or contaminations, so can throw away.
+Q. Why biallelic?  
+A. Mostly because its simpler, but also something to do with evolutionary theory.  
+Also, low MAF indicates high LD and/or contaminations, so can throw away.  
 
-Q. Why samling every 500bp?
-A. Won't miss much because of Linkage
-  - Could do different subsets
-  - Could also find out av. LD distance for the species (one publication says 800bp for diff pop, loc and date)
+Q. Why samling every 500bp?  
+A. Won't miss much because of Linkage  
+  - Could do different subsets  
+  - Could also find out av. LD distance for the species (one publication says 800bp for diff pop, loc and date)  
 
+### Genetic admixture
+Is the presence of DNA in an individual from a distantly-related population or species, as a result of interbreeding between populations or species who had been genetically isolated and developed unique gene pools.Admixture results in the introduction of new genetic lineages into a population.  
+- Might this explain why our populations are so different?  
+
+### Introgression
+the transfer of genetic material from one species into the gene pool of another by the repeated backcrossing of an interspecific hybrid with one of its parent species. Introgression is a long-term process, even when artificial; it may take many hybrid generations before significant backcrossing occurs. This process is distinct from most forms of gene flow in that it occurs between two populations of different species, rather than two populations of the same species.
+
+Introgression also differs from simple hybridization. Simple hybridization results in a relatively even mixture; gene and allele frequencies in the first generation will be a uniform mix of two parental species, such as that observed in mules. Introgression, on the other hand, results in a complex, highly variable mixture of genes, and may only involve a minimal percentage of the donor genome.
 

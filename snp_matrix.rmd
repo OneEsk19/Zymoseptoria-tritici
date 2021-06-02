@@ -22,7 +22,7 @@ bcftools query drought_pops.recode.vcf -f '%CHROM\t%POS[\t%GT]\n' > snp_matrix_o
 
 # get sample names
 bcftools query -l drought_pops.recode.vcf > sample_names_Dpops.txt
-
+# this should be identical to sample_names_check.txt whih was produced when the drought_pops.recode.vcf was created
 ```
 
 

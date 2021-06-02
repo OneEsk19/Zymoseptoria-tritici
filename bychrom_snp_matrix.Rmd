@@ -10,6 +10,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Per Chrom SNP Matrix Processing
+#### Breakdown of individual commands
+Followed by
+#### Looped method
 
 This document outlines how to create the appropriately formatted matrices for downstream analysis
 ________________________________________________________________
@@ -17,11 +20,22 @@ Creation of the files
 This has been done for ALL already, no need to repeat, here for reference.
 All files in /ByChrom folder (local, not on GH)
 ```{bash}
+# EXAMPLE OF CODE
 # split a chromosome off from big vcf
 vcftools --gzvcf drought_pops.recode.vcf --chr WAI332_chr_01 --recode --out WAI332_chr_01 
 
 #Create the snip matrix for one chrom
 bcftools query WAI332_chr_01.recode.vcf -f '%CHROM\t%POS[\t%GT]\n' > chr1_snp_matrix.txt
+
+##############################################
+######## UPDATED METHOD ######################
+# List of chromosome names in chromosomes.txt in same directory as big vcf
+# Then ran loop:
+for i in `cat chromosomes.txt`; do vcftools --gzvcf drought_pops.recode.vcf --chr $i --recode --out $i.vcf;done
+# Naming issues in loop so had to rename files after with:
+rename "s/.vcf.recode.vcf/.recode.vcf/g" *.vcf.recode.vcf*
+# So i could then paste in commands from chrom_matrices_create.txt into bash
+# It would be great to loop the above too, but my attampts failed
 ```
 ________________________________________________________________
 
@@ -79,5 +93,43 @@ write.csv(snp_matrix1, "Processed_SNP_matrices/chr21.csv")
 8) clean env
 ```{r}
 rm(list=ls())
+```
+__________________________________________________________________________________________________
+
+# Improved method!!
+
+Load this: 
+```{r}
+files <- list.files(path="./ByChrom/", pattern="*matrix.txt", full.names=TRUE, recursive=FALSE)
+files <- as.data.frame(files)
+chroms <- c(1, 10:16, 19, 2, 20, 21, 3:9)
+
+table <- cbind(files, chroms)
+table$x <- rep("chrom", 19)
+table$y <- paste(table$x, table$chroms, sep = "_")
+
+temp <- read.csv("data_sheets/Dpop_ID_popname.csv", header = T)
+sample_names <- temp$popname
+rm(temp, files, chroms)
+```
+
+Then run this!
+```{r}
+ for (i in 1:19) {
+
+  snp_matrix1  <- read.table(table$files[i])
+  loci <- snp_matrix1[,1:2]
+  colnames(loci) <- c("scaffold", "position")
+  write.csv(loci, file = paste("./Processed_SNP_matrices/", table$y[i], "_loci.csv", sep = ""))
+  snp_matrix1 <- snp_matrix1[,3:ncol(snp_matrix1)]
+  snp_matrix1 <- t(snp_matrix1)
+  row.names(snp_matrix1) <- sample_names
+  beforeD <- sample_names[grep("pre", sample_names)]
+  afterD <- sample_names[grep("post", sample_names)]
+  snp_matrix1 <- snp_matrix1[c(beforeD, afterD),]
+  write.csv(snp_matrix1, file = paste("./Processed_SNP_matrices/", table$y[i], "_processed_matrix.csv", sep = ""))
+  
+  rm(snp_matrix1, loci, beforeD, afterD)
+}
 ```
 

@@ -14,12 +14,12 @@ knitr::opts_chunk$set(echo = TRUE)
 Template to load them from file:
 ```{r}
 # Load processed snp matrix and remove the index column that is introduced into csv when R creates csv
-snp_matrix1 <- read.csv("Processed_SNP_matrices/chr1.csv", header = T)
+snp_matrix1 <- read.csv("Processed_SNP_matrices/chr4.csv", header = T)
 # snp_matrix <- snp_matrix[,-1]
 snp_matrix <- as.matrix(snp_matrix1)
 
 # Load processed loci and remove the index column that is introduced into csv when R creates csv
-loci <- read.csv("Processed_SNP_matrices/chr1_loci.csv", header = T)
+loci <- read.csv("Processed_SNP_matrices/chr4_loci.csv", header = T)
 loci <- loci[,2:3]
 
 # load the sample names
@@ -39,7 +39,7 @@ library(adegenet)
 
 ```{r, message = FALSE, warning = FALSE}
 snp <- new("genlight",
-           snp_matrix,
+           snp_matrix1,
            chromosome=loci$scaffold,
            position=loci$position,
            pop=as.factor(c(rep("PRE",21), rep("POST",328))))
@@ -55,7 +55,7 @@ snp <- new("genlight",
 ```{r}
 
 ## Heat map of genotype
-colours <- c("darkslategrey","darkcyan")
+colours <- c("darkslategrey","burlywood3")
 glPlot(snp, col = colours, legend = F)
 # Can immediately see how different the pre-drought population are.
 ```
