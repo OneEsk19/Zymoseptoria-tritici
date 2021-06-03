@@ -36,7 +36,7 @@ Actions:
 4) Produced PCA showing separation of the two populations (IMGS/pre_post_drought_PCA.html)
 5) Ready to proceed once exams are over.
 
-#### Week 4: 25th May - 1st June
+#### Week 4: 25th May - 31st May
 
 Goals:
 Exam week, so no clear objectives other than to continue with workflows when time allows.
@@ -47,3 +47,12 @@ Actions:
 2) Re-code main VCF on a per-chromosome basis to reduce size of data
 3) Produce SNP matrix for each new VCF
 4) Produce heatmaps for each snp matrix
+
+#### Week 5: 1st - 7th June
+
+Goals:
+Remove the individuals that have high missingness and see why they slipped through the filter
+Do some writing about the heatmaps, a summary paragraph, maybe include a table of loci that have not changed across pops.
+There seems to be some structural event that has occurred on Chr15, investigate this.
+- Redo heatmap
+- Do linkage map maybe
