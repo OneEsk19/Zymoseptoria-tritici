@@ -1,0 +1,63 @@
+---
+title: "slidingFST"
+author: "Georgina Robertson"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Sliding window FST
+## NOT WORKING
+```{bash}
+mkdir popgenome-vcf
+```
+
+Prepping files
+```{bash}
+# copying chroms 
+cd /ByChrom
+cp *.vcf ../popgenome_vcf
+
+# compressing them all
+ls *.vcf | xargs -n1 bgzip
+
+# index them all
+for F in *.vcf.gz ; do   tabix -f -p vcf ${F}  ; done
+```
+
+```{r}
+library(PopGenome)
+```
+```{r}
+VCFfile <- "./ByChrom/drought_pops.recode.vcf"
+
+VCF_split_into_scaffolds(VCFfile, "./popgenome_vcf/")
+```
+
+```{r}
+snp <- readData("./popgenome_vcf", format = "VCF")
+```
+```{r}
+get.sum.data(snp)
+show.slots(snp)
+```
+```{r}
+snp@n.sites
+```
+```{r}
+populations <- read.csv("./data_sheets/Dpop_ID_popname.csv")
+
+populations[(populations$pop =="pre"),] <- "B"
+populations[(populations$pop =="post"),] <- "A"
+
+
+snp <- set.populations(snp, list(populations$pop))
+snp@populations
+```
+```{r}
+snp <- F_ST.stats(snp)
+```
+
+

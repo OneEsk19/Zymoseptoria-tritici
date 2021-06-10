@@ -1,0 +1,5 @@
+special version of vcf tools needed:
+https://github.com/jydu/vcftools
+This version has haploid mode
+
+vcftools --vcf drought_pops.recode.vcf --haploid --weir-fst-pop pre.txt --weir-fst-pop post.txt --out pop1_vs_pop2

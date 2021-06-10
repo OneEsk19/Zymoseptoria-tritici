@@ -9,12 +9,13 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Using the snp matrices
+## Using the snp matrices to produce heatmaps
+The heatmaps show a binary ref allele vs alt alelle
 
 Template to load them from file:
 ```{r}
 # Load processed snp matrix and remove the index column that is introduced into csv when R creates csv
-snp_matrix1 <- read.csv("Processed_SNP_matrices/chrom_15_processed_matrix.csv", header = T)
+snp_matrix1 <- read.table("Processed_SNP_matrices/chrom_15_processed_matrix.csv", header = T)
 # snp_matrix <- snp_matrix[,-1]
 snp_matrix <- as.matrix(snp_matrix1)
 
