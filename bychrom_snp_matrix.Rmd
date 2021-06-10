@@ -15,9 +15,10 @@ Followed by
 #### Looped method
 
 This document outlines how to create the appropriately formatted matrices for downstream analysis
+NOTE: chrs 17 and 18 are missing as there was not enough data for matrices
 ________________________________________________________________
-Creation of the files
-This has been done for ALL already, no need to repeat, here for reference.
+## Creation of the files
+### Individual command
 All files in /ByChrom folder (local, not on GH)
 ```{bash}
 # EXAMPLE OF CODE
@@ -26,11 +27,12 @@ vcftools --gzvcf drought_pops.recode.vcf --chr WAI332_chr_01 --recode --out WAI3
 
 #Create the snip matrix for one chrom
 bcftools query WAI332_chr_01.recode.vcf -f '%CHROM\t%POS[\t%GT]\n' > chr1_snp_matrix.txt
+```
 
-##############################################
-######## UPDATED METHOD ######################
-# List of chromosome names in chromosomes.txt in same directory as big vcf
-# Then ran loop:
+### Looped method
+List of chromosome names in chromosomes.txt in same directory as big vcf
+Then ran loop:
+```{bash}
 for i in `cat chromosomes.txt`; do vcftools --gzvcf drought_pops.recode.vcf --chr $i --recode --out $i.vcf;done
 # Naming issues in loop so had to rename files after with:
 rename "s/.vcf.recode.vcf/.recode.vcf/g" *.vcf.recode.vcf*
@@ -39,6 +41,8 @@ rename "s/.vcf.recode.vcf/.recode.vcf/g" *.vcf.recode.vcf*
 ```
 ________________________________________________________________
 
+## Formatting matricies
+### Individual steps
 Assuming the isolate names are the same as those as in the big VCF, I won't bother making a separate sample_names file for each
 
 1) Input sample names:
@@ -49,14 +53,11 @@ sample_names <- temp$popname
 
 
 2) Input the by chromosome SNP data: 
-############## CHANGE FILE NAME ###############
 ```{r}
 snp_matrix1  <- read.table("ByChrom/chr1_snp_matrix.txt")
 ```
 
 3) Create loci names: 
-This will be needed for each chromosome matrix
-############## CHANGE FILE NAME ###############
 ```{r}
 loci <- snp_matrix1[,1:2]
 colnames(loci) <- c("scaffold", "position")
@@ -85,7 +86,6 @@ snp_matrix1 <- snp_matrix1[c(beforeD, afterD),]
 
 
 7) Save this matrix for future use!
-############## CHANGE FILE NAME ###############
 ```{r}
 write.csv(snp_matrix1, "Processed_SNP_matrices/chr21.csv")
 ```
@@ -94,9 +94,8 @@ write.csv(snp_matrix1, "Processed_SNP_matrices/chr21.csv")
 ```{r}
 rm(list=ls())
 ```
-__________________________________________________________________________________________________
 
-# Improved method!!
+### Loop for all files
 
 Load this: 
 ```{r}

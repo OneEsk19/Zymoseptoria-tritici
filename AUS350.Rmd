@@ -13,6 +13,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Subset AUS_375.biallelic VCF to exclude the isolates in the upper cluster on the all AUS PCA (hamilton 25 cluster)
 
+Note: this is the initial VCF file from which all other workflows are derived.
+
+
 
 ```{bash}
 # starting with the original biallelic vcf

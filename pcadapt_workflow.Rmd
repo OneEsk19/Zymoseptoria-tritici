@@ -91,7 +91,7 @@ displays −log10 of the p-values.
 ```{r}
 plot(x , option = "manhattan", pch = 20, cex=1)
 ```
-In GWAS Manhattan plots, genomic coordinates are displayed along the X-axis, with the negative logarithm of the association p-value for each single nucleotide polymorphism (SNP) displayed on the Y-axis, meaning that each dot on the Manhattan plot signifies a SNP. Because the strongest associations have the smallest p-values (e.g., 10−15), their negative logarithms will be the greatest (e.g., 15). The different colors of each block usually show the extent of each chromosome. 
+In GWAS Manhattan plots, genomic coordinates are displayed along the X-axis, with the negative logarithm of the association p-value for each single nucleotide polymorphism (SNP) displayed on the Y-axis, meaning that each dot on the Manhattan plot signifies a SNP. Because the strongest associations have the smallest p-values, their negative logarithms will be the greatest.
 
 ## Q-Q plot
 The expected uniform distribution of the p-values using a Q-Q plot
@@ -152,7 +152,4 @@ length(outliers)
 
 ## Linkage Disequilibrium (LD) thinning
 
-Need to remake a SNP matrix for this
-snp_matrix.rmd
-
-# Work in progress, TBC...
+see: LD_Thinning.Rmd
