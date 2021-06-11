@@ -10,256 +10,291 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Here the FST output from vcftools FST will be used
-
+________________________________________________________
+1a) Preparing the file for first time use
 ```{r}
 fst_file <- read.csv("./data_sheets/pop1_vs_pop2.weir.fst", header = T, sep = "\t")
+
 ```
 
 There are some negative vales here. These occur due to the incluson of standarrd deviation in the caluculations. They should be treated as zero, so for clarity they will be changed.
 ```{r}
 # check that the classes are correct
 str(fst_file)
-# = chr, in and num
+# = chr, int, int and num
 
 # change negative values to zero
 fst_file$WEIR_AND_COCKERHAM_FST[fst_file$WEIR_AND_COCKERHAM_FST<0] <- 0
 ```
-Adding a clearer column for CHROM
+
 ```{r}
-colnames(fst_file) <- c("SCAFFOLD", "POS" , "FST")
+colnames(fst_file) <- c("Scaffold", "Position", "FST")
 
-CHROM <- sapply(strsplit(fst_file$SCAFFOLD, "_", "_") ,"[", 3)
+Chrom <- sapply(strsplit(fst_file$Scaffold, "_", "_") ,"[", 3)
 
-CHROM <- as.numeric(CHROM)
-fst_file <- cbind(fst_file, CHROM)
+Chrom <- as.numeric(Chrom)
+fst_file <- cbind(fst_file, Chrom)
 fst_file <- fst_file[, c(1, 4,2,3)]
 
 write.csv(fst_file, "./data_sheets/fst_file.csv")
 ```
+_________________________________________________________
 
+1b) Reading in formatted file (future use)
+```{r}
+fst_file <- read.csv("./data_sheets/fst_file.csv")
+fst_file <- fst_file[,-1]
+```
+
+1c) Reading in file that contains SNP index and FST data which was made in the pipeline: "SnpIndex_FST.Rmd"
+```{r}
+FST_SnpIndex <- read.csv("./data_sheets/FST_SNPindex.csv")
+FST_SnpIndex <- FST_SnpIndex[,-1]
+```
+_________________________________________________________
+
+2) Manhattan plot
 ```{r}
 library(qqman)
 
-manhattan(fst_file, chr = "CHROM", bp = "POS", p = "FST", logp = F, snp = "SCAFFOLD")
+manhattan(fst_file, chr = "Chrom", bp = "Position", p = "FST", logp = F, snp = "Scaffold")
+
+# Saved in /IMGS as Manhattan_All_FST.png
+```
+3) Now I will look at strong differences between our populations by subsetting loci with <= 0.9 fst
+
+Will use the file from 1c) so I also have the SNP index for corss-referencing the heatmaps
+
+```{r}
+ninetyplus <- subset(FST_SnpIndex, FST_SnpIndex$FST >= 0.9)
 ```
 
-Now i will look at strong differences between our populations by subsetting loci with <= 0.9 fst
-```{r}
-ninetyplus <- subset(fst_file, fst_file$FST >= 0.9)
-```
-
 
 ```{r}
-first100 <- fst_file[1:100,]
-
 library(ggplot2)
-# all data is just too much, this is where a sliding window would be useful, and/or snp thinning
-
-# for now I will just use the first 500 snps
-ggplot()+
-geom_point(data = first100, aes(x=POS, y = WEIR_AND_COCKERHAM_FST), colour = "red") +
-  xlab("loci")+
-  ylab("fst")
-
 ```
 
+4.1) Chromosome 1
+```{r}
+chr1high <- ninetyplus[ninetyplus$Chrom==1, ]
+ggplot()+
+geom_point(data = chr1high, aes(x=Position, y = FST), colour = "red") +
+  xlab("loci")+
+  ylab("fst")
+# not saved thsi image, only showed 3 points
+```
 Not many in chromosome 1
+This may change if i reduced the threshold to >0.8
 ```{r}
-chr1high <- ninetyplus[ninetyplus$CHROM==1, ]
+eightyplus <- subset(FST_SnpIndex, FST_SnpIndex$FST >= 0.8)
+```
+
+```{r}
+chr1high <- eightyplus[eightyplus$Chrom==1, ]
 ggplot()+
-geom_point(data = chr1high, aes(x=POS, y = FST), colour = "red") +
+geom_point(data = chr1high, aes(x=Position, y = FST), colour = "red") +
   xlab("loci")+
   ylab("fst")
+
+# not saved this image, only showed 4 points
 ```
-None in chrs 2-4, but MANY in chromosome 5.
+Still not many, but does show one loci of high variation
 ```{r}
-chr5high <- ninetyplus[ninetyplus$CHROM==5,]
+print(chr1high$SNPindex)
+```
+Check heatmap @ 24772 24773 24774 50279
+
+
+4.2) No  high variation in chrs 2-4
+note: can check "eightyplus" later for chr 2,3,4
+
+4.3) A lot of high FST values in chromosome 5
+```{r}
+chr5high <- ninetyplus[ninetyplus$Chrom==5,]
 
 ggplot()+
-geom_point(data = chr5high, aes(x=POS, y = FST), colour = "red") +
+geom_point(data = chr5high, aes(x=Position, y = FST), colour = "red") +
   xlab("loci")+
-  ylab("fst")
+  ylab("fst")+
+  ggtitle("High variance SNPs between populations in chromosome 5")+
+   theme(plot.title = element_text(hjust = 0.5))
+# saved in /IMGS as chr5_HighVar.png
 ```
-What region does this correspond to in the heatmap?
+Formatting  a variable out of the data to enable easy enembl genome annotation search 
 ```{r}
 # determine the loci range of interest
-lower <- head(chr5high$POS, n=1)
-upper <- tail(chr5high$POS, n=1)
+lower <- head(chr5high$Position, n=1)
+upper <- tail(chr5high$Position, n=1)
 
 # this puts the info into a vector that can be copy pasted to ensemble
-chr5LociOfInterest <- paste(chr5high$CHROM[[1]],":", lower, "-", upper, sep = "")
-
-# get the loci from the loci list for the snp matrix
-chromosome5 <- read.csv("./Processed_SNP_matrices/chrom_5_loci.csv")
-
-# extract SNP index at the beginning and the end of the region
-rangestart <- chromosome5[chromosome5$position==lower, 1]
-rangeend <- chromosome5[chromosome5$position==upper, 1]
-print(rangestart)
-print(rangeend)
-
-# save this for later
-chr5snpIndexOfInterest <- paste(rangestart, rangeend, sep = ":")
-print(chr5snpIndexOfInterest)
-
-rm(lower, upper, rangestart, rangeend, chromosome5)
+chr5LociOfInterest <- paste(chr5high$Chrom[[1]],":", lower, "-", upper, sep = "")
 ```
 
-Which other chromosomes have regions of interest
+Getting SNP indexes.
+There are 1124 observations, so will store as a vector rather than print it out
 ```{r}
-print(unique(ninetyplus$CHROM))
+chr5HighVar <- chr5high$SNPindex
+range(chr5HighVar)
 ```
-Looking at chrom 6 next:
+In the heatmap, this corresponds to the region 16560 to 18211
+
+
+
+Which other chromosomes have regions of interest?
+```{r}
+print(unique(ninetyplus$Chrom))
+```
+4.4) Looking at chrom 6 next:
 
 ```{r}
-chr6high <- ninetyplus[ninetyplus$CHROM==6,]
+chr6high <- ninetyplus[ninetyplus$Chrom==6,]
 
 ggplot()+
-geom_point(data = chr6high, aes(x=POS, y = FST), colour = "blue") +
+geom_point(data = chr6high, aes(x=Position, y = FST), colour = "blue") +
   xlab("loci")+
-  ylab("fst")
+  ylab("fst")+
+  ggtitle("High variance SNPs between populations in chromosome 6")+
+   theme(plot.title = element_text(hjust = 0.5))
+# saved in /IMGS as chr6_HighVar.png
 ```
 In contrast to chromosome 5, this show 2 (maybe 3) distinct regions. *This may change if i lowered the threshhold for the fst value to =>0.8 rather than =>0.9*
 
-Here i will repeat the workflow for producing snp indexes and coordinates for usin in further investigations.
+Here i will repeat the workflow for producing snp indexes and coordinates for using in further investigations.
 ```{r}
 # determine the loci range of interest
-lower <- head(chr6high$POS, n=1)
-upper <- tail(chr6high$POS, n=1)
+lower <- head(chr6high$Position, n=1)
+upper <- tail(chr6high$Position, n=1)
 
 # this puts the info into a vector that can be copy pasted to ensemble
-chr6LociOfInterest <- paste(chr6high$CHROM[[1]],":", lower, "-", upper, sep = "")
+chr6LociOfInterest <- paste(chr6high$Chrom[[1]],":", lower, "-", upper, sep = "")
 
-# get the loci from the loci list for the snp matrix
-chromosome6 <- read.csv("./Processed_SNP_matrices/chrom_6_loci.csv")
-
-# extract SNP index at the beginning and the end of the region
-rangestart <- chromosome6[chromosome6$position==lower, 1]
-rangeend <- chromosome6[chromosome6$position==upper, 1]
-print(rangestart)
-print(rangeend)
-
-# save this for later
-chr6snpIndexOfInterest <- paste(rangestart, rangeend, sep = ":")
-print(chr6snpIndexOfInterest)
-
-rm(lower, upper, rangestart, rangeend, chromosome6)
 ```
 
-quick reminder for me:
+There are less observations in this set, and 2 or 3 distinct regions, so I will print the SNP indexes and eyeball it
 ```{r}
-print(unique(ninetyplus$CHROM))
+chr6HighVar <- chr6high$SNPindex
+print(chr6HighVar)
 ```
-Now for chr7
+So the first peak is ~ 13800
+Second peak ~ 18000 to 19100
+Third peak (pretty tightly grouped!) ~ 20100 to 20980
+
+
 ```{r}
-chr7high <- ninetyplus[ninetyplus$CHROM==7,]
+print(unique(ninetyplus$Chrom))
+```
+4.5) Now for chr7
+```{r}
+chr7high <- ninetyplus[ninetyplus$Chrom==7,]
 
 ggplot()+
-geom_point(data = chr7high, aes(x=POS, y = FST), colour = "darkgreen") +
+geom_point(data = chr7high, aes(x=Position, y = FST), colour = "darkgreen") +
   xlab("loci")+
-  ylab("fst")
+  ylab("fst")+
+  ggtitle("High variance SNPs between populations in chromosome 7")+
+   theme(plot.title = element_text(hjust = 0.5))
+# saved in /IMGS as chr7_HighVar.png
 ```
 This is more diffuse than chr6
 
-Here i will repeat the workflow for producing snp indexes and coordinates for usin in further investigations.
 ```{r}
 # determine the loci range of interest
-lower <- head(chr7high$POS, n=1)
-upper <- tail(chr7high$POS, n=1)
+lower <- head(chr7high$Position, n=1)
+upper <- tail(chr7high$Position, n=1)
 
 # this puts the info into a vector that can be copy pasted to ensemble
-chr7LociOfInterest <- paste(chr7high$CHROM[[1]],":", lower, "-", upper, sep = "")
+chr7LociOfInterest <- paste(chr7high$Chrom[[1]],":", lower, "-", upper, sep = "")
 
-# get the loci from the loci list for the snp matrix
-chromosome7 <- read.csv("./Processed_SNP_matrices/chrom_7_loci.csv")
-
-# extract SNP index at the beginning and the end of the region
-rangestart <- chromosome7[chromosome7$position==lower, 1]
-rangeend <- chromosome7[chromosome7$position==upper, 1]
-print(rangestart)
-print(rangeend)
-
-# save this for later
-chr7snpIndexOfInterest <- paste(rangestart, rangeend, sep = ":")
-print(chr7snpIndexOfInterest)
-
-rm(lower, upper, rangestart, rangeend, chromosome7)
+rm(lower, upper)
 ```
+
+As this was less defined, i will just take a the range of snp indexes
+```{r}
+chr7HighVar <- chr7high$SNPindex
+range(chr7HighVar)
+```
+[1] 14707 19454
 
 quick reminder for me:
 ```{r}
-print(unique(ninetyplus$CHROM))
+print(unique(ninetyplus$Chrom))
 ```
 
 
-Now for chr9
+4.6) Now for chr9
 ```{r}
-chr9high <- ninetyplus[ninetyplus$CHROM==9,]
+chr9high <- ninetyplus[ninetyplus$Chrom==9,]
 
 ggplot()+
-geom_point(data = chr9high, aes(x=POS, y = FST), colour = "purple") +
+geom_point(data = chr9high, aes(x=Position, y = FST), colour = "purple") +
   xlab("loci")+
   ylab("fst")
 ```
 This is only one snp
 Maybe a reduction in fst value threshold would he helpful here.
-I won't repeat the usual workflow on this.
-
 ```{r}
-print(unique(ninetyplus$CHROM))
-```
-
-```{r}
-chr15high <- ninetyplus[ninetyplus$CHROM==15,]
-
+chr9high <- eightyplus[ninetyplus$Chrom==9,]
 ggplot()+
-geom_point(data = chr15high, aes(x=POS, y = FST), colour = "purple") +
+geom_point(data = chr9high, aes(x=Position, y = FST), colour = "purple") +
   xlab("loci")+
   ylab("fst")
 ```
-Again, very low amount of data here, and also on an accessory chromosome.
+With changed threshhold (>0.8) There are still few snps of high variation.
+Note: Not saying that this is irrelevant, just that it will be difficult to visualise on the heatmap, so will only extract the loci and not bother with getting the snp index.
 
-Finally, chromosome 16, another accessory chromosome
 ```{r}
-chr16high <- ninetyplus[ninetyplus$CHROM==16,]
+print(chr9high$Position)
+```
+[1] 1806395 2081750 2358336
+
+```{r}
+print(unique(ninetyplus$Chrom))
+```
+4.7) Chromosome 15
+Only 2 SNPS for >0.9, so will try with >0.8
+```{r}
+chr15high <- eightyplus[eightyplus$Chrom==15,]
 
 ggplot()+
-geom_point(data = chr16high, aes(x=POS, y = FST), colour = "purple") +
+geom_point(data = chr15high, aes(x=Position, y = FST), colour = "purple") +
   xlab("loci")+
   ylab("fst")
+```
+Again, low amount of data here, and also is an accessory chromosome which are not considered essential-to-survival
+
+
+4.8) Finally, chromosome 16, another accessory chromosome
+```{r}
+chr16high <- ninetyplus[ninetyplus$Chrom==16,]
+
+ggplot()+
+geom_point(data = chr16high, aes(x=Position, y = FST), colour = "purple") +
+  xlab("loci")+
+  ylab("fst")+
+  ggtitle("High variance SNPs between populations in chromosome 16")+
+   theme(plot.title = element_text(hjust = 0.5))
+# saved in /IMGS as chr16_HighVar.png
 ```
 ```{r}
 # determine the loci range of interest
-lower <- head(chr16high$POS, n=1)
-upper <- tail(chr16high$POS, n=1)
+lower <- head(chr16high$Position, n=1)
+upper <- tail(chr16high$Position, n=1)
 
 # this puts the info into a vector that can be copy pasted to ensemble
-chr16LociOfInterest <- paste(chr16high$CHROM[[1]],":", lower, "-", upper, sep = "")
-
-# get the loci from the loci list for the snp matrix
-chromosome16 <- read.csv("./Processed_SNP_matrices/chrom_16_loci.csv")
-
-# extract SNP index at the beginning and the end of the region
-rangestart <- chromosome16[chromosome16$position==lower, 1]
-rangeend <- chromosome16[chromosome16$position==upper, 1]
-print(rangestart)
-print(rangeend)
-
-# save this for later
-chr16snpIndexOfInterest <- paste(rangestart, rangeend, sep = ":")
-print(chr16snpIndexOfInterest)
-
-rm(lower, upper, rangestart, rangeend, chromosome16)
+chr16LociOfInterest <- paste(chr16high$Chrom[[1]],":", lower, "-", upper, sep = "")
 ```
 
-So now I will make some reference documents to aid in further investigations
+
 ```{r}
-write(c(chr5snpIndexOfInterest, chr6snpIndexOfInterest, chr7snpIndexOfInterest, chr16snpIndexOfInterest), file = "./data_sheets/highvariation_bySNPindex.txt")
-
-###### NOTE:
-# I failed to put the relevant chromosome with the snp indexes, I am adding them manually.
-# Will change the script to add this automatically if i run this again with a different threshhold.
+chr16HighVar <- chr16high$SNPindex
+print(chr16HighVar)
 ```
+First peak spans ~ 1365 to 1547
+Second ~ 1971 to 1982
+Third, just one blip @ 2839
+
+
+5) Build a small file with the loci of interest for checking ensembl
 
 ```{r}
 write(c(chr5LociOfInterest, chr6LociOfInterest, chr7LociOfInterest, chr16LociOfInterest), file = "./data_sheets/highvariation_byLOCI.txt")

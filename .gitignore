@@ -1,0 +1,24 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+**/.vcf
+**/.bed
+AUS_102.gds
+AUS_25.gds
+by_pop_analysis.Rmd
+EXCL_HAM.gds
+AUS_372.gds
+accessory from popgenome
+drought_pops_pcadapt.log
+lostianfstsmoothing
+notsurewhatthiswas.Rmd
+popgenome_vcf
+ridiculousFAFFtryingtoRENAMEvars.R
+snp_matrix_ori.txt
+split_vcf_chrom (copy).txt
+testingstuff.R
+thereHAStobeabetterway
+ByChrom
+Processed_SNP_matrices
+Thesis.Rproj
