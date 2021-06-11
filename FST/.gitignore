@@ -1,0 +1,12 @@
+EXCL_HAMIL_CLUS.biallelicSNP.maf0.5.miss0.9.recode.vcf
+all_snp_matrix.txt
+drought_pops.log
+drought_pops.recode.vcf
+drought_pops_pcadapt.bed
+drought_pops_pcadapt.bim
+drought_pops_pcadapt.fam
+drought_pops_pcadapt.log
+old_drought_pops.recode.vcf
+old_20miss_depth.idepth
+pop1_vs_pop2.log
+pop1_vs_pop2.weir.fst
