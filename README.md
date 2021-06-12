@@ -20,6 +20,9 @@
 * Dissecting VCF files
   - Document i made a while ago detailing the typical contents of a vcf file
 
+* FST.Rmd
+  - Mostly deprecated, but with some useful snippets
+
 * Generalised_VCF_filter_PCA.rmd
   - Subsetting AUS isolates from population
   - Applying folters
@@ -28,11 +31,17 @@
   - PCA of a different subset (describe this better when you understand it)
   - Combine isolates subset with phenotype data and make PCA
 
+* High_Variation_FST.Rmd
+  - This file uses the FST output from VCFTools to look at snps on a per chromosone basis which have high variation (FST >= 80, or 90)
+
+* LD_Thinning.Rmd /LD_Thinning.html
+  - LD thinning workflow as seen in the pcadapt workflow example
+
 * Mapping.rmd
   - Plotting where are our samples are from and thier relative sample size
 
-* Notes.md
-  - Notes, reminders, correspondence. Stuff i might need to remember.
+* Notes.md / Notes.html
+  - Notes, reminders, correspondence. Stuff I might need to remember.
 
 * PlotFilteredSNPs.rmd
   - PLots of various quality metrics from the filtered VCF of all isolates
@@ -41,6 +50,9 @@
 * Run_filter_may2020.sh
   - GATK pipeline
 
+* SnpIndex_FST.Rmd
+  - This workflow merges FST output (from VCFTools) with loci files (produced from SNP matrix pipeline) to link FST values with genomic loci, and by-chromosome SNP index.
+
 * WGS_survey_maps_megan.R
   - Megan's map plot as a baseline to work from
 
@@ -48,8 +60,20 @@
   - script that modified GATK output VCF
   - used in PlotFilteredSNPs.rmd
 
+* byChrom_snp_matrix.Rmd
+  - This document outlines how to create the appropriately formatted matrices for downstream analysis
+    - individual steps (deprecated)
+    - looped version that automates the above
+
 * drought_status_pop.Rmd
   - pipeline for indicating drought status per isolate and re-ordering the VCF file accordingly
+
+* high_missing_indv.Rmd
+  - This removes the 3 individuals that evaded the initial vcf filter (due to being only very slightly above lower threshhold)
+  - Then recodes the main VCF
+
+* loci.csv
+  - MOVE THIS TO /data_sheets and rename to: all_loci_snpIndex
 
 * metadata_wrangling
   - various bits and bobs to aid with my understanding of the dataset
@@ -76,5 +100,11 @@
   - this is the "Generalised_VCF_filter_PCA" modified and commented by me
   - in a nice readable format that displays well on github
 
-* snp_matrix
+* snp_matrix.rmd
   - workflow for producing and labelling a snp matrix
+
+* snpmatrix_heatmaps.Rmd
+  - Using the snp matrices to produce heatmaps
+
+* using_snpmatrix.Rmd
+  - DUPLICATE OF ABOVE *DELETE*
