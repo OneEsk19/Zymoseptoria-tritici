@@ -1,0 +1,50 @@
+---
+title: "High_Low_plot"
+author: "Georgina Robertson"
+date: "14/06/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 
+
+```{r}
+FST_SnpIndex <- read.csv("./data_sheets/FST_SNPindex.csv")
+FST_SnpIndex <- FST_SnpIndex[,-1]
+```
+
+
+```{r}
+ninetyplus <- subset(FST_SnpIndex, FST_SnpIndex$FST >= 0.9)
+lowest <- subset(FST_SnpIndex, FST_SnpIndex$FST <=0.1)
+
+lowest$status <- rep("Low", length(lowest$Position))
+ninetyplus$status <- rep("High", length(ninetyplus$Position))
+high_n_low <- rbind(lowest, ninetyplus)
+high_n_low <- high_n_low[order(high_n_low[,4], high_n_low[,1]),]
+
+write.csv(high_n_low, "./data_sheets/high_n_low.csv")
+```
+
+```{r}
+high_n_low <- read.csv("./data_sheets/high_n_low.csv")
+high_n_low <- high_n_low[,-1]
+```
+
+
+
+
+```{r}
+chr6 <- high_n_low[high_n_low$Chrom==6,]
+
+ggplot()+
+geom_col(data=chr6, aes(x= SNPindex, y = FST, , colour = status)) +
+  xlab("loci")+
+  ylab("fst")+
+  ggtitle("High and Low variance SNPs between populations in chromosome 6")+
+   theme(plot.title = element_text(hjust = 0.5))
+# saved in /IMGS as chr5_HighVar.png
+```

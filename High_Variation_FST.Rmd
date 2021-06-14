@@ -113,12 +113,12 @@ note: can check "eightyplus" later for chr 2,3,4
 ```{r}
 chr5high <- ninetyplus[ninetyplus$Chrom==5,]
 
-ggplot()+
-geom_point(data = chr5high, aes(x=Position, y = FST), colour = "red") +
-  xlab("loci")+
+p <- ggplot()+
+geom_point(data = chr5high, aes(x=SNPindex, y = FST), colour = "red") +
+  xlab("SNPindex")+
   ylab("fst")+
   ggtitle("High variance SNPs between populations in chromosome 5")+
-   theme(plot.title = element_text(hjust = 0.5))
+   theme(plot.title=element_text(hjust = 0.5))
 # saved in /IMGS as chr5_HighVar.png
 ```
 Formatting  a variable out of the data to enable easy enembl genome annotation search 
