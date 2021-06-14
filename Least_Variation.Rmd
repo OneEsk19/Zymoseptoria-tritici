@@ -1,0 +1,91 @@
+---
+title: "Min_Variation_FST"
+author: "Georgina Robertson"
+date: "10/06/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Do the regions of no variation co-incide with highly conversrved genes?
+
+```{r}
+fst_file <- read.csv("./data_sheets/fst_file.csv", header = T)
+fst_file <- fst_file[,-1]
+```
+
+```{r}
+lowest <- fst_file[fst_file$FST <=0.1, ]
+```
+
+```{r}
+print(unique(lowest$Chrom))
+```
+```{r}
+chr1Lowest <- lowest[lowest$CHROM==1,]
+chr2Lowest <- lowest[lowest$CHROM==2,]
+chr3Lowest <- lowest[lowest$CHROM==3,]
+chr4Lowest <- lowest[lowest$CHROM==4,]
+chr5Lowest <- lowest[lowest$CHROM==5,]
+chr6Lowest <- lowest[lowest$CHROM==6,]
+chr7Lowest <- lowest[lowest$CHROM==7,]
+chr8Lowest <- lowest[lowest$CHROM==8,]
+chr9Lowest <- lowest[lowest$CHROM==9,]
+chr10Lowest <- lowest[lowest$CHROM==10,]
+chr11Lowest <- lowest[lowest$CHROM==11,]
+chr12Lowest <- lowest[lowest$CHROM==12,]
+chr13Lowest <- lowest[lowest$CHROM==13,]
+```
+```{r}
+library(ggplot2)
+```
+
+Will look at 13, as this has a very interesting heatmap
+```{r}
+dim(chr13Lowest)
+# =1546
+  
+c13Low1 <- chr13Lowest[1:500,]  
+ggplot()+
+geom_point(data = c13Low1, aes(x=POS, y = FST), colour = "red") +
+  xlab("loci")+
+  ylab("fst")
+```
+
+
+```{r}
+# determine the loci range of interest
+lower <- head(chr13Lowest$POS, n=1)
+upper <- tail(chr13Lowest$POS, n=1)
+
+# this puts the info into a vector that can be copy pasted to ensemble
+chr13conserved <- paste(chr13Lowest$CHROM[[1]],":", lower, "-", upper, sep = "")
+
+# get the loci from the loci list for the snp matrix
+chromosome13 <- read.csv("./Processed_SNP_matrices/chrom_13_loci.csv")
+
+# extract SNP index at the beginning and the end of the region
+rangestart <- chromosome13[chromosome13$position==lower, 1]
+rangeend <- chromosome13[chromosome13$position==upper, 1]
+print(rangestart)
+print(rangeend)
+
+# save this for later
+chr13conservedSNPindex <- paste(chr13Lowest$CHROM[[1]], rangestart, rangeend, sep = ":")
+print(chr13conservedSNPindex)
+
+rm(lower, upper, rangestart, rangeend, chromosome5)
+```
+
+I'm quite interested in the 9000-11000 snp region in the heatmap. This is large region of 
+
+
+```{r}
+library(data.table)
+setkey()
+```
+```{r}
+```
+

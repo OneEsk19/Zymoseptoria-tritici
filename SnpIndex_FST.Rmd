@@ -25,11 +25,30 @@ dflist <- lapply(files, function(i){
 snpindeces <- do.call(rbind, dflist)
 ```
 
-
+read in the calculated fst data
 ```{r}
-# merge the fst output and the above table by the common values: scaffold and Loci / position
+fst_file <- read.csv("./data_sheets/fst_file.csv")
+fst_file <- fst_file[,-1]
+```
+
+merge the fst output and the above table by the common values: scaffold and Loci / position
+```{r}
 FST_SnpIndex <- merge(snpindeces, fst_file, by=c("Position", "Scaffold"))
 ```
+
+this data is a mess, so will need to sort it
+```{r}
+FST_SnpIndex <- FST_SnpIndex[order(FST_SnpIndex[,4], FST_SnpIndex[,1]),]
+```
+
+Make some unique rownames
+```{r}
+test <- paste(FST_SnpIndex$Chrom, FST_SnpIndex$Position, sep = ":")
+
+rownames(FST_SnpIndex) <- test
+head(FST_SnpIndex)
+```
+
 
 Save this to file!
 ```{r}
