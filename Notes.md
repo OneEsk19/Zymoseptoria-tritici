@@ -154,3 +154,18 @@ the transfer of genetic material from one species into the gene pool of another 
 
 Introgression also differs from simple hybridization. Simple hybridization results in a relatively even mixture; gene and allele frequencies in the first generation will be a uniform mix of two parental species, such as that observed in mules. Introgression, on the other hand, results in a complex, highly variable mixture of genes, and may only involve a minimal percentage of the donor genome.
 
+
+### Some meeting notes:
+
+Long Linkage = asexual    
+Short linkage = increseed recombination
+> Is LD (r^2) different between pops?  
+
+Introgression: poppr package
+ - hybridisation  
+ 
+Paper: Genome-wide evidence for divergent selection between populations of a major agricultural pathogen.
+Similar to what we want to do. One major difference: they have ancestral SNPs.
+See how they did sliding window FST in:
+Section 2.4
+- Our K is 2 because K = number of distinct groups.

@@ -1,0 +1,23 @@
+---
+title: "STRUCTURE"
+author: "G.Robertson"
+date: "14/06/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Preparing for and using STRUCTURE software
+
+Structure software installed on Windows (did not work on Linux)
+Documentation:
+https://web.stanford.edu/group/pritchardlab/structure_software/release_versions/v2.3.4/structure_doc.pdf
+
+Data needs to be prepared in a particular way. The following software can do so Mega2:
+Info and citation:
+https://watson.hgen.pitt.edu/docs/conversions/vcf_or_bcf_structure.html
+Installation (linux):
+https://watson.hgen.pitt.edu/docs/conversions/frame_inp_vcf_or_bcf.html
+
