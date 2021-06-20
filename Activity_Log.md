@@ -104,3 +104,4 @@ Actions:
   - Thin it? Select secific areas?
   - Too much to plot
   - Finding it impossible to calculat average LD decay!
+2) FST boxplot done (IMGS/Summary_FST_ByChrom.png)
