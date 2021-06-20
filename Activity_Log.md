@@ -84,3 +84,23 @@ To Do:
     - avg allelic diversity
     - Nei's GD https://en.wikipedia.org/wiki/Genetic_distance#Nei's_standard_genetic_distance  
     - Avg rate of LD
+
+#### Week 7: 15th - 22nd June
+To Do:
+1) Write outline plan/headings for introducton
+  - What / why / what story are we trying to tell
+2) Do methods outlines in sections 2.5 and 2.6 in the main referene paper.
+  - 2.6 uses the FST values
+3) Summarise FST
+  - Boxplot by chromosome
+  - Selection test
+    - ??
+  - Sliding window 
+    - avg LD decay for window size
+
+Actions:
+1) Calculated LD for both populations
+  - This is an overwhelmingly large amount of data.
+  - Thin it? Select secific areas?
+  - Too much to plot
+  - Finding it impossible to calculat average LD decay!
