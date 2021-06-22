@@ -104,4 +104,11 @@ Actions:
   - Thin it? Select secific areas?
   - Too much to plot
   - Finding it impossible to calculat average LD decay!
+    - Alternatively I can just plot LD over distance per chromosome and use regression to fit a line
 2) FST boxplot done (IMGS/Summary_FST_ByChrom.png)
+3) Part 2.5 of paper - Detection of slection sweeps
+  - REHH R package.
+  - None of the inputs works. Tried VCF, tried hap and map files made from......
+4) Part 2.6 of paper
+  - BAYPASS (installed, but not sure if it actually works. not sure about format of inputs
+  - 
