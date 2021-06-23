@@ -1,0 +1,66 @@
+---
+title: "LD"
+author: "Georgina Robertson"
+date: "16/06/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## LD in VCFTools
+
+First split the vcf into populations
+```{bash}
+vcftools --vcf drought_pops.recode.vcf --keep post.txt --recode --out post_pops
+
+vcftools --vcf drought_pops.recode.vcf --keep pre.txt --recode --out pre_pops
+```
+
+Perform LD for each pop
+```{bash}
+vcftools --vcf post_pops.recode.vcf --hap-r2 --ld-window-bp 25000 --out post_ld_window_25000
+# -----------
+
+vcftools --vcf pre_pops.recode.vcf --hap-r2 --ld-window-bp 25000 --out pre_ld_window_5000
+
+##########THIS ONE###############
+vcftools --vcf drought_pops.recode.vcf --hap-r2 --ld-window-bp 25000 --out all_ld_window_5000
+
+
+```
+
+Not used
+```{bash}
+plink --vcf pre_pops.recode.vcf --r2 inter-chr --allow-extra-chr --threads 4 --const-fid
+```
+
+Splitting by chromosome 
+*code for pre below, same done for post
+```{bash}
+awk '$1=="WAI332_chr_01"' pre_nan_rm.hap.ld > pre_chr1.ld;
+awk '$1=="WAI332_chr_02"' pre_nan_rm.hap.ld > pre_chr2.ld;
+awk '$1=="WAI332_chr_03"' pre_nan_rm.hap.ld > pre_chr3.ld;
+awk '$1=="WAI332_chr_04"' pre_nan_rm.hap.ld > pre_chr4.ld;
+awk '$1=="WAI332_chr_05"' pre_nan_rm.hap.ld > pre_chr5.ld;
+awk '$1=="WAI332_chr_06"' pre_nan_rm.hap.ld > pre_chr6.ld;
+awk '$1=="WAI332_chr_07"' pre_nan_rm.hap.ld > pre_chr7.ld;
+awk '$1=="WAI332_chr_08"' pre_nan_rm.hap.ld > pre_chr8.ld;
+awk '$1=="WAI332_chr_10"' pre_nan_rm.hap.ld > pre_chr10.ld;
+awk '$1=="WAI332_chr_09"' pre_nan_rm.hap.ld > pre_chr9.ld;
+awk '$1=="WAI332_chr_11"' pre_nan_rm.hap.ld > pre_chr11.ld;
+awk '$1=="WAI332_chr_12"' pre_nan_rm.hap.ld > pre_chr12.ld;
+awk '$1=="WAI332_chr_13"' pre_nan_rm.hap.ld > pre_chr13.ld;
+awk '$1=="WAI332_chr_14"' pre_nan_rm.hap.ld > pre_chr14.ld;
+awk '$1=="WAI332_chr_15"' pre_nan_rm.hap.ld > pre_chr15.ld;
+awk '$1=="WAI332_chr_16"' pre_nan_rm.hap.ld > pre_chr16.ld;
+awk '$1=="WAI332_chr_19"' pre_nan_rm.hap.ld > pre_chr19.ld;
+awk '$1=="WAI332_chr_20"' pre_nan_rm.hap.ld > pre_chr20.ld;
+awk '$1=="WAI332_chr_21"' pre_nan_rm.hap.ld > pre_chr21.ld
+```
+
+```{r}
+
+```
+

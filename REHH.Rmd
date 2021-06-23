@@ -1,0 +1,29 @@
+---
+title: "REHH"
+author: "Georgina Robertson"
+date: "15/06/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 
+
+```{r}
+library(rehh)
+library(data.table)
+```
+
+```{r}
+hh_vcf <- data2haplohh(hap_file = "./ByChrom/WAI332_chr_12.recode.vcf", vcf_reader = "data.table", verbose = F, polarize_vcf = F)
+```
+
+Cross population extended haplotype homozygosity (XP-EHH)
+https://rdrr.io/cran/rehh/man/ies2xpehh.html
+
+```{r}
+scan <- scan_hh(hh_vcf)
+```
+

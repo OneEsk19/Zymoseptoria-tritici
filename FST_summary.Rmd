@@ -1,0 +1,43 @@
+---
+title: "fst_Summary"
+author: "Georgina Robertson"
+date: "15/06/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Summarise FST data
+Boxplot by chromosome
+
+```{r}
+# EXAMPLE how boxplot works
+# data("airquality")
+# 
+# boxplot(Temp~Month,
+# data=airquality,
+# main="Different boxplots for each month",
+# xlab="Month Number",
+# ylab="Degree Fahrenheit",
+# col="orange",
+# border="brown"
+# )
+
+```
+
+```{r}
+fst_data <- read.csv("./data_sheets/FST_SNPindex.csv")
+```
+
+```{r}
+boxplot(FST~Chrom,
+        data = fst_data,
+        main="Summary of FST distribution per chromosome",
+        xlab = "Chromosome",
+        ylab = "FST",
+        col="burlywood",
+        border="darkslategrey")
+```
+

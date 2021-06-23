@@ -9,44 +9,15 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Here the FST output from vcftools FST will be used
-________________________________________________________
-1a) Preparing the file for first time use
-```{r}
-fst_file <- read.csv("./data_sheets/pop1_vs_pop2.weir.fst", header = T, sep = "\t")
-```
+## Investigating FST results
 
-There are some negative vales here. These occur due to the incluson of standarrd deviation in the caluculations. They should be treated as zero, so for clarity they will be changed.
-```{r}
-# check that the classes are correct
-str(fst_file)
-
-# change negative values to zero
-fst_file$WEIR_AND_COCKERHAM_FST[fst_file$WEIR_AND_COCKERHAM_FST<0] <- 0
-```
-
-```{r}
-colnames(fst_file) <- c("Scaffold", "Position", "FST")
-
-Chrom <- sapply(strsplit(fst_file$Scaffold, "_", "_") ,"[", 3)
-
-Chrom <- as.numeric(Chrom)
-
-fst_file <- cbind(fst_file, Chrom)
-fst_file <- fst_file[, c(1, 4,2,3)]
-
-write.csv(fst_file, "./data_sheets/fst_file.csv")
-```
-
-_________________________________________________________
-
-1b) Reading in formatted file (future use)
+1a) Reading in formatted file (future use)
 ```{r}
 fst_file <- read.csv("./data_sheets/fst_file.csv")
 fst_file <- fst_file[,-1]
 ```
 
-1c) Reading in file that contains SNP index and FST data which was made in the pipeline: "SnpIndex_FST.Rmd"
+1b) Reading in file that contains SNP index and FST data which was made in the pipeline: "FST_file_prep.Rmd"
 ```{r}
 FST_SnpIndex <- read.csv("./data_sheets/FST_SNPindex.csv")
 FST_SnpIndex <- FST_SnpIndex[,-1]
@@ -57,7 +28,7 @@ _________________________________________________________
 ```{r}
 library(qqman)
 
-manhattan(fst_file, chr = "Chrom", bp = "Position", p = "FST", logp = F, snp = "Scaffold")
+manhattan(fst_file, chr = "Chrom", bp = "Position", p = "FST", logp = F, snp = "Scaffold", ylab="FST")
 
 # Saved in /IMGS as Manhattan_All_FST.png
 ```

@@ -11,45 +11,50 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Do the regions of no variation co-incide with highly conversrved genes?
 
+Reading in file that contains SNP index and FST data which was made in the pipeline: "SnpIndex_FST.Rmd"
 ```{r}
-fst_file <- read.csv("./data_sheets/fst_file.csv", header = T)
-fst_file <- fst_file[,-1]
+FST_SnpIndex <- read.csv("./data_sheets/FST_SNPindex.csv")
+FST_SnpIndex <- FST_SnpIndex[,-1]
 ```
 
 ```{r}
-lowest <- fst_file[fst_file$FST <=0.1, ]
+lowest <- FST_SnpIndex[FST_SnpIndex$FST <=0.05, ]
 ```
 
 ```{r}
 print(unique(lowest$Chrom))
 ```
+All the chroms have these regions.
+Will only look at the core chromosomes
+
 ```{r}
-chr1Lowest <- lowest[lowest$CHROM==1,]
-chr2Lowest <- lowest[lowest$CHROM==2,]
-chr3Lowest <- lowest[lowest$CHROM==3,]
-chr4Lowest <- lowest[lowest$CHROM==4,]
-chr5Lowest <- lowest[lowest$CHROM==5,]
-chr6Lowest <- lowest[lowest$CHROM==6,]
-chr7Lowest <- lowest[lowest$CHROM==7,]
-chr8Lowest <- lowest[lowest$CHROM==8,]
-chr9Lowest <- lowest[lowest$CHROM==9,]
-chr10Lowest <- lowest[lowest$CHROM==10,]
-chr11Lowest <- lowest[lowest$CHROM==11,]
-chr12Lowest <- lowest[lowest$CHROM==12,]
-chr13Lowest <- lowest[lowest$CHROM==13,]
+chr1Lowest <- lowest[lowest$Chrom==1,]
+chr2Lowest <- lowest[lowest$Chrom==2,]
+chr3Lowest <- lowest[lowest$Chrom==3,]
+chr4Lowest <- lowest[lowest$Chrom==4,]
+chr5Lowest <- lowest[lowest$Chrom==5,]
+chr6Lowest <- lowest[lowest$Chrom==6,]
+chr7Lowest <- lowest[lowest$Chrom==7,]
+chr8Lowest <- lowest[lowest$Chrom==8,]
+chr9Lowest <- lowest[lowest$Chrom==9,]
+chr10Lowest <- lowest[lowest$Chrom==10,]
+chr11Lowest <- lowest[lowest$Chrom==11,]
+chr12Lowest <- lowest[lowest$Chrom==12,]
+chr13Lowest <- lowest[lowest$Chrom==13,]
 ```
+
 ```{r}
 library(ggplot2)
 ```
 
-Will look at 13, as this has a very interesting heatmap
+Will look at chr 5, as this has a very interesting heatmap
 ```{r}
-dim(chr13Lowest)
-# =1546
-  
-c13Low1 <- chr13Lowest[1:500,]  
+dim(chr5Lowest)
+# =4811
+
+c12Low1<- chr12Lowest[1000:1500,]
 ggplot()+
-geom_point(data = c13Low1, aes(x=POS, y = FST), colour = "red") +
+geom_col(data = chr5Lowest, aes(x=SNPindex, y = FST), colour = "red") +
   xlab("loci")+
   ylab("fst")
 ```

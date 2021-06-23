@@ -1,0 +1,144 @@
+---
+title: "binning_LD"
+author: "Georgina Robertson"
+date: "22/06/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Visualising linkage decay
+
+Thanks to this amazing blog post: https://www.jdatalab.com/data_science_and_data_mining/2017/01/30/data-binning-plot.html
+
+Reading in and formatting of the data
+```{r}
+chr13postLD <- read.delim("./LDfiles/post_chr13.ld", header = F)
+# peek
+head(chr13postLD)
+# col names
+colnames(chr13postLD) <- c("CHR",	"POS1", "POS2",	"N_CHR",	"Rsq",	"D",	"Dprime")
+# new varible of distance
+chr13postLD$distance <- chr13postLD$POS2 - chr13postLD$POS1
+```
+__________________________________________________________________________________________
+
+1) Count of binned distances
+
+Define bins
+```{r}
+breaks <- c(0,1000,  2000, 3000, 4000 ,5000, 6000, 7000 , 8000 , 9000, 10000, 11000,
+            12000, 13000, 14000, 15000, 16000, 17000, 18000, 19000, 20000, 21000, 22000,
+            23000, 24000, 25000)
+```
+
+Define bin labels
+```{r}
+tags <- c("[0-1)","[1-2)", "[2-3)", "[3-4)", "[4-5)", "[5-6)",
+          "[6-7)", "[7-8)","[8-9)", "[9-10)", "[10-11)","[11-12)",
+          "[12-13)", "[13-14)", "[14-15)", "[15-16)","[16-17)", 
+          "[17-18)","[18-19)", "[19-20)","[20-21)","[21-22)",
+          "[22-23)", "[23-24)", "[24-25)")
+```
+
+Add the data to the bins
+```{r}
+group_tags <- cut(v$distance, 
+                  breaks=breaks, 
+                  include.lowest=TRUE, 
+                  right=FALSE, 
+                  labels=tags)
+```
+
+Check it out
+```{r}
+summary(group_tags)
+```
+
+```{r}
+library(ggplot2)
+library(dplyr)
+```
+Plot couunt of binned distances
+```{r}
+ggplot(data = as_tibble(group_tags), mapping = aes(x=value)) + 
+  geom_bar(fill="burlywood3",color="white",alpha=0.7) + 
+  labs(x='mean distance(kbp)') +
+  theme_minimal()
+```
+______________________________________________________________________________
+
+2) Plotting average Rsq per bin
+
+Subset main data
+```{r}
+v <- chr13postLD %>% select(Rsq, distance)
+```
+
+Assign bin labels
+```{r}
+tags <- c("[0-1)", "[1-2)", "[2-3)", "[3-4)", "[4-5)", "[5-6)", "[6-7)", "[7-8)", "[8-9)", "[9-10)", "[10-11)", "[11-12)", "[12-13)", "[13-14)", "[14-15)", "[15-16)", "[16-17)", "[17-18)", "[18-19)", "[19-20)", "[20-21)", "[21-22)", "[22-23)", "[23-24)", "[24-25)")
+```
+
+Bin distances, store groups as new column
+```{r}
+vgroup <- as_tibble(v) %>% 
+  mutate(tag = case_when(
+    distance < 1000 ~ tags[1],
+    distance >= 1000 & distance < 2000 ~ tags[2],
+    distance >= 2000 & distance < 3000 ~ tags[3],
+    distance >= 3000 & distance < 4000 ~ tags[4],
+    distance >= 4000 & distance < 5000 ~ tags[5],
+    distance >= 5000 & distance < 6000 ~ tags[6],
+    distance >= 6000 & distance < 7000 ~ tags[7],
+    distance >= 7000 & distance < 8000 ~ tags[8],
+    distance >= 8000 & distance < 9000 ~ tags[9],
+    distance >= 9000 & distance < 10000 ~ tags[10],
+    distance >= 10000 & distance < 11000 ~ tags[11],
+    distance >= 11000 & distance < 12000 ~ tags[12],
+    distance >= 12000 & distance < 13000 ~ tags[13],
+    distance >= 13000 & distance < 14000 ~ tags[14],
+    distance >= 14000 & distance < 15000 ~ tags[15],
+    distance >= 15000 & distance < 16000 ~ tags[16],
+    distance >= 16000 & distance < 17000 ~ tags[17],
+    distance >= 17000 & distance < 18000 ~ tags[18],
+    distance >= 18000 & distance < 19000 ~ tags[19],
+    distance >= 19000 & distance < 20000 ~ tags[20],
+    distance >= 20000 & distance < 21000 ~ tags[21],
+    distance >= 21000 & distance < 22000 ~ tags[22],
+    distance >= 22000 & distance < 23000 ~ tags[23],
+    distance >= 23000 & distance < 24000 ~ tags[24],
+    distance >= 24000 & distance < 25000 ~ tags[25]
+   ))
+summary(vgroup)
+```
+Make tag a factor variable for potting
+```{r}
+vgroup$tag <- factor(vgroup$tag,
+                       levels = tags,
+                       ordered = FALSE)
+summary(vgroup$tag)
+```
+Boxplot of avg LD per bin
+```{r}
+ggplot(data = vgroup, mapping = aes(x=tag,y=Rsq)) + 
+  geom_boxplot(fill="burlywood3",color="darkslategrey",alpha=0.3) + 
+  # geom_jitter(aes(color='blue'),alpha=0.2) +
+  labs(x="distance (kbp)") +
+  ggtitle("Average LD decay of post-drought population in chromosome 13") +
+  theme(plot.title=element_text(hjust = 0.5)) +
+  guides(color=FALSE)
+
+```
+
+
+> Images saved in /IMGS/ as:
+avg_LDdecay_POST|PRE_Chr#.png
+
+
+
+
+
+
