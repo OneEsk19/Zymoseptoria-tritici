@@ -20,22 +20,32 @@
 * Dissecting VCF files
   - Document i made a while ago detailing the typical contents of a vcf file
 
-* FST.Rmd
-  - Mostly deprecated, but with some useful snippets
+* FST_file_prep.Rmd
+  - Tidying FST output file, re-writes to file (/data_sheets/fst.file.csv)
+  - Merges FST output with loci files (produced from SNP matrix pipeline) to link FST values with genomic loci, and   by-chromosome SNP index (/data_sheets/FST_SNPindex.csv)
 
-* Generalised_VCF_filter_PCA.rmd
-  - Subsetting AUS isolates from population
-  - Applying folters
-  - PCA to indicate clustering of isolates
-  - SNP subsetting to reduce dimension
-  - PCA of a different subset (describe this better when you understand it)
-  - Combine isolates subset with phenotype data and make PCA
+* FST_summary.Rmd
+  -  Boxplot of summary FST values by chrom, whole genome
 
 * High_Variation_FST.Rmd
   - This file uses the FST output from VCFTools to look at snps on a per chromosone basis which have high variation (FST >= 80, or 90)
 
+* High_n_Low_Plot
+  - Playing around with high and low variation snps from the FST data
+ 
+* LD_Calc_VCFtools.Rmd
+  - workflow for splitting VCF by population and calculating LD using VCFtools
+  - splitting the resulting two population LD files by chromosome
+  
 * LD_Thinning.Rmd /LD_Thinning.html
   - LD thinning workflow as seen in the pcadapt workflow example
+
+* LD_binning.Rmd
+  - Workflow for producing a by pop and by chrom LD decay plot
+
+* Least_Variation.Rmd
+  - Similar to "High_Variation.Rmd" but looking at snps with FST <0.05
+  - Hoping to find highly conserved domains
 
 * Mapping.rmd
   - Plotting where are our samples are from and thier relative sample size
@@ -47,14 +57,11 @@
   - PLots of various quality metrics from the filtered VCF of all isolates
     - From GATK pipeline which combined invidicual VCFs into one large VCF
 
+* REHH.Rmd
+  - Work in progress
+
 * Run_filter_may2020.sh
   - GATK pipeline
-
-* SnpIndex_FST.Rmd
-  - This workflow merges FST output (from VCFTools) with loci files (produced from SNP matrix pipeline) to link FST values with genomic loci, and by-chromosome SNP index.
-
-* WGS_survey_maps_megan.R
-  - Megan's map plot as a baseline to work from
 
 * amendingfile.R
   - script that modified GATK output VCF
@@ -71,17 +78,6 @@
 * high_missing_indv.Rmd
   - This removes the 3 individuals that evaded the initial vcf filter (due to being only very slightly above lower threshhold)
   - Then recodes the main VCF
-
-* loci.csv
-  - MOVE THIS TO /data_sheets and rename to: all_loci_snpIndex
-
-* metadata_wrangling
-  - various bits and bobs to aid with my understanding of the dataset
-
-* pcadapt_first_try.Rmd
-  - First attempt at using this package.
-  - Ran into problems
-  - Retained this file simply to document problems encountered.
 
 * pcadapt_workflow.Rmd
   - Using package pcadapt to perform genome scans for selection based on principal component analysis 
@@ -106,5 +102,3 @@
 * snpmatrix_heatmaps.Rmd
   - Using the snp matrices to produce heatmaps
 
-* using_snpmatrix.Rmd
-  - DUPLICATE OF ABOVE *DELETE*
