@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Calculating FST using VCFTools compiling data sources
+## Calculating FST using VCFTools and compiling data sources
 
 1) A special version of vcf tools needed for haploid data:
 https://github.com/jydu/vcftools
