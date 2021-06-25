@@ -1,0 +1,195 @@
+---
+title: "Untitled"
+author: "Georgina Robertson"
+date: "25/06/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Plotting IHS of Post-drought populations
+
+```{r}
+library(stringr)
+```
+
+```{r}
+postIHS <- read.csv("./data_sheets/ISH_Post.csv")
+postIHS$NegAbs <- -abs(postIHS$IHS)
+postIHS<- postIHS[,-1]
+postIHS <- na.omit(postIHS)
+
+temp <- postIHS$CHR
+temp2 <- str_split(temp, "_")
+temp3 <- sapply(temp2, "[[", 3)
+postIHS$CHR <- temp3
+
+rm(temp, temp2, temp3)
+```
+
+
+```{r}
+library(ggplot2)
+```
+
+```{r}
+chr1post <- postIHS[postIHS$CHR=="01",]
+
+post1 <- 
+  ggplot(data = chr1post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("")+
+  ylab("-[iHS]")
+```
+```{r}
+chr2post <- postIHS[postIHS$CHR=="02",]
+
+post2 <- 
+  ggplot(data = chr2post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("")+
+    theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+```{r}
+chr3post <- postIHS[postIHS$CHR=="03",]
+
+post3 <- 
+  ggplot(data = chr3post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("")+
+    theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+```{r}
+chr4post <- postIHS[postIHS$CHR=="04",]
+
+post4 <- 
+  ggplot(data = chr4post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("")+
+    theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+```{r}
+chr5post <- postIHS[postIHS$CHR=="05",]
+
+post5 <- 
+  ggplot(data = chr5post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("")+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+```{r}
+chr6post <- postIHS[postIHS$CHR=="06",]
+
+post6 <- 
+  ggplot(data = chr6post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("")+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+```{r}
+chr7post <- postIHS[postIHS$CHR=="07",]
+
+post7 <- 
+  ggplot(data = chr7post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("")+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+
+```{r}
+chr8post <- postIHS[postIHS$CHR=="08",]
+
+post8 <- 
+  ggplot(data = chr8post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("")+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+
+```{r}
+chr9post <- postIHS[postIHS$CHR=="09",]
+
+post9 <- 
+  ggplot(data = chr9post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("")+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+
+```{r}
+chr10post <- postIHS[postIHS$CHR=="10",]
+
+post10 <- 
+  ggplot(data = chr10post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("")+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+
+```{r}
+chr11post <- postIHS[postIHS$CHR=="11",]
+
+post11 <- 
+  ggplot(data = chr11post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("")+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+
+```{r}
+chr12post <- postIHS[postIHS$CHR=="12",]
+
+post12 <- 
+  ggplot(data = chr12post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("")+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+
+```{r}
+chr13post <- postIHS[postIHS$CHR=="13",]
+
+post13 <- 
+  ggplot(data = chr13post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("")+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+
+```{r}
+library("gridExtra")
+
+postplot <- grid.arrange(post1, post2, post3, post4, post5, post6, post7, post8, post9, post10, post11, post12, post13, 
+             ncol = 13, nrow = 1)
+```
+
+```{r}
+ggsave(filename = "./IMGS/WG_ISH_POST.png", plot = postplot, device = "png", width = 50, height = 4, units = "cm")
+```
+

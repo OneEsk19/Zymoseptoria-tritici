@@ -1,0 +1,180 @@
+---
+title: "IHS plots"
+author: "Georgina Robertson"
+date: "25/06/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Plotting IHS of Pre-drought populations
+
+```{r}
+library(stringr)
+```
+
+
+```{r}
+preIHS <- read.csv("./data_sheets/ISH_Pre.csv")
+preIHS$NegAbs <- -abs(preIHS$IHS)
+preIHS<- preIHS[,-1]
+
+temp <- preIHS$CHR
+temp2 <- str_split(temp, "_")
+temp3 <- sapply(temp2, "[[", 3)
+preIHS$CHR <- temp3
+
+rm(temp, temp2, temp3)
+```
+
+```{r}
+library(ggplot2)
+```
+
+```{r}
+chr1PRE <- preIHS[preIHS$CHR=="01",]
+
+# post1 <- 
+  ggplot(data = chr1PRE, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("Chromosome 1 (Position in Mb)")+
+  ylab("-[iHS]")
+```
+```{r}
+chr2PRE <- preIHS[preIHS$CHR=="02",]
+
+# post1 <- 
+  ggplot(data = chr2PRE, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("Chromosome 2 (Position in Mb)")+
+    theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+```{r}
+chr3PRE <- preIHS[preIHS$CHR=="03",]
+
+# post1 <- 
+  ggplot(data = chr3PRE, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("Chromosome 3 (Position in Mb)")+
+  ylab("-[iHS]")
+```
+```{r}
+chr4PRE <- preIHS[preIHS$CHR=="04",]
+
+# post1 <- 
+  ggplot(data = chr4PRE, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("Chromosome 4 (Position in Mb)")+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+```{r}
+chr5PRE <- preIHS[preIHS$CHR=="05",]
+
+# post1 <- 
+  ggplot(data = chr5PRE, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("Chromosome 5 (Position in Mb)")+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+```{r}
+chr6PRE <- preIHS[preIHS$CHR=="06",]
+
+# post1 <- 
+  ggplot(data = chr6PRE, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("Chromosome 6 (Position in Mb)")+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+```{r}
+chr7PRE <- preIHS[preIHS$CHR=="07",]
+
+# post1 <- 
+  ggplot(data = chr7PRE, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("Chromosome 7 (Position in Mb)")+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+
+```{r}
+chr8PRE <- preIHS[preIHS$CHR=="08",]
+
+# post1 <- 
+  ggplot(data = chr8PRE, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("Chromosome 8 (Position in Mb)")+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+
+```{r}
+chr9PRE <- preIHS[preIHS$CHR=="09",]
+
+# post1 <- 
+  ggplot(data = chr9PRE, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("Chromosome 9 (Position in Mb)")+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+
+```{r}
+chr10PRE <- preIHS[preIHS$CHR=="10",]
+
+# post1 <- 
+  ggplot(data = chr10PRE, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("Chromosome 10 (Position in Mb)")+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+
+```{r}
+chr11PRE <- preIHS[preIHS$CHR=="11",]
+
+# post1 <- 
+  ggplot(data = chr11PRE, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("Chromosome 11 (Position in Mb)")+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+
+```{r}
+chr12PRE <- preIHS[preIHS$CHR=="12",]
+
+# post1 <- 
+  ggplot(data = chr12PRE, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("Chromosome 12 (Position in Mb)")+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+
+```{r}
+chr13PRE <- preIHS[preIHS$CHR=="13",]
+
+# post1 <- 
+  ggplot(data = chr13PRE, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("Chromosome 13 (Position in Mb)")+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
