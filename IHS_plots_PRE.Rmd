@@ -9,6 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
 ## Plotting IHS of Pre-drought populations
 
 ```{r}
@@ -30,6 +31,21 @@ rm(temp, temp2, temp3)
 ```
 
 ```{r}
+postIHS <- read.csv("./data_sheets/ISH_Post.csv")
+postIHS$NegAbs <- -abs(postIHS$IHS)
+postIHS<- postIHS[,-1]
+
+temp <- postIHS$CHR
+temp2 <- str_split(temp, "_")
+temp3 <- sapply(temp2, "[[", 3)
+postIHS$CHR <- temp3
+
+rm(temp, temp2, temp3)
+```
+
+
+```{r}
+
 library(ggplot2)
 ```
 

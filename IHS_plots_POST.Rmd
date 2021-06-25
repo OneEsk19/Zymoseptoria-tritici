@@ -9,7 +9,9 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
 ## Plotting IHS of Post-drought populations
+
 
 ```{r}
 library(stringr)
@@ -20,6 +22,7 @@ postIHS <- read.csv("./data_sheets/ISH_Post.csv")
 postIHS$NegAbs <- -abs(postIHS$IHS)
 postIHS<- postIHS[,-1]
 postIHS <- na.omit(postIHS)
+
 
 temp <- postIHS$CHR
 temp2 <- str_split(temp, "_")
@@ -43,6 +46,7 @@ post1 <-
   xlab("")+
   ylab("-[iHS]")
 ```
+
 ```{r}
 chr2post <- postIHS[postIHS$CHR=="02",]
 
@@ -54,6 +58,7 @@ post2 <-
           axis.title.y = element_blank(),
           axis.text.y = element_blank())
 ```
+
 ```{r}
 chr3post <- postIHS[postIHS$CHR=="03",]
 
@@ -64,7 +69,9 @@ post3 <-
     theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.text.y = element_blank())
+
 ```
+
 ```{r}
 chr4post <- postIHS[postIHS$CHR=="04",]
 
@@ -76,6 +83,7 @@ post4 <-
           axis.title.y = element_blank(),
           axis.text.y = element_blank())
 ```
+
 ```{r}
 chr5post <- postIHS[postIHS$CHR=="05",]
 
@@ -87,6 +95,7 @@ post5 <-
           axis.title.y = element_blank(),
           axis.text.y = element_blank())
 ```
+
 ```{r}
 chr6post <- postIHS[postIHS$CHR=="06",]
 
@@ -98,8 +107,10 @@ post6 <-
           axis.title.y = element_blank(),
           axis.text.y = element_blank())
 ```
+
 ```{r}
 chr7post <- postIHS[postIHS$CHR=="07",]
+
 
 post7 <- 
   ggplot(data = chr7post, aes(x=POSITION/1000000, y=NegAbs))+
