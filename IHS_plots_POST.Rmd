@@ -1,0 +1,179 @@
+---
+title: "Untitled"
+author: "Georgina Robertson"
+date: "25/06/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(stringr)
+```
+
+```{r}
+postIHS <- read.csv("./data_sheets/ISH_Post.csv")
+postIHS$NegAbs <- -abs(postIHS$IHS)
+postIHS<- postIHS[,-1]
+
+temp <- postIHS$CHR
+temp2 <- str_split(temp, "_")
+temp3 <- sapply(temp2, "[[", 3)
+postIHS$CHR <- temp3
+
+rm(temp, temp2, temp3)
+```
+
+
+```{r}
+library(ggplot2)
+```
+
+```{r}
+chr1post <- postIHS[postIHS$CHR=="01",]
+
+# post1 <- 
+  ggplot(data = chr1post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("Chromosome 1 (Position in Mb)")+
+  ylab("-[iHS]")
+```
+```{r}
+chr2post <- postIHS[postIHS$CHR=="02",]
+
+# post1 <- 
+  ggplot(data = chr2post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("Chromosome 2 (Position in Mb)")+
+    theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+```{r}
+chr3post <- postIHS[postIHS$CHR=="03",]
+
+# post1 <- 
+  ggplot(data = chr3post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("Chromosome 3 (Position in Mb)")+
+  ylab("-[iHS]")
+```
+```{r}
+chr4post <- postIHS[postIHS$CHR=="04",]
+
+# post1 <- 
+  ggplot(data = chr4post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("Chromosome 4 (Position in Mb)")+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+```{r}
+chr5post <- postIHS[postIHS$CHR=="05",]
+
+# post1 <- 
+  ggplot(data = chr5post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("Chromosome 5 (Position in Mb)")+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+```{r}
+chr6post <- postIHS[postIHS$CHR=="06",]
+
+# post1 <- 
+  ggplot(data = chr6post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("Chromosome 6 (Position in Mb)")+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+```{r}
+chr7post <- postIHS[postIHS$CHR=="07",]
+
+# post1 <- 
+  ggplot(data = chr7post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("Chromosome 7 (Position in Mb)")+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+
+```{r}
+chr8post <- postIHS[postIHS$CHR=="08",]
+
+# post1 <- 
+  ggplot(data = chr8post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("Chromosome 8 (Position in Mb)")+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+
+```{r}
+chr9post <- postIHS[postIHS$CHR=="09",]
+
+# post1 <- 
+  ggplot(data = chr9post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("Chromosome 9 (Position in Mb)")+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+
+```{r}
+chr10post <- postIHS[postIHS$CHR=="10",]
+
+# post1 <- 
+  ggplot(data = chr10post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("Chromosome 10 (Position in Mb)")+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+
+```{r}
+chr11post <- postIHS[postIHS$CHR=="11",]
+
+# post1 <- 
+  ggplot(data = chr11post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("Chromosome 11 (Position in Mb)")+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+
+```{r}
+chr12post <- postIHS[postIHS$CHR=="12",]
+
+# post1 <- 
+  ggplot(data = chr12post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("Chromosome 12 (Position in Mb)")+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```
+
+```{r}
+chr13post <- postIHS[postIHS$CHR=="13",]
+
+# post1 <- 
+  ggplot(data = chr13post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  xlab("Chromosome 13 (Position in Mb)")+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank())
+```

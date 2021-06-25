@@ -1,0 +1,137 @@
+---
+title: "REHH"
+author: "Georgina Robertson"
+date: "15/06/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## The iHS within-population statistic
+
+```{r}
+library(rehh)
+library(data.table)
+```
+1) Store the file paths as variables
+```{r}
+# read in list of files for each pop
+filesPRE <- list.files(path ="./ByPop_Chrom/", pattern = "*.pre.recode.vcf", full.names = T, recursive = T)
+filesPOST <- list.files(path ="./ByPop_Chrom/", pattern = "*.post.recode.vcf", full.names = T, recursive = T)
+
+# convert the above lists to dataframes so they can be called in loop
+filesPRE <- as.data.frame(filesPRE)
+filesPRE$chrom <- c(1:16, 19:21)
+filesPOST <- as.data.frame(filesPOST)
+filesPOST$chrom <- c(1:16, 19:21)
+```
+
+2) Pre-drought population
+```{r}
+for(i in 1:13) {
+  prepop  <- data2haplohh(hap_file = filesPRE$filesPRE[i],
+      vcf_reader = "data.table", verbose = F, polarize_vcf = F)
+  
+  scan_pre <- scan_hh(prepop)
+  
+  if (i == 1) {
+    wgscan_pre <- scan_pre
+  } else {
+    wgscan_pre <- rbind(wgscan_pre, scan_pre)
+  }
+}
+# calculate genome-wide iHS values
+wgscan_pre_ihs <- ihh2ihs(wgscan_pre)
+```
+Discard focal markers with Minor Allele Frequency equal to or below 0.05 .
+189313 markers discarded.
+187472 markers remaining.
+The number of markers with allele frequencies in bin [0.075,0.1) is less than 10: you should probably increase bin width.The number of markers with allele frequencies in bin [0.15,0.175) is less than 10: you should probably increase bin width.The number of markers with allele frequencies in bin [0.225,0.25) is less than 10: you should probably increase bin width.The number of markers with allele frequencies in bin [0.325,0.35) is less than 10: you should probably increase bin width.The number of markers with allele frequencies in bin [0.4,0.425) is less than 10: you should probably increase bin width.The number of markers with allele frequencies in bin [0.475,0.5) is less than 10: you should probably increase bin width.The number of markers with allele frequencies in bin [0.575,0.6) is less than 10: you should probably increase bin width.The number of markers with allele frequencies in bin [0.65,0.675) is less than 10: you should probably increase bin width.The number of markers with allele frequencies in bin [0.75,0.775) is less than 10: you should probably increase bin width.The number of markers with allele frequencies in bin [0.825,0.85) is less than 10: you should probably increase bin width.The number of markers with allele frequencies in bin [0.9,0.925) is less than 10: you should probably increase bin width.
+```{r}
+head(wgscan_pre_ihs$ihs)
+
+write.csv(wgscan_pre_ihs$ihs, file = "./data_sheets/ISH_Pre.csv")
+
+head(wgscan_pre_ihs$frequency.class)
+
+write.csv(wgscan_pre_ihs$frequency.class, file = "./data_sheets/IHS_Frequency_Pre.csv")
+```
+
+```{r}
+freqbinplot(wgscan_pre_ihs)
+# /IMGS/freqbinplotPRE.png
+```
+```{r}
+manhattanplot(wgscan_pre_ihs)
+# /IMGS/mhplotPRE.png
+```
+
+
+```{r}
+distribplot(wgscan_pre_ihs$ihs$IHS, xlab = "iHS")
+# /IMGS/distrplotPRE.png
+```
+
+```{r}
+manhattanplot(wgscan_pre_ihs,
+              pval = TRUE,
+              threshold = 4)
+# /IMGS/mhPlotPRE .png
+```
+
+
+
+```{r}
+for(i in 1:13) {
+  postpop  <- data2haplohh(hap_file = filesPOST$filesPOST[i],
+      vcf_reader = "data.table", verbose = F, polarize_vcf = F)
+  
+  scan_post <- scan_hh(postpop)
+  
+ 
+  if (i == 1) {
+    wgscan_post <- scan_post
+  } else {
+    wgscan_post <- rbind(wgscan_post, scan_post)
+  }
+}
+# calculate genome-wide iHS values
+wgscan_post_ihs <- ihh2ihs(wgscan_post)
+```
+ Discard focal markers with Minor Allele Frequency equal to or below 0.05 .
+7066 markers discarded.
+243508 markers remaining.
+```{r}
+head(wgscan_post_ihs$ihs)
+write.csv(wgscan_post_ihs$ihs, file = "./data_sheets/ISH_Post.csv")
+```
+```{r}
+head(wgscan_post_ihs$frequency.class)
+write.csv(wgscan_post_ihs$frequency.class, file = "./data_sheets/IHS_Frequency_Post.csv")
+```
+```{r}
+freqbinplot(wgscan_post_ihs)
+# /IMGS/freqbinplotPOST.png
+```
+```{r}
+distribplot(wgscan_post_ihs$ihs$IHS, xlab = "iHS")
+# /IMGS/distrplotPOST.png
+```
+
+
+```{r}
+manhattanplot(wgscan_post_ihs)
+# /IMGS/mhPlotPOST.png
+```
+
+```{r}
+manhattanplot(wgscan_post_ihs,
+              pval = TRUE,
+              threshold = 4)
+# /IMGS/mh2plotPOST.png
+```
+
+
+
