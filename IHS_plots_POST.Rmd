@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "Post_IHs_Plots"
 author: "Georgina Robertson"
 date: "25/06/2021"
 output: html_document
@@ -39,12 +39,17 @@ library(ggplot2)
 
 ```{r}
 chr1post <- postIHS[postIHS$CHR=="01",]
+range(chr1post$POSITION)
 
 post1 <- 
   ggplot(data = chr1post, aes(x=POSITION/1000000, y=NegAbs))+
   geom_point(shape=20, colour="darkslategrey")+
   xlab("")+
-  ylab("-[iHS]")
+  ylab("-[iHS]")+   
+  theme(plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 1,
+                             l=0))
 ```
 
 ```{r}
@@ -56,7 +61,11 @@ post2 <-
   xlab("")+
     theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
-          axis.text.y = element_blank())
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 1,
+                             l=0))
 ```
 
 ```{r}
@@ -68,8 +77,11 @@ post3 <-
   xlab("")+
     theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
-          axis.text.y = element_blank())
-
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 1,
+                             l=0))
 ```
 
 ```{r}
@@ -81,7 +93,11 @@ post4 <-
   xlab("")+
     theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
-          axis.text.y = element_blank())
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 1,
+                             l=0))
 ```
 
 ```{r}
@@ -93,7 +109,11 @@ post5 <-
   xlab("")+
   theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
-          axis.text.y = element_blank())
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 1,
+                             l=0))
 ```
 
 ```{r}
@@ -105,7 +125,11 @@ post6 <-
   xlab("")+
    theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
-          axis.text.y = element_blank())
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 1,
+                             l=0))
 ```
 
 ```{r}
@@ -118,7 +142,11 @@ post7 <-
   xlab("")+
    theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
-          axis.text.y = element_blank())
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 1,
+                             l=0))
 ```
 
 ```{r}
@@ -130,7 +158,11 @@ post8 <-
   xlab("")+
    theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
-          axis.text.y = element_blank())
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 1,
+                             l=0))
 ```
 
 ```{r}
@@ -142,7 +174,11 @@ post9 <-
   xlab("")+
    theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
-          axis.text.y = element_blank())
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 1,
+                             l=0))
 ```
 
 ```{r}
@@ -154,7 +190,11 @@ post10 <-
   xlab("")+
    theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
-          axis.text.y = element_blank())
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 1,
+                             l=0))
 ```
 
 ```{r}
@@ -166,7 +206,11 @@ post11 <-
   xlab("")+
    theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
-          axis.text.y = element_blank())
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 1,
+                             l=0))
 ```
 
 ```{r}
@@ -178,7 +222,11 @@ post12 <-
   xlab("")+
    theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
-          axis.text.y = element_blank())
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 1,
+                             l=0))
 ```
 
 ```{r}
@@ -190,17 +238,39 @@ post13 <-
   xlab("")+
    theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
-          axis.text.y = element_blank())
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 1,
+                             l=0))
 ```
 
 ```{r}
 library("gridExtra")
 
-postplot <- grid.arrange(post1, post2, post3, post4, post5, post6, post7, post8, post9, post10, post11, post12, post13, 
-             ncol = 13, nrow = 1)
+# postplot <- grid.arrange(post1, post2, post3, post4, post5, post6, post7, post8, post9, post10, post11, post12, post13, ncol = 13, nrow = 1)
 ```
 
 ```{r}
-ggsave(filename = "./IMGS/WG_ISH_POST.png", plot = postplot, device = "png", width = 50, height = 4, units = "cm")
+# ggsave(filename = "./IMGS/WG_ISH_POST.png", plot = postplot, device = "png", width = 50, height = 4, units = "cm")
+```
+
+```{r}
+library(cowplot)
+```
+
+```{r}
+posrange <- c(range(chr1post$POSITION), range(chr2post$POSITION), range(chr3post$POSITION), range(chr4post$POSITION), range(chr5post$POSITION), range(chr6post$POSITION), range(chr7post$POSITION), range(chr8post$POSITION), range(chr9post$POSITION), range(chr10post$POSITION), range(chr11post$POSITION), range(chr12post$POSITION), range(chr13post$POSITION))
+
+print(posrange[seq(2, length(posrange), 2)])
+```
+
+
+```{r}
+postplot2 <- plot_grid(post1, post2, post3, post4, post5, post6, post7, post8, post9, post10, post11, post12, post13, ncol = 13, nrow = 1, rel_widths = c(6.2, 4.1, 3.8, 2.9, 2.9, 2.3, 2.8, 2.4, 2, 1.7, 1.6, 1.2, 1.1))
+```
+
+```{r}
+ggsave(filename = "./IMGS/WG_ISH_POST.png", plot = postplot2, device = "png", width = 50, height = 4, units = "cm")
 ```
 
