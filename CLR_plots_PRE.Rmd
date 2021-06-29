@@ -1,0 +1,245 @@
+---
+title: "CLR_PRE_PLOTS"
+author: "Georgina Robertson"
+date: "29/06/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Plotting CLR values in pre drought population
+
+```{r}
+library(ggplot2)
+```
+
+
+```{r}
+clr_pre1 <- read.table("./Sweed_Results/SweeD_Report.pre1", sep = "\t", header = T, skip = 2)
+
+pre1 <- ggplot(clr_pre1, aes(x=Position/1000000, y=Likelihood))+
+  geom_point(shape=20, colour="darkslateblue")+
+  xlab("")+
+  ylab("CLR")+ 
+  ggtitle("Pre Drought")+
+  expand_limits(y=c(0,700))+
+  theme(plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 1,
+                             l=0))
+```
+
+```{r}
+clr_pre2 <- read.table("./Sweed_Results/SweeD_Report.pre2", sep = "\t", header = T, skip = 2)
+
+pre2 <- ggplot(clr_pre2, aes(x=Position/1000000, y=Likelihood))+
+  geom_point(shape=20, colour="darkslateblue")+
+  xlab("")+
+  expand_limits(y=c(0,700))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 1,
+                             l=0))
+```
+
+```{r}
+clr_pre3 <- read.table("./Sweed_Results/SweeD_Report.pre3", sep = "\t", header = T, skip = 2)
+
+pre3 <- ggplot(clr_pre3, aes(x=Position/1000000, y=Likelihood))+
+  geom_point(shape=20, colour="darkslateblue")+
+  xlab("")+
+expand_limits(y=c(0,700))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 1,
+                             l=0))
+```
+
+
+```{r}
+clr_pre4 <- read.table("./Sweed_Results/SweeD_Report.pre4", sep = "\t", header = T, skip = 2)
+
+pre4 <- ggplot(clr_pre4, aes(x=Position/1000000, y=Likelihood))+
+  geom_point(shape=20, colour="darkslateblue")+
+  xlab("")+
+ expand_limits(y=c(0,700))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 1,
+                             l=0))
+```
+
+```{r}
+clr_pre5 <- read.table("./Sweed_Results/SweeD_Report.pre5", sep = "\t", header = T, skip = 2)
+
+pre5 <- ggplot(clr_pre5, aes(x=Position/1000000, y=Likelihood))+
+  geom_point(shape=20, colour="darkslateblue")+
+  xlab("")+
+expand_limits(y=c(0,700))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 1,
+                             l=0))
+```
+
+```{r}
+clr_pre6 <- read.table("./Sweed_Results/SweeD_Report.pre6", sep = "\t", header = T, skip = 2)
+
+pre6 <- ggplot(clr_pre6, aes(x=Position/1000000, y=Likelihood))+
+  geom_point(shape=20, colour="darkslateblue")+
+  xlab("")+
+expand_limits(y=c(0,700))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 1,
+                             l=0))
+```
+
+```{r}
+clr_pre7 <- read.table("./Sweed_Results/SweeD_Report.pre7", sep = "\t", header = T, skip = 2)
+
+pre7 <- ggplot(clr_pre7, aes(x=Position/1000000, y=Likelihood))+
+  geom_point(shape=20, colour="darkslateblue")+
+  xlab("")+
+ expand_limits(y=c(0,700))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 1,
+                             l=0))
+```
+
+```{r}
+clr_pre8 <- read.table("./Sweed_Results/SweeD_Report.pre8", sep = "\t", header = T, skip = 2)
+
+pre8 <- ggplot(clr_pre8, aes(x=Position/1000000, y=Likelihood))+
+  geom_point(shape=20, colour="darkslateblue")+
+  xlab("")+
+ expand_limits(y=c(0,700))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 1,
+                             l=0))
+```
+
+```{r}
+clr_pre9 <- read.table("./Sweed_Results/SweeD_Report.pre9", sep = "\t", header = T, skip = 2)
+
+pre9 <- ggplot(clr_pre9, aes(x=Position/1000000, y=Likelihood))+
+  geom_point(shape=20, colour="darkslateblue")+
+  xlab("")+
+expand_limits(y=c(0,700))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 1,
+                             l=0))
+```
+
+```{r}
+clr_pre10 <- read.table("./Sweed_Results/SweeD_Report.pre10", sep = "\t", header = T, skip = 2)
+
+pre10 <- ggplot(clr_pre10, aes(x=Position/1000000, y=Likelihood))+
+  geom_point(shape=20, colour="darkslateblue")+
+  xlab("")+
+expand_limits(y=c(0,700))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 1,
+                             l=0))
+```
+
+```{r}
+clr_pre11 <- read.table("./Sweed_Results/SweeD_Report.pre11", sep = "\t", header = T, skip = 2)
+
+pre11 <- ggplot(clr_pre11, aes(x=Position/1000000, y=Likelihood))+
+  geom_point(shape=20, colour="darkslateblue")+
+  xlab("")+
+ expand_limits(y=c(0,700))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 1,
+                             l=0))
+```
+
+
+```{r}
+clr_pre12 <- read.table("./Sweed_Results/SweeD_Report.pre12", sep = "\t", header = T, skip = 2)
+
+pre12 <- ggplot(clr_pre12, aes(x=Position/1000000, y=Likelihood))+
+  geom_point(shape=20, colour="darkslateblue")+
+  xlab("")+
+ expand_limits(y=c(0,700))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 1,
+                             l=0))
+```
+
+```{r}
+clr_pre13 <- read.table("./Sweed_Results/SweeD_Report.pre13", sep = "\t", header = T, skip = 2)
+
+pre13 <- ggplot(clr_pre13, aes(x=Position/1000000, y=Likelihood))+
+  geom_point(shape=20, colour="darkslateblue")+
+  xlab("")+
+ expand_limits(y=c(0,700))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 1,
+                             l=0))
+```
+
+
+```{r}
+library(cowplot)
+```
+
+```{r}
+posrange <- c(range(clr_pre1$Position), range(clr_pre2$Position), range(clr_pre3$Position), range(clr_pre4$Position), range(clr_pre5$Position), range(clr_pre6$Position), range(clr_pre7$Position), range(clr_pre8$Position), range(clr_pre9$Position), range(clr_pre10$Position), range(clr_pre11$Position), range(clr_pre12$Position), range(clr_pre13$Position))
+
+print(posrange[seq(2, length(posrange), 2)])
+```
+
+```{r}
+preplot2 <- plot_grid(pre1, pre2, pre3, pre4, pre5, pre6, pre7, pre8, pre9, pre10, pre11, pre12, pre13, ncol = 13, nrow = 1, rel_widths = c(6.3, 4.1, 4.0, 3, 3, 2.6, 3.1, 2.5, 2.2, 2, 1.8, 1.5, 1.2))
+```
+
+```{r}
+ggsave(filename = "./IMGS/WG_CLR_pre.png", plot = preplot2, device = "png", width = 50, height = 4, units = "cm")
+```
