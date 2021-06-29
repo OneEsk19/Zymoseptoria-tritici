@@ -1,0 +1,69 @@
+---
+title: "CLR_Calculation"
+author: "Georgina Robertson"
+date: "29/06/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Using SWEED to calculate CLR
+
+===========================================================
+SweeD
+===========================================================
+
+Copyright (C) 2012 Pavlos Pavlidis and Nikolaos Alachiotis 
+
+SweeD implements a maximum-likelihood approach to detect selective sweeps 
+using the site frequency spectrum.
+
+The sequential version of SweeD represents an algorithmically improved re-design
+of the SweepFinder tool by Nielsen et al. (2005). 
+
+For more details see:
+R. Nielsen, S. Williamson, Y. Kim, M.J. Hubisz, A.G. Clark, and C. Bustamante, 
+"Genomic scans for selective sweeps using SNP data", Genome Research, pages 1566-1575, 2005.
+
+Commands used
+```{bash}
+## Execute from the sweed directory which is in the directory containing the vcfs
+
+## Pre pops
+./SweeD -name pre1 -input ../Chr_01.pre.recode.vcf -grid 1000;
+./SweeD -name pre2 -input ../Chr_02.pre.recode.vcf -grid 1000;
+./SweeD -name pre3 -input ../Chr_03.pre.recode.vcf -grid 1000;
+./SweeD -name pre4 -input ../Chr_04.pre.recode.vcf -grid 1000;
+./SweeD -name pre5 -input ../Chr_05.pre.recode.vcf -grid 1000;
+./SweeD -name pre6 -input ../Chr_06.pre.recode.vcf -grid 1000;
+./SweeD -name pre7 -input ../Chr_07.pre.recode.vcf -grid 1000;
+./SweeD -name pre8 -input ../Chr_08.pre.recode.vcf -grid 1000;
+./SweeD -name pre9 -input ../Chr_09.pre.recode.vcf -grid 1000;
+./SweeD -name pre10 -input ../Chr_10.pre.recode.vcf -grid 1000;
+./SweeD -name pre11 -input ../Chr_11.pre.recode.vcf -grid 1000;
+./SweeD -name pre12 -input ../Chr_12.pre.recode.vcf -grid 1000;
+./SweeD -name pre13 -input ../Chr_13.pre.recode.vcf -grid 1000;
+
+
+# Post pops
+./SweeD -name post1 -input ../Chr_01.post.recode.vcf -grid 1000;
+./SweeD -name post2 -input ../Chr_02.post.recode.vcf -grid 1000;
+./SweeD -name post3 -input ../Chr_03.post.recode.vcf -grid 1000;
+./SweeD -name post4 -input ../Chr_04.post.recode.vcf -grid 1000;
+./SweeD -name post5 -input ../Chr_05.post.recode.vcf -grid 1000;
+./SweeD -name post6 -input ../Chr_06.post.recode.vcf -grid 1000;
+./SweeD -name post7 -input ../Chr_07.post.recode.vcf -grid 1000;
+./SweeD -name post8 -input ../Chr_08.post.recode.vcf -grid 1000;
+./SweeD -name post9 -input ../Chr_09.post.recode.vcf -grid 1000;
+./SweeD -name post10 -input ../Chr_10.post.recode.vcf -grid 1000;
+./SweeD -name post11 -input ../Chr_11.post.recode.vcf -grid 1000;
+./SweeD -name post12 -input ../Chr_12.post.recode.vcf -grid 1000;
+./SweeD -name post13 -input ../Chr_13.post.recode.vcf -grid 1000;
+
+# To move outputs...
+mv *.pre* ../../Sweed_Results
+mv *.post* ../../Sweed_Results
+```
+

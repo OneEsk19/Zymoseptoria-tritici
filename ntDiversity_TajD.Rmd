@@ -1,0 +1,106 @@
+---
+title: "Population_Stats"
+author: "Georgina Robertson"
+date: "29/06/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Nucleotide Diversity and Tajima's D
+
+Nucleotide diversity
+```{bash}
+## All samples
+vcftools --vcf drought_pops.recode.vcf --haploid --window-pi  10000 --out all_samples
+
+## By pop
+vcftools --vcf pre_pops.recode.vcf --haploid --window-pi  10000 --out pre_samples
+vcftools --vcf post_pops.recode.vcf --haploid --window-pi  10000 --out post_samples
+```
+
+
+Tajima's D
+```{bash}
+## All samples
+vcftools --vcf drought_pops.recode.vcf --haploid --TajimaD 10000 --out all_samples
+## By pop
+vcftools --vcf pre_pops.recode.vcf --haploid --TajimaD 10000 --out pre_samples
+vcftools --vcf post_pops.recode.vcf --haploid --TajimaD 10000 --out post_samples
+```
+
+Plots
+```{r}
+library(ggplot2)
+```
+
+1) Nucleotide diversity
+```{r}
+pi_all <- read.table("./FST/all_samples.windowed.pi", header = T)
+
+p1 <- ggplot(pi_all, aes(x=PI))+
+  geom_histogram(bins = 20, fill="darkslategrey", color="burlywood3")+
+  ylab("All pops")+
+  xlab("")+
+ggtitle("Nucleotide diversity")
+```
+
+```{r}
+pi_pre <- read.table("./FST/pre_samples.windowed.pi", header = T)
+
+p3 <- ggplot(pi_pre, aes(x=PI))+
+  geom_histogram(bins = 20, fill="darkslategrey", color="burlywood3")+
+  xlab("")+
+  ylab("Pre-drought")
+```
+
+```{r}
+pi_post <- read.table("./FST/post_samples.windowed.pi", header = T)
+
+p5 <- ggplot(pi_post, aes(x=PI))+
+  geom_histogram(bins = 20, fill="darkslategrey", color="burlywood3")+
+  xlab("pi")+
+  ylab("Post-drought")
+```
+
+2) Tajima's D
+```{r}
+taj_all <- read.table("./FST/all_samples.Tajima.D", header = T)
+
+p2 <- ggplot(taj_all, aes(x=TajimaD))+
+  geom_histogram(bins=20, fill="burlywood3", color="darkslategrey")+
+  ggtitle("Tajima's D")+
+  xlab("")+
+  ylab("")
+```
+
+```{r}
+taj_pre <- read.table("./FST/pre_samples.Tajima.D", header = T)
+
+p4 <- ggplot(taj_pre, aes(x=TajimaD))+
+  geom_histogram(bins=20, fill="burlywood3", color="darkslategrey")+
+  xlab("")+
+  ylab("")
+```
+
+```{r}
+taj_post <- read.table("./FST/post_samples.Tajima.D", header = T)
+
+p6 <- ggplot(taj_post, aes(x=TajimaD))+
+  geom_histogram(bins=20, fill="burlywood3", color="darkslategrey")+
+  xlab("Tajima's D")+
+ylab("")
+```
+
+```{r}
+library(gridExtra)
+```
+
+```{r}
+all_plots <- grid.arrange(p1, p2, p3, p4, p5, p6, nrow=3)
+ggsave(all_plots, filename = "./IMGS/diversity_plots.png", width = 20, height = 15, units = "cm")
+```
+
+

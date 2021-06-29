@@ -1,0 +1,15 @@
+# Nucleotide diversity
+
+## All samples
+vcftools --vcf drought_pops.recode.vcf --haploid --window-pi  10000 --out all_samples
+## By pop
+vcftools --vcf pre_pops.recode.vcf --haploid --window-pi  10000 --out pre_samples
+vcftools --vcf post_pops.recode.vcf --haploid --window-pi  10000 --out post_samples
+
+# Taj D
+
+## All samples
+vcftools --vcf drought_pops.recode.vcf --haploid --TajimaD 10000 --out all_samples
+## By pop
+vcftools --vcf pre_pops.recode.vcf --haploid --TajimaD 10000 --out pre_samples
+vcftools --vcf post_pops.recode.vcf --haploid --TajimaD 10000 --out post_samples
