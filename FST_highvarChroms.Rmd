@@ -1,0 +1,78 @@
+---
+title: "FST_graphs"
+author: "Georgina Robertson"
+date: "27/06/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 
+
+```{r}
+FST_SnpIndex <- read.csv("./data_sheets/FST_SNPindex.csv")
+FST_SnpIndex <- FST_SnpIndex[,-1]
+```
+
+```{r}
+chr1FST <- FST_SnpIndex[FST_SnpIndex$Chrom==1, c(1,5)]
+chr2FST <- FST_SnpIndex[FST_SnpIndex$Chrom==2, c(1,5)]
+chr3FST <- FST_SnpIndex[FST_SnpIndex$Chrom==3, c(1,5)]
+chr4FST <- FST_SnpIndex[FST_SnpIndex$Chrom==4, c(1,5)]
+chr5FST <- FST_SnpIndex[FST_SnpIndex$Chrom==5, c(1,5)]
+chr6FST <- FST_SnpIndex[FST_SnpIndex$Chrom==6, c(1,5)]
+chr7FST <- FST_SnpIndex[FST_SnpIndex$Chrom==7, c(1,5)]
+chr8FST <- FST_SnpIndex[FST_SnpIndex$Chrom==8, c(1,5)]
+chr9FST <- FST_SnpIndex[FST_SnpIndex$Chrom==9, c(1,5)]
+chr10FST <- FST_SnpIndex[FST_SnpIndex$Chrom==10, c(1,5)]
+chr11FST <- FST_SnpIndex[FST_SnpIndex$Chrom==11, c(1,5)]
+chr12FST <- FST_SnpIndex[FST_SnpIndex$Chrom==12, c(1,5)]
+chr13FST <- FST_SnpIndex[FST_SnpIndex$Chrom==13, c(1,5)]
+chr14FST <- FST_SnpIndex[FST_SnpIndex$Chrom==14, c(1,5)]
+chr15FST <- FST_SnpIndex[FST_SnpIndex$Chrom==15, c(1,5)]
+chr16FST <- FST_SnpIndex[FST_SnpIndex$Chrom==16, c(1,5)]
+chr19FST <- FST_SnpIndex[FST_SnpIndex$Chrom==19, c(1,5)]
+chr20FST <- FST_SnpIndex[FST_SnpIndex$Chrom==20, c(1,5)]
+chr21FST <- FST_SnpIndex[FST_SnpIndex$Chrom==21, c(1,5)]
+```
+
+```{r}
+library(ggplot2)
+```
+
+```{r}
+ggplot(data=chr5FST, aes(x=Position/1000000, y=FST))+
+  geom_point(shape=20, colour="darkseagreen4")+
+  geom_hline(yintercept = 0.9, color="midnightblue", linetype="dashed")+
+  xlab("Chromosome 5 (Position in Mb)")+
+  ylab("FST")
+  
+```
+```{r}
+ggplot(data=chr6FST, aes(x=Position/1000000, y=FST))+
+  geom_point(shape=20, colour="darkseagreen4")+
+  geom_hline(yintercept = 0.9, color="midnightblue", linetype="dashed")+
+  xlab("Chromosome 6 (Position in Mb)")+
+  ylab("FST")
+  
+```
+```{r}
+ggplot(data=chr7FST, aes(x=Position/1000000, y=FST))+
+  geom_point(shape=20, colour="darkseagreen4")+
+  geom_hline(yintercept = 0.9, color="midnightblue", linetype="dashed")+
+  xlab("Chromosome 7 (Position in Mb)")+
+  ylab("FST")
+  
+```
+
+```{r}
+ggplot(data=chr16FST, aes(x=Position/1000000, y=FST))+
+  geom_point(shape=20, colour="darkseagreen4")+
+  geom_hline(yintercept = 0.9, color="midnightblue", linetype="dashed")+
+  xlab("Chromosome 16 (Position in Mb)")+
+  ylab("FST")
+  
+```
+
