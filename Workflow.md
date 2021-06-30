@@ -19,5 +19,5 @@
 |15.|XP_EHH|Calculating cross population extended haplotype homozygosity|XP-EHH.Rmd|?? Have files, but not sure what this is!|
 |16.|IHS|Calculating IHS witin population statistic|IHS.Rmd|in /data_sheets/ <br> ISH_Pre.csv <br> IHS_Frequency_Pre.csv<br>ISH_Post.csv<br> IHS_Frequency_Post.csv|
 |17.|IHS Plots|plotting IHS statistics per chrom + per pop| IHS_plots_POST.Rmd <br> IHS_plots_PRE.Rmd| in /IMGS/ <br> WG_ISH_POST.png <br> WG_ISH.PRE.png|
-|18.|CLR analysis|Composite likihood Ration|CLR_Sweed.Rmd <br>CLR_plots_POST.Rmd <br>CLR_plots_PRE.Rmd |IMGS/WG_CLR_post.png<br>IMGS/WG_CLR_pre.png|
+|18.|CLR analysis|Composite likihood Ratio|CLR_Sweed.Rmd <br>CLR_plots_POST.Rmd <br>CLR_plots_PRE.Rmd |IMGS/WG_CLR_post.png<br>IMGS/WG_CLR_pre.png|
 |19.|Integrated plot|Plot to integrate iHS and CLR statistics|WIP|WIP| 
