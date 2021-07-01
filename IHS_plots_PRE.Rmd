@@ -18,7 +18,7 @@ library(stringr)
 ```
 
 ```{r}
-preIHS <- read.csv("./data_sheets/ISH_Pre.csv")
+preIHS <- read.csv("./data_sheets/ISH_pre.csv")
 preIHS$NegAbs <- -abs(preIHS$IHS)
 preIHS<- preIHS[,-1]
 preIHS <- na.omit(preIHS)
@@ -46,10 +46,13 @@ pre1 <-
   geom_point(shape=20, colour="darkslategrey")+
   xlab("")+
   ylab("-[iHS]")+   
-  theme(plot.margin = margin(t=1,
+ theme(plot.margin = margin(t=0.25,
                              r=0.25,
-                             b= 1,
-                             l=0))
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
 ```{r}
@@ -59,13 +62,16 @@ pre2 <-
   ggplot(data = chr2pre, aes(x=POSITION/1000000, y=NegAbs))+
   geom_point(shape=20, colour="darkslategrey")+
   xlab("")+
-    theme(axis.ticks.y = element_blank(),
+   theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.text.y = element_blank(),
-          plot.margin = margin(t=1,
+          plot.margin = margin(t=0.25,
                              r=0.25,
-                             b= 1,
-                             l=0))
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
 ```{r}
@@ -78,10 +84,13 @@ pre3 <-
     theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.text.y = element_blank(),
-          plot.margin = margin(t=1,
+          plot.margin = margin(t=0.25,
                              r=0.25,
-                             b= 1,
-                             l=0))
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
 ```{r}
@@ -91,13 +100,16 @@ pre4 <-
   ggplot(data = chr4pre, aes(x=POSITION/1000000, y=NegAbs))+
   geom_point(shape=20, colour="darkslategrey")+
   xlab("")+
-    theme(axis.ticks.y = element_blank(),
+   theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.text.y = element_blank(),
-          plot.margin = margin(t=1,
+          plot.margin = margin(t=0.25,
                              r=0.25,
-                             b= 1,
-                             l=0))
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
 ```{r}
@@ -107,13 +119,16 @@ pre5 <-
   ggplot(data = chr5pre, aes(x=POSITION/1000000, y=NegAbs))+
   geom_point(shape=20, colour="darkslategrey")+
   xlab("")+
-  theme(axis.ticks.y = element_blank(),
+ theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.text.y = element_blank(),
-          plot.margin = margin(t=1,
+          plot.margin = margin(t=0.25,
                              r=0.25,
-                             b= 1,
-                             l=0))
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
 ```{r}
@@ -123,13 +138,17 @@ pre6 <-
   ggplot(data = chr6pre, aes(x=POSITION/1000000, y=NegAbs))+
   geom_point(shape=20, colour="darkslategrey")+
   xlab("")+
-   theme(axis.ticks.y = element_blank(),
+  scale_x_continuous(breaks = c(0,1,2))+
+  theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.text.y = element_blank(),
-          plot.margin = margin(t=1,
+          plot.margin = margin(t=0.25,
                              r=0.25,
-                             b= 1,
-                             l=0))
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
 ```{r}
@@ -140,13 +159,16 @@ pre7 <-
   ggplot(data = chr7pre, aes(x=POSITION/1000000, y=NegAbs))+
   geom_point(shape=20, colour="darkslategrey")+
   xlab("")+
-   theme(axis.ticks.y = element_blank(),
+  theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.text.y = element_blank(),
-          plot.margin = margin(t=1,
+          plot.margin = margin(t=0.25,
                              r=0.25,
-                             b= 1,
-                             l=0))
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
 ```{r}
@@ -156,13 +178,17 @@ pre8 <-
   ggplot(data = chr8pre, aes(x=POSITION/1000000, y=NegAbs))+
   geom_point(shape=20, colour="darkslategrey")+
   xlab("")+
-   theme(axis.ticks.y = element_blank(),
+  scale_x_continuous(breaks = c(0,1,2))+
+  theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.text.y = element_blank(),
-          plot.margin = margin(t=1,
+          plot.margin = margin(t=0.25,
                              r=0.25,
-                             b= 1,
-                             l=0))
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
 ```{r}
@@ -172,13 +198,17 @@ pre9 <-
   ggplot(data = chr9pre, aes(x=POSITION/1000000, y=NegAbs))+
   geom_point(shape=20, colour="darkslategrey")+
   xlab("")+
+  scale_x_continuous(breaks = c(0,1,2))+
    theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.text.y = element_blank(),
-          plot.margin = margin(t=1,
+          plot.margin = margin(t=0.25,
                              r=0.25,
-                             b= 1,
-                             l=0))
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
 ```{r}
@@ -188,13 +218,17 @@ pre10 <-
   ggplot(data = chr10pre, aes(x=POSITION/1000000, y=NegAbs))+
   geom_point(shape=20, colour="darkslategrey")+
   xlab("")+
-   theme(axis.ticks.y = element_blank(),
+  scale_x_continuous(breaks = c(0,1,2))+
+  theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.text.y = element_blank(),
-          plot.margin = margin(t=1,
+          plot.margin = margin(t=0.25,
                              r=0.25,
-                             b= 1,
-                             l=0))
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
 ```{r}
@@ -204,13 +238,17 @@ pre11 <-
   ggplot(data = chr11pre, aes(x=POSITION/1000000, y=NegAbs))+
   geom_point(shape=20, colour="darkslategrey")+
   xlab("")+
-   theme(axis.ticks.y = element_blank(),
+  scale_x_continuous(breaks = c(0,1))+
+  theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.text.y = element_blank(),
-          plot.margin = margin(t=1,
+          plot.margin = margin(t=0.25,
                              r=0.25,
-                             b= 1,
-                             l=0))
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
 ```{r}
@@ -220,13 +258,17 @@ pre12 <-
   ggplot(data = chr12pre, aes(x=POSITION/1000000, y=NegAbs))+
   geom_point(shape=20, colour="darkslategrey")+
   xlab("")+
+  scale_x_continuous(breaks = c(0,1))+
    theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.text.y = element_blank(),
-          plot.margin = margin(t=1,
+          plot.margin = margin(t=0.25,
                              r=0.25,
-                             b= 1,
-                             l=0))
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
 ```{r}
@@ -236,15 +278,28 @@ pre13 <-
   ggplot(data = chr13pre, aes(x=POSITION/1000000, y=NegAbs))+
   geom_point(shape=20, colour="darkslategrey")+
   xlab("")+
+  scale_x_continuous(breaks = c(0,1))+
    theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.text.y = element_blank(),
-          plot.margin = margin(t=1,
+          plot.margin = margin(t=0.25,
                              r=0.25,
-                             b= 1,
-                             l=0))
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
+```{r}
+library("gridExtra")
+
+# preplot <- grid.arrange(pre1, pre2, pre3, pre4, pre5, pre6, pre7, pre8, pre9, pre10, pre11, pre12, pre13, ncol = 13, nrow = 1)
+```
+
+```{r}
+# ggsave(filename = "./IMGS/WG_ISH_pre.png", plot = preplot, device = "png", width = 50, height = 4, units = "cm")
+```
 
 ```{r}
 library(cowplot)
@@ -258,10 +313,10 @@ print(posrange[seq(2, length(posrange), 2)])
 
 
 ```{r}
-preplot2 <- plot_grid(pre1, pre2, pre3, pre4, pre5, pre6, pre7, pre8, pre9, pre10, pre11, pre12, pre13, ncol = 13, nrow = 1, rel_widths = c(6.3, 4.1, 3.9, 3, 3, 2.5, 2.9, 2.5, 2.1, 1.9, 1.7, 1.5, 1.2))
+preplotIHS <- plot_grid(pre1, pre2, pre3, pre4, pre5, pre6, pre7, pre8, pre9, pre10, pre11, pre12, pre13, ncol = 13, nrow = 1, rel_widths = c(6.3, 4.1, 3.9, 3, 3, 2.5, 2.9, 2.5, 2.1, 1.9, 1.7, 1.5, 1.2))
 ```
 
 ```{r}
-ggsave(filename = "./IMGS/WG_ISH_pre.png", plot = preplot2, device = "png", width = 50, height = 4, units = "cm")
+ggsave(filename = "./IMGS/WG_ISH_pre.png", plot = preplotIHS, device = "png", width = 50, height = 4, units = "cm")
 ```
 

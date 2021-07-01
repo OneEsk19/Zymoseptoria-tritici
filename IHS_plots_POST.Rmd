@@ -44,12 +44,15 @@ range(chr1post$POSITION)
 post1 <- 
   ggplot(data = chr1post, aes(x=POSITION/1000000, y=NegAbs))+
   geom_point(shape=20, colour="darkslategrey")+
-  xlab("")+
+  xlab("Chromosome:   1")+
   ylab("-[iHS]")+   
-  theme(plot.margin = margin(t=1,
+  theme(plot.margin = margin(t=0.25,
                              r=0.25,
-                             b= 1,
-                             l=0))
+                             b= 0.25,
+                              l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
 ```{r}
@@ -58,14 +61,17 @@ chr2post <- postIHS[postIHS$CHR=="02",]
 post2 <- 
   ggplot(data = chr2post, aes(x=POSITION/1000000, y=NegAbs))+
   geom_point(shape=20, colour="darkslategrey")+
-  xlab("")+
+  xlab("2")+
     theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.text.y = element_blank(),
-          plot.margin = margin(t=1,
+          plot.margin = margin(t=0.25,
                              r=0.25,
-                             b= 1,
-                             l=0))
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
 ```{r}
@@ -74,14 +80,17 @@ chr3post <- postIHS[postIHS$CHR=="03",]
 post3 <- 
   ggplot(data = chr3post, aes(x=POSITION/1000000, y=NegAbs))+
   geom_point(shape=20, colour="darkslategrey")+
-  xlab("")+
+  xlab("3")+
     theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.text.y = element_blank(),
-          plot.margin = margin(t=1,
+          plot.margin = margin(t=0.25,
                              r=0.25,
-                             b= 1,
-                             l=0))
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
 ```{r}
@@ -90,14 +99,17 @@ chr4post <- postIHS[postIHS$CHR=="04",]
 post4 <- 
   ggplot(data = chr4post, aes(x=POSITION/1000000, y=NegAbs))+
   geom_point(shape=20, colour="darkslategrey")+
-  xlab("")+
+  xlab("4")+
     theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.text.y = element_blank(),
-          plot.margin = margin(t=1,
+          plot.margin = margin(t=0.25,
                              r=0.25,
-                             b= 1,
-                             l=0))
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
 ```{r}
@@ -106,14 +118,17 @@ chr5post <- postIHS[postIHS$CHR=="05",]
 post5 <- 
   ggplot(data = chr5post, aes(x=POSITION/1000000, y=NegAbs))+
   geom_point(shape=20, colour="darkslategrey")+
-  xlab("")+
+  xlab("5")+
   theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.text.y = element_blank(),
-          plot.margin = margin(t=1,
+          plot.margin = margin(t=0.25,
                              r=0.25,
-                             b= 1,
-                             l=0))
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
 ```{r}
@@ -122,14 +137,18 @@ chr6post <- postIHS[postIHS$CHR=="06",]
 post6 <- 
   ggplot(data = chr6post, aes(x=POSITION/1000000, y=NegAbs))+
   geom_point(shape=20, colour="darkslategrey")+
-  xlab("")+
+  xlab("6")+
+  scale_x_continuous(breaks = c(0,1,2))+
    theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.text.y = element_blank(),
-          plot.margin = margin(t=1,
+          plot.margin = margin(t=0.25,
                              r=0.25,
-                             b= 1,
-                             l=0))
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
 ```{r}
@@ -139,14 +158,17 @@ chr7post <- postIHS[postIHS$CHR=="07",]
 post7 <- 
   ggplot(data = chr7post, aes(x=POSITION/1000000, y=NegAbs))+
   geom_point(shape=20, colour="darkslategrey")+
-  xlab("")+
+  xlab("7")+
    theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.text.y = element_blank(),
-          plot.margin = margin(t=1,
+          plot.margin = margin(t=0.25,
                              r=0.25,
-                             b= 1,
-                             l=0))
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
 ```{r}
@@ -155,14 +177,18 @@ chr8post <- postIHS[postIHS$CHR=="08",]
 post8 <- 
   ggplot(data = chr8post, aes(x=POSITION/1000000, y=NegAbs))+
   geom_point(shape=20, colour="darkslategrey")+
-  xlab("")+
+  xlab("8")+
+  scale_x_continuous(breaks = c(0,1,2))+
    theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.text.y = element_blank(),
-          plot.margin = margin(t=1,
+          plot.margin = margin(t=0.25,
                              r=0.25,
-                             b= 1,
-                             l=0))
+                             b= 0.25,
+                              l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
 ```{r}
@@ -171,14 +197,18 @@ chr9post <- postIHS[postIHS$CHR=="09",]
 post9 <- 
   ggplot(data = chr9post, aes(x=POSITION/1000000, y=NegAbs))+
   geom_point(shape=20, colour="darkslategrey")+
-  xlab("")+
+  xlab("9")+
+  scale_x_continuous(breaks = c(0,1,2))+
    theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.text.y = element_blank(),
-          plot.margin = margin(t=1,
+          plot.margin = margin(t=0.25,
                              r=0.25,
-                             b= 1,
-                             l=0))
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
 ```{r}
@@ -187,14 +217,18 @@ chr10post <- postIHS[postIHS$CHR=="10",]
 post10 <- 
   ggplot(data = chr10post, aes(x=POSITION/1000000, y=NegAbs))+
   geom_point(shape=20, colour="darkslategrey")+
-  xlab("")+
+  xlab("10")+
+  scale_x_continuous(breaks = c(0,1,2))+
    theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.text.y = element_blank(),
-          plot.margin = margin(t=1,
+          plot.margin = margin(t=0.25,
                              r=0.25,
-                             b= 1,
-                             l=0))
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
 ```{r}
@@ -203,14 +237,18 @@ chr11post <- postIHS[postIHS$CHR=="11",]
 post11 <- 
   ggplot(data = chr11post, aes(x=POSITION/1000000, y=NegAbs))+
   geom_point(shape=20, colour="darkslategrey")+
-  xlab("")+
+  xlab("11")+
+  scale_x_continuous(breaks = c(0,1))+
    theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.text.y = element_blank(),
-          plot.margin = margin(t=1,
+          plot.margin = margin(t=0.25,
                              r=0.25,
-                             b= 1,
-                             l=0))
+                             b= 0.25,
+                              l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
 ```{r}
@@ -219,14 +257,18 @@ chr12post <- postIHS[postIHS$CHR=="12",]
 post12 <- 
   ggplot(data = chr12post, aes(x=POSITION/1000000, y=NegAbs))+
   geom_point(shape=20, colour="darkslategrey")+
-  xlab("")+
+  xlab("12")+
+  scale_x_continuous(breaks = c(0,1))+
    theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.text.y = element_blank(),
-          plot.margin = margin(t=1,
+          plot.margin = margin(t=0.25,
                              r=0.25,
-                             b= 1,
-                             l=0))
+                             b= 0.25,
+                              l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
 ```{r}
@@ -235,14 +277,18 @@ chr13post <- postIHS[postIHS$CHR=="13",]
 post13 <- 
   ggplot(data = chr13post, aes(x=POSITION/1000000, y=NegAbs))+
   geom_point(shape=20, colour="darkslategrey")+
-  xlab("")+
+  xlab("13")+
+  scale_x_continuous(breaks = c(0,1))+
    theme(axis.ticks.y = element_blank(),
           axis.title.y = element_blank(),
           axis.text.y = element_blank(),
-          plot.margin = margin(t=1,
+          plot.margin = margin(t=0.25,
                              r=0.25,
-                             b= 1,
-                             l=0))
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
 ```{r}
@@ -267,10 +313,10 @@ print(posrange[seq(2, length(posrange), 2)])
 
 
 ```{r}
-postplot2 <- plot_grid(post1, post2, post3, post4, post5, post6, post7, post8, post9, post10, post11, post12, post13, ncol = 13, nrow = 1, rel_widths = c(6.2, 4.1, 3.8, 2.9, 2.9, 2.3, 2.8, 2.4, 2, 1.7, 1.6, 1.2, 1.1))
+postplotIHS <- plot_grid(post1, post2, post3, post4, post5, post6, post7, post8, post9, post10, post11, post12, post13, ncol = 13, nrow = 1, rel_widths = c(6.2, 4.1, 3.8, 2.9, 2.9, 2.3, 2.8, 2.4, 2, 1.7, 1.6, 1.2, 1.1))
 ```
 
 ```{r}
-ggsave(filename = "./IMGS/WG_ISH_POST.png", plot = postplot2, device = "png", width = 50, height = 4, units = "cm")
+ggsave(filename = "./IMGS/WG_ISH_POST.png", plot = postplotIHS, device = "png", width = 50, height = 4, units = "cm")
 ```
 
