@@ -132,4 +132,27 @@ unique(EHH_CoreChroms$CHR)
 
 chromorder <- c("WAI332_chr_01","WAI332_chr_02","WAI332_chr_04","WAI332_chr_05","WAI332_chr_06","WAI332_chr_07","WAI332_chr_08","WAI332_chr_09","WAI332_chr_10", "WAI332_chr_11", "WAI332_chr_12", "WAI332_chr_13")
 ```
+____________________________________
+
+```{r}
+EHHdata <- read.csv("./REHH/core_chroms_EHH.csv", header = T)
+EHHdata <- EHHdata[,-1]
+```
+
+```{r}
+chr1 <- EHHdata[EHHdata$CHR=="WAI332_chr_01",]
+chr5 <- EHHdata[EHHdata$CHR=="WAI332_chr_05",]
+```
+
+
+```{r}
+ggplot()+
+  geom_point(data = chr1, aes(x=POSITION/1000000, y=XPEHH_pre_post), colour="darkslategrey")+
+  geom_line(data=chr1, aes(x=POSITION/1000000, y=LOGPVALUE), colour="red")
+```
+
+```{r}
+ggplot()+
+  geom_line(data=chr5, aes(x=POSITION/1000000, y=LOGPVALUE), colour="darkslategrey")
+```
 

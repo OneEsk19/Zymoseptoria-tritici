@@ -1,0 +1,113 @@
+---
+title: "LD_AltPlot_Loop.Rmd"
+author: "G.Robertson"
+date: "02/07/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Better LD decay plots
+
+
+1) Loading files from directory
+```{r}
+postLDfiles <- list.files(path ="./LDfiles/", pattern = "post_chr*", full.names = T, recursive = T)
+
+preLDfiles <- list.files(path ="./LDfiles/", pattern = "pre_chr*", full.names = T, recursive = T)
+
+postLDfiles <- postLDfiles[c(1, 10, 13:19, 2:9, 11, 12)]
+postLDfiles<- as.data.frame(postLDfiles)
+postLDfiles$chrom <- c(1:16, 19:21)
+
+
+preLDfiles <- preLDfiles[c(1, 10, 13:19, 2:9, 11, 12)]
+preLDfiles<- as.data.frame(preLDfiles)
+preLDfiles$chrom <- c(1:16, 19:21)
+```
+
+> For some weird reason it did not read file nine in pre LD. Fix:  preLDfiles[9,1] <- "./LDfiles/pre_chr9.ld"
+
+```{r include=FALSE}
+library(ggplot2)
+library(dplyr)
+library(stringr)
+```
+
+2) Loop to produce linkage decay plots
+```{r}
+for (i in 1:19) {
+
+### Post pops
+  
+  LDfilePost <- read.delim(file = postLDfiles$postLDfiles[i], header = F)
+  
+  colnames(LDfilePost) <- c("CHR",	"POS1", "POS2",	"N_CHR",	"Rsq",	"D",	"Dprime")
+
+# new varible of distance
+LDfilePost$distance <- LDfilePost$POS2 - LDfilePost$POS1
+
+# binning
+LDfilePost$distc <- cut(LDfilePost$distance, breaks = seq(from=min(LDfilePost$distance)-1, to=max(LDfilePost$distance)+1, by=100))
+  
+# subset
+Post <- LDfilePost %>% group_by(distc) %>% summarise(mean=mean(Rsq), median=median(Rsq))
+
+# remove LDfilePost to save memory
+rm(LDfilePost)
+
+# extract start, end and mid from distc
+Post <- Post %>% mutate(start=as.integer(str_extract(str_replace_all(distc,"[\\(\\)\\[\\]]",""),"^[0-9-e+.]+")), end=as.integer(str_extract(str_replace_all(distc,"[\\(\\)\\[\\]]",""),"[0-9-e+.]+$")), mid=start+((end-start)/2))
+
+# create population variable
+Post$population <- c(rep("post", length(Post$distc)))
+
+### Pre population
+
+LDfilePre <- read.delim(file = preLDfiles$preLDfiles[i], header = F)
+
+colnames(LDfilePre) <- c("CHR",	"POS1", "POS2",	"N_CHR",	"Rsq",	"D",	"Dprime")
+
+# new varible of distance
+LDfilePre$distance <- LDfilePre$POS2 - LDfilePre$POS1
+
+# binning
+LDfilePre$distc <- cut(LDfilePre$distance, breaks = seq(from=min(LDfilePre$distance)-1, to=max(LDfilePre$distance)+1, by=100))
+
+# subset
+Pre <- LDfilePre %>% group_by(distc) %>% summarise(mean=mean(Rsq), median=median(Rsq))
+
+# remove LDfilePre to save memory
+rm(LDfilePre)
+
+# extract start, end and mid from distc
+Pre <- Pre %>% mutate(start=as.integer(str_extract(str_replace_all(distc,"[\\(\\)\\[\\]]",""),"^[0-9-e+.]+")), end=as.integer(str_extract(str_replace_all(distc,"[\\(\\)\\[\\]]",""),"[0-9-e+.]+$")), mid=start+((end-start)/2))
+
+# create population variable
+Pre$population <- c(rep("Pre", length(Pre$distc)))
+
+##### merge for plotting
+Both <- rbind(Post, Pre)
+# remove NA's and subset
+plot <- na.omit(Both[,c(2,4,7)])
+
+# clean up
+rm(Post, Pre, Both)
+  
+##### Draw the plot
+avgLDdecay <- ggplot(data = plot, aes(x=start, y=mean, col=population))+
+  geom_smooth()+
+    labs(x="Distance (bp x100)",y=expression(LD~(r^{2})),
+         title=paste("Linkage decay in chromosome ",postLDfiles$chrom[i])) +
+  theme(plot.title=element_text(hjust = 0.5))
+
+  ggsave(
+  filename = paste("Chr", postLDfiles$chrom[i], "_LDdecay.png", sep = ""),
+  plot = last_plot(),
+  device = "png",
+  path = "./IMGS/",
+  scale = 1)
+}
+```
