@@ -1,0 +1,57 @@
+---
+title: "FST Distribution"
+author: "G.Robertson"
+date: "03/07/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## FST distribution
+
+Read in the data
+```{r}
+FST <- read.csv("./data_sheets/fst_file.csv", header = T)
+
+head(FST)
+```
+
+Load library and plot hist of whole genome fst measurements
+```{r}
+library(ggplot2)
+
+plot <- 
+  ggplot()+
+  geom_histogram(data = FST, aes(x=FST), bins = 100, fill= "darkslategrey", color ="darkslategrey")+
+    ggtitle("Distribution of FST values across the genome")
+  
+```
+
+Make a list of chromosome names/numbers
+```{r}
+chrval <- unique(FST$Chrom)
+```
+
+Use above list to subset fst data to plot fst distribution per chromosome, then save plot to /IMGS
+```{r}
+for (i in 1:19){
+  
+  chr <- chrval[[i]]
+  
+  data <- FST[FST$Chrom == chr, ]
+  
+  plot <- ggplot()+
+  geom_histogram(data = data, aes(x=FST), bins = 100, fill= "darkslategrey", color ="darkslategrey")+
+    ggtitle(paste("Distribution of FST values in chromosome ", chr, sep = ""))
+  
+  
+  ggsave(filename = paste("FST_distribution_chr", chr, ".png", sep = ""),
+         plot = last_plot(),
+        device = "png",
+  path = "./IMGS/",
+  scale = 1)
+}
+```
+

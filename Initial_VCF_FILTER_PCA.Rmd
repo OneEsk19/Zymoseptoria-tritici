@@ -61,7 +61,8 @@ F_MISS column is the frequency of missing data for the isolate, calculated as : 
 
 ```{bash}
 # Calculate missing XX% of the total genotypes for each isolate
-awk '{printf "%.1f\n", $5}' out.imiss | sort | uniq -c | sort -nrk2,2
+awk '{printf "%.1f\n", $5}' out.imiss | sort | unbcftools view working.vcf.gz 
+iq -c | sort -nrk2,2
 ```
 %.1f means to print the value of a float number to one decimal place  
 $5 is column5  
@@ -284,7 +285,7 @@ ggsave("PCA_AUS25.pdf", PCA_AUS25, height = 12,width=16,dpi=300,units = "cm")
 interactive_AUS25<-ggplotly(PCA_AUS25)
 interactive_AUS25
 ```
-So this was for isolates from 2017
+So this was for *some* isolates from 2017
 - this will be useful for looking at different drought status subsets.
 
 ## Make VCF file for 109 isolates with Phenotyping data

@@ -1,0 +1,27 @@
+---
+title: "Compound_IHS_CLR_plot"
+author: "G.Robertson"
+date: "01/07/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Plotting both ISH and both CLR together
+
+Loading all four multi-plots need to be loaded into environment from IHS_plots_PRE.Rmd, IHS_plots_POST.Rmd, CLR_plots_PRE.Rmd, CLR_plots_POST.Rmd
+
+```{r}
+library(ggplot2)
+library(gridExtra)
+```
+
+```{r}
+compound <- grid.arrange(preplotCLR, preplotIHS, postplotCLR, postplotIHS, ncol=1)
+```
+```{r}
+ggsave(filename = "./IMGS/compound_CLR_IHS.png", plot = compound, device = "png", width = 50, height = 20, units = "cm")
+```
+

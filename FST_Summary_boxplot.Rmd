@@ -1,0 +1,26 @@
+---
+title: "FST_Summary_plot"
+author: "G.Robertson"
+date: "20/06/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## FST summary plot
+
+```{r}
+dataFST <- read.csv("./data_sheets/fst_file.csv", header = T)
+dataFST <- data[,-1]
+```
+
+```{r}
+boxplot(FST~Chrom,data=dataFST, col="burlywood3", border="darkslategrey",
+    main="Summary of FST between populations per chromosome",
+    xlab="Chromosome",
+    ylab="FST")
+```
+
+
