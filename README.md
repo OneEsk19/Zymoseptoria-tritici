@@ -1,4 +1,9 @@
-# Population genetics workflow with *Zymoseptoria tritici* 
+# Population genetics with *Zymoseptoria tritici* 
+
+## Summary
+Population selection (1-4) > Global analysis (5-11) > Population analysis (12-14) > Selection tests (15-19)
+
+## Workflow 
 
 | Step | Process | Description | Workflow | Outputs |
 |------|---------|-------------|----------|---------|
@@ -21,3 +26,6 @@
 |17.|IHS Plots|plotting IHS statistics per chrom + per pop| IHS_plots_POST.Rmd <br> IHS_plots_PRE.Rmd| in /IMGS/ <br> WG_ISH_POST.png <br> WG_ISH.PRE.png|
 |18.|CLR analysis|Composite likihood Ratio|CLR_Sweed.Rmd <br>CLR_plots_POST.Rmd <br>CLR_plots_PRE.Rmd |IMGS/WG_CLR_post.png<br>IMGS/WG_CLR_pre.png|
 |19.|Integrated plot|Plot to integrate iHS and CLR statistics|compountPlot_IHS_CLR.Rmd|IMGS/compound_CLR_IHS.png| 
+
+
+## Abstract
