@@ -1,0 +1,366 @@
+To cite the adegenet package:
+
+  Jombart, T. (2008) adegenet: a R package for the
+  multivariate analysis of genetic markers. Bioinformatics
+  24: 1403-1405. doi: 10.1093/bioinformatics/btn129
+
+  Jombart T. and Ahmed I. (2011) adegenet 1.3-1: new tools
+  for the analysis of genome-wide SNP data. Bioinformatics.
+  doi: 10.1093/bioinformatics/btr521
+
+To see these entries in BibTeX format, use 'print(<citation>,
+bibtex=TRUE)', 'toBibtex(.)', or set
+'options(citation.bibtex.max=999)'.
+
+
+To cite package ‘cowplot’ in publications use:
+
+  Claus O. Wilke (2020). cowplot: Streamlined Plot Theme and
+  Plot Annotations for 'ggplot2'. R package version 1.1.1.
+  https://CRAN.R-project.org/package=cowplot
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {cowplot: Streamlined Plot Theme and Plot Annotations for 'ggplot2'},
+    author = {Claus O. Wilke},
+    year = {2020},
+    note = {R package version 1.1.1},
+    url = {https://CRAN.R-project.org/package=cowplot},
+  }
+
+
+To cite package ‘data.table’ in publications use:
+
+  Matt Dowle and Arun Srinivasan (2021). data.table:
+  Extension of `data.frame`. R package version 1.14.0.
+  https://CRAN.R-project.org/package=data.table
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {data.table: Extension of `data.frame`},
+    author = {Matt Dowle and Arun Srinivasan},
+    year = {2021},
+    note = {R package version 1.14.0},
+    url = {https://CRAN.R-project.org/package=data.table},
+  }
+
+
+To cite package ‘dplyr’ in publications use:
+
+  Hadley Wickham, Romain François, Lionel Henry and Kirill
+  Müller (2021). dplyr: A Grammar of Data Manipulation. R
+  package version 1.0.6.
+  https://CRAN.R-project.org/package=dplyr
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {dplyr: A Grammar of Data Manipulation},
+    author = {Hadley Wickham and Romain François and Lionel Henry and Kirill Müller},
+    year = {2021},
+    note = {R package version 1.0.6},
+    url = {https://CRAN.R-project.org/package=dplyr},
+  }
+
+
+To cite ggplot2 in publications, please use:
+
+  H. Wickham. ggplot2: Elegant Graphics for Data Analysis.
+  Springer-Verlag New York, 2016.
+
+A BibTeX entry for LaTeX users is
+
+  @Book{,
+    author = {Hadley Wickham},
+    title = {ggplot2: Elegant Graphics for Data Analysis},
+    publisher = {Springer-Verlag New York},
+    year = {2016},
+    isbn = {978-3-319-24277-4},
+    url = {https://ggplot2.tidyverse.org},
+  }
+
+
+To cite package ‘gridExtra’ in publications use:
+
+  Baptiste Auguie (2017). gridExtra: Miscellaneous Functions
+  for "Grid" Graphics. R package version 2.3.
+  https://CRAN.R-project.org/package=gridExtra
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {gridExtra: Miscellaneous Functions for "Grid" Graphics},
+    author = {Baptiste Auguie},
+    year = {2017},
+    note = {R package version 2.3},
+    url = {https://CRAN.R-project.org/package=gridExtra},
+  }
+
+
+To cite package ‘hierfstat’ in publications use:
+
+  Jerome Goudet and Thibaut Jombart (2020). hierfstat:
+  Estimation and Tests of Hierarchical F-Statistics. R
+  package version 0.5-7.
+  https://CRAN.R-project.org/package=hierfstat
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {hierfstat: Estimation and Tests of Hierarchical F-Statistics},
+    author = {Jerome Goudet and Thibaut Jombart},
+    year = {2020},
+    note = {R package version 0.5-7},
+    url = {https://CRAN.R-project.org/package=hierfstat},
+  }
+
+
+To cite mice in publications use:
+
+  Stef van Buuren, Karin Groothuis-Oudshoorn (2011). mice:
+  Multivariate Imputation by Chained Equations in R. Journal
+  of Statistical Software, 45(3), 1-67. URL
+  https://www.jstatsoft.org/v45/i03/.
+
+A BibTeX entry for LaTeX users is
+
+  @Article{,
+    title = {{mice}: Multivariate Imputation by Chained Equations in R},
+    author = {Stef {van Buuren} and Karin Groothuis-Oudshoorn},
+    journal = {Journal of Statistical Software},
+    year = {2011},
+    volume = {45},
+    number = {3},
+    pages = {1-67},
+    url = {https://www.jstatsoft.org/v45/i03/},
+  }
+
+
+To cite package ‘naniar’ in publications use:
+
+  Nicholas Tierney, Di Cook, Miles McBain and Colin Fay
+  (2021). naniar: Data Structures, Summaries, and
+  Visualisations for Missing Data. R package version 0.6.1.
+  https://CRAN.R-project.org/package=naniar
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {naniar: Data Structures, Summaries, and Visualisations for Missing Data},
+    author = {Nicholas Tierney and Di Cook and Miles McBain and Colin Fay},
+    year = {2021},
+    note = {R package version 0.6.1},
+    url = {https://CRAN.R-project.org/package=naniar},
+  }
+
+
+To cite pcadapt in publications, please use:
+
+  Privé, Florian, et al. "Performing highly efficient genome
+  scans for local adaptation with R package pcadapt version
+  4." Molecular Biology and Evolution (2020).
+
+A BibTeX entry for LaTeX users is
+
+  @Article{,
+    title = {Performing highly efficient genome scans for local adaptation with {R} package pcadapt version 4.},
+    author = {Florian Priv{\'e} and Keurcien Luu and Bjarni J. Vilhj{\'a}lmsson and Michael G.B. Blum},
+    journal = {Molecular Biology and Evolution},
+    year = {2020},
+    doi = {10.1093/molbev/msaa053},
+    url = {https://doi.org/10.1093/molbev/msaa053},
+  }
+
+
+To cite pegas in a publication use:
+
+  Paradis E. 2010. pegas: an R package for population
+  genetics with an integrated-modular approach.
+  Bioinformatics 26: 419-420.
+
+A BibTeX entry for LaTeX users is
+
+  @Article{,
+    title = {pegas: an {R} package for population genetics with an integrated--modular approach},
+    author = {E. Paradis},
+    journal = {Bioinformatics},
+    year = {2010},
+    volume = {26},
+    pages = {419-420},
+  }
+
+As pegas is evolving quickly, you may want to cite also its
+version number (found with 'library(help = pegas)').
+
+
+To cite plotly in publications use:
+
+  C. Sievert. Interactive Web-Based Data Visualization with
+  R, plotly, and shiny. Chapman and Hall/CRC Florida, 2020.
+
+A BibTeX entry for LaTeX users is
+
+  @Book{,
+    author = {Carson Sievert},
+    title = {Interactive Web-Based Data Visualization with R, plotly, and shiny},
+    publisher = {Chapman and Hall/CRC},
+    year = {2020},
+    isbn = {9781138331457},
+    url = {https://plotly-r.com},
+  }
+
+
+To cite qqman in publications use:
+
+  Stephen D. Turner (2018). qqman: an R package for
+  visualizing GWAS results using Q-Q and manhattan plots.
+  Journal of Open Source Software, 3(25), 731
+  doi:10.21105/joss.00731
+
+A BibTeX entry for LaTeX users is
+
+  @Article{,
+    title = {qqman: an R package for visualizing GWAS results using Q-Q and manhattan plots},
+    author = {Stephen Turner},
+    journal = {The Journal of Open Source Software},
+    year = {2018},
+    doi = {10.21105/joss.00731},
+  }
+
+
+To cite package ‘qvalue’ in publications use:
+
+  John D. Storey, Andrew J. Bass, Alan Dabney and David
+  Robinson (2021). qvalue: Q-value estimation for false
+  discovery rate control. R package version 2.24.0.
+  http://github.com/jdstorey/qvalue
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {qvalue: Q-value estimation for false discovery rate control},
+    author = {John D. Storey and Andrew J. Bass and Alan Dabney and David Robinson},
+    year = {2021},
+    note = {R package version 2.24.0},
+    url = {http://github.com/jdstorey/qvalue},
+  }
+
+
+To cite package ‘RColorBrewer’ in publications use:
+
+  Erich Neuwirth (2014). RColorBrewer: ColorBrewer Palettes.
+  R package version 1.1-2.
+  https://CRAN.R-project.org/package=RColorBrewer
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {RColorBrewer: ColorBrewer Palettes},
+    author = {Erich Neuwirth},
+    year = {2014},
+    note = {R package version 1.1-2},
+    url = {https://CRAN.R-project.org/package=RColorBrewer},
+  }
+
+
+To cite package ‘readr’ in publications use:
+
+  Hadley Wickham and Jim Hester (2020). readr: Read
+  Rectangular Text Data. R package version 1.4.0.
+  https://CRAN.R-project.org/package=readr
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {readr: Read Rectangular Text Data},
+    author = {Hadley Wickham and Jim Hester},
+    year = {2020},
+    note = {R package version 1.4.0},
+    url = {https://CRAN.R-project.org/package=readr},
+  }
+
+
+To cite package ‘readxl’ in publications use:
+
+  Hadley Wickham and Jennifer Bryan (2019). readxl: Read
+  Excel Files. R package version 1.3.1.
+  https://CRAN.R-project.org/package=readxl
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {readxl: Read Excel Files},
+    author = {Hadley Wickham and Jennifer Bryan},
+    year = {2019},
+    note = {R package version 1.3.1},
+    url = {https://CRAN.R-project.org/package=readxl},
+  }
+
+
+To cite package 'rehh' in publications use:
+
+  Gautier M. and Vitalis R. (2012). rehh: An R package to
+  detect footprints of selection in genome-wide SNP data from
+  haplotype structure. Bioinformatics, 28(8):1176-1177
+
+  Gautier M., Klassmann A., and Vitalis R. (2017). rehh 2:0.
+  A reimplementation of the R package rehh to detect positive
+  selection from haplotype structure. Molecular Ecology
+  Resources, 17(1):78-90
+
+To see these entries in BibTeX format, use 'print(<citation>,
+bibtex=TRUE)', 'toBibtex(.)', or set
+'options(citation.bibtex.max=999)'.
+
+
+To cite reshape2 in publications use:
+
+  Hadley Wickham (2007). Reshaping Data with the reshape
+  Package. Journal of Statistical Software, 21(12), 1-20. URL
+  http://www.jstatsoft.org/v21/i12/.
+
+A BibTeX entry for LaTeX users is
+
+  @Article{,
+    title = {Reshaping Data with the {reshape} Package},
+    author = {Hadley Wickham},
+    journal = {Journal of Statistical Software},
+    year = {2007},
+    volume = {21},
+    number = {12},
+    pages = {1--20},
+    url = {http://www.jstatsoft.org/v21/i12/},
+  }
+
+
+To cite package ‘stringr’ in publications use:
+
+  Hadley Wickham (2019). stringr: Simple, Consistent Wrappers
+  for Common String Operations. R package version 1.4.0.
+  https://CRAN.R-project.org/package=stringr
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {stringr: Simple, Consistent Wrappers for Common String Operations},
+    author = {Hadley Wickham},
+    year = {2019},
+    note = {R package version 1.4.0},
+    url = {https://CRAN.R-project.org/package=stringr},
+  }
+
+
+Knaus BJ, Grünwald NJ (2017). “VCFR: a package to manipulate
+and visualize variant call format data in R.” _Molecular
+Ecology Resources_, *17*(1), 44-53. ISSN 757, <URL:
+http://dx.doi.org/10.1111/1755-0998.12549>.
+
+Knaus BJ, Grünwald NJ (2016). “VcfR: an R package to
+manipulate and visualize VCF format data.” _BioRxiv_. <URL:
+http://dx.doi.org/10.1101/041277>.
+
+To see these entries in BibTeX format, use 'print(<citation>,
+bibtex=TRUE)', 'toBibtex(.)', or set
+'options(citation.bibtex.max=999)'.
