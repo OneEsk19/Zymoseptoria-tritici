@@ -20,12 +20,13 @@ Population selection (1-4) > Global analysis (5-11) > Population analysis (12-14
 |11.|Low differentiation|Plotting highly conserved SNPs by chromosome|Least_Variation.Rmd|***INCOMPLETE***|
 |12.|LD I|Calculating LD between pops, per chromosome|LD_Calc_VCFtools.Rmd|Locally stored .ld files|
 |13.|LD II|Visualising Linkage decay|LD_binning.RMD <br> LD_binning_LOOP.Rmd|/IMGS/(POST/PRE)_avgLDdecay_chrXX.png|
-|14.|Nucleotide diversity|.. and Tajima's D|ntDiversity_TajD.Rmd|/IMGS/diversity_plots.png|
-|15.|XP_EHH|Calculating cross population extended haplotype homozygosity|XP-EHH.Rmd|?? Have files, but not sure what this is!|
-|16.|IHS|Calculating IHS witin population statistic|IHS.Rmd|in /data_sheets/ <br> ISH_Pre.csv <br> IHS_Frequency_Pre.csv<br>ISH_Post.csv<br> IHS_Frequency_Post.csv|
-|17.|IHS Plots|plotting IHS statistics per chrom + per pop| IHS_plots_POST.Rmd <br> IHS_plots_PRE.Rmd| in /IMGS/ <br> WG_ISH_POST.png <br> WG_ISH.PRE.png|
-|18.|CLR analysis|Composite likihood Ratio|CLR_Sweed.Rmd <br>CLR_plots_POST.Rmd <br>CLR_plots_PRE.Rmd |IMGS/WG_CLR_post.png<br>IMGS/WG_CLR_pre.png|
-|19.|Integrated plot|Plot to integrate iHS and CLR statistics|compountPlot_IHS_CLR.Rmd|IMGS/compound_CLR_IHS.png| 
-
+|14.|Nucleotide diversity|and Tajima's D computation|NT_TajD_COMPUTE.Rmd|/IMGS/diversity_plots.png|
+|15.|Nucleotide diversity|and Tajima's D Plots|NT_TajD_core_summary.Rmd|/IMGS/ND_TajD_boxplot.png|
+|16.|XP_EHH|Calculating cross population extended haplotype homozygosity|XP-EHH_compute.Rmd|/data_sheets/XPEHH_na.rm.csv|
+|17.|IHS|Calculating IHS witin population statistic|IHS.Rmd|in /data_sheets/ <br> ISH_Pre.csv <br> IHS_Frequency_Pre.csv<br>ISH_Post.csv<br> IHS_Frequency_Post.csv|
+|18.|IHS Plots|plotting IHS statistics per chrom + per pop| IHS_plots_POST.Rmd <br> IHS_plots_PRE.Rmd| in /IMGS/ <br> WG_ISH_POST.png <br> WG_ISH.PRE.png|
+|19.|CLR analysis|Composite likihood Ratio|CLR_Sweed.Rmd <br>CLR_plots_POST.Rmd <br>CLR_plots_PRE.Rmd |IMGS/WG_CLR_post.png<br>IMGS/WG_CLR_pre.png|
+|20.|Integrated plot I|Plot to integrate iHS and CLR statistics|compountPlot_IHS_CLR.Rmd|IMGS/compound_CLR_IHS.png| 
+|20.|Integrated plot II|Plot to integrate FST and XP-EHH statistics|XP_EHH_longplots.Rmd first<br>FST_long_scatter.Rmd|/IMGS/FST_XPEHH.png| 
 
 ## Abstract
