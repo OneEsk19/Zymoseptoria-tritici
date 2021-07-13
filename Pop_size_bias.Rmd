@@ -1,0 +1,80 @@
+---
+title: "Pop_Size_Bias_Check"
+author: "G.Robertson"
+date: "14/07/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Population size bias
+
+Problem:
+Of our two populations, the post drought population is > 10x the size of the pre drough population. This may have affected the results.
+
+Checking this:
+Create some smaller vcf files from post population with n=27
+
+Getting post isolate list and selecting 5 random picks of 27 isolates
+```{r}
+postpop <- read.delim(file = "./data_sheets/postDsamples.txt", header = F)
+
+
+for (i in 1:10) {
+  write(s(i), file = paste("s", i, "postpop.keep"))
+}
+s1 <- sample(postpop$V1, 27, replace = F)
+write(s1, file = "s1.keep")
+s2 <- sample(postpop$V1, 27, replace = F)
+write(s2, file = "s2.keep")
+s3 <- sample(postpop$V1, 27, replace = F)
+write(s3, file = "s3.keep")
+s4 <- sample(postpop$V1, 27, replace = F)
+write(s4, file = "s4.keep")
+s5 <- sample(postpop$V1, 27, replace = F)
+write(s5, file = "s5.keep")
+```
+
+These files I will move to the direcctory that contains the post pop vcf.
+Then perform:
+```{bash}
+#1
+STARTING_VCF="post_pops.recode.vcf"
+KEEP="s1.keep"
+OUTVCF="post.s1"
+
+vcftools --vcf ${STARTING_VCF} --keep ${KEEP} --recode --out ${OUTVCF}
+
+#2
+STARTING_VCF="post_pops.recode.vcf"
+KEEP="s2.keep"
+OUTVCF="post.s2"
+
+vcftools --vcf ${STARTING_VCF} --keep ${KEEP} --recode --out ${OUTVCF}
+
+#3
+STARTING_VCF="post_pops.recode.vcf"
+KEEP="s3.keep"
+OUTVCF="post.s3"
+
+vcftools --vcf ${STARTING_VCF} --keep ${KEEP} --recode --out ${OUTVCF}
+
+#4
+STARTING_VCF="post_pops.recode.vcf"
+KEEP="s4.keep"
+OUTVCF="post.s4"
+
+vcftools --vcf ${STARTING_VCF} --keep ${KEEP} --recode --out ${OUTVCF}
+
+#5
+STARTING_VCF="post_pops.recode.vcf"
+KEEP="s5.keep"
+OUTVCF="post.s5"
+
+vcftools --vcf ${STARTING_VCF} --keep ${KEEP} --recode --out ${OUTVCF}
+```
+
+Then can perform:
+FST, LD, Ndiv, TajD
