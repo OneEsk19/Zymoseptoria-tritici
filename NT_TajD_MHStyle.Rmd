@@ -1,0 +1,92 @@
+---
+title: "NT_TajD_MHStyle"
+author: "G.Robertson"
+date: "13/07/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Mahnattan style scatter plots showing  Taj D and ND statistics by pop and by chrom for core chromosomes
+
+These aren't very informative, except for perhaps Taj D, post pop chr5, otherwise the boxplots are more informative
+
+#### Tajima's D
+Pre-drought
+
+```{r}
+taj_pre <- read.csv("./data_sheets/pre_samples.Tajima.D", header = T)
+```
+
+```{r}
+  pre_taj_core <- taj_pre[c(1:3662), ]
+  pre_taj_core <- na.omit(pre_taj_core)  
+  pre_taj_core$CHROM <- as.factor(pre_taj_core$CHROM)
+    
+    
+  ggplot(pre_taj_core, aes(x=CHROM, y=TajimaD,  color=CHROM))+
+  geom_jitter()+
+    geom_hline(yintercept = 0)+
+    theme(legend.position="none")+
+    xlab("Chromosome")+
+    ggtitle("Pre drought population")
+
+```
+Post drought
+
+```{r}
+taj_post <- read.csv("./data_sheets/post_samples.Tajima.D", header = T)
+```
+
+```{r}
+  post_taj_core <- taj_post[c(1:3668), ]
+  post_taj_core <- na.omit(post_taj_core)  
+  post_taj_core$CHROM <- as.factor(post_taj_core$CHROM)
+    
+    
+  ggplot(post_taj_core, aes(x=CHROM, y=TajimaD,  color=CHROM))+
+  geom_jitter()+
+    geom_hline(yintercept = 0)+
+    theme(legend.position="none")+
+    xlab("Chromosome")+
+    ggtitle("Post drought population")
+
+```
+
+#### Nucleotide diversity
+```{r}
+pi_pre <- read.csv("./data_sheets/pre_samples.windowed.pi", header = T)
+
+pi_post <- read.csv("./data_sheets/post_samples.windowed.pi", header = T)
+
+```
+
+Post drought
+```{r}
+ post_pi_core <- pi_post[c(1:3337), ]
+  post_pi_core <- na.omit(post_pi_core)  
+  post_pi_core$CHROM <- as.factor(post_pi_core$CHROM)
+    
+    
+  ggplot(post_pi_core, aes(x=CHROM, y=PI,  color=CHROM))+
+  geom_jitter()+
+    theme(legend.position="none")+
+    xlab("Chromosome")+
+    ggtitle("Post drought population")
+```
+
+Pre drought
+```{r}
+ pre_pi_core <- pi_pre[c(1:3172), ]
+  pre_pi_core <- na.omit(pre_pi_core)  
+  pre_pi_core$CHROM <- as.factor(pre_pi_core$CHROM)
+    
+    
+  ggplot(pre_pi_core, aes(x=CHROM, y=PI,  color=CHROM))+
+  geom_jitter()+
+    theme(legend.position="none")+
+    xlab("Chromosome")+
+    ggtitle("Post drought population")
+```

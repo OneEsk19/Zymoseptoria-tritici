@@ -135,8 +135,7 @@ chromorder <- c("WAI332_chr_01","WAI332_chr_02","WAI332_chr_04","WAI332_chr_05",
 ____________________________________
 
 ```{r}
-EHHdata <- read.csv("./REHH/core_chroms_EHH.csv", header = T)
-EHHdata <- EHHdata[,-1]
+EHHdata <- read.csv("./data_sheets/XPEHH_na.rm.csv", header = T)
 ```
 
 ```{r}
@@ -144,15 +143,36 @@ chr1 <- EHHdata[EHHdata$CHR=="WAI332_chr_01",]
 chr5 <- EHHdata[EHHdata$CHR=="WAI332_chr_05",]
 ```
 
-
+# both pval and raw
 ```{r}
 ggplot()+
   geom_point(data = chr1, aes(x=POSITION/1000000, y=XPEHH_pre_post), colour="darkslategrey")+
   geom_line(data=chr1, aes(x=POSITION/1000000, y=LOGPVALUE), colour="red")
 ```
 
+# just pval
 ```{r}
 ggplot()+
   geom_line(data=chr5, aes(x=POSITION/1000000, y=LOGPVALUE), colour="darkslategrey")
 ```
 
+
+# manahhtan style of pval WG
+```{r}
+
+ ggplot(EHHdata, aes(x=CHR, y=LOGPVALUE,  color=CHR))+
+  geom_jitter()+
+    theme(legend.position="none")+
+    xlab("Chromosome")+
+    ggtitle("XP-EHH P vals")
+```
+
+# manahhtan style of raw WG
+```{r}
+
+ ggplot(EHHdata, aes(x=CHR, y=XPEHH_pre_post,  color=CHR))+
+  geom_jitter()+
+    theme(legend.position="none")+
+    xlab("Chromosome")+
+    ggtitle("XP-EHH raw")
+```

@@ -1,0 +1,106 @@
+---
+title: "TajD"
+author: "G.Robertson"
+date: "08/07/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Boxplot summaries fo TajD and ND per pop per chrom in combined graphs
+
+### Tajima's D
+
+```{r}
+taj_pre <- read.csv("./data_sheets/pre_samples.Tajima.D", header = T)
+
+taj_post <- read.csv("./data_sheets/post_samples.Tajima.D", header = T)
+```
+
+Extract core chroms, get rid of NAs and change chroms to factors
+```{r}
+  pre_taj_core <- taj_pre[c(1:3662), ]
+  pre_taj_core <- na.omit(pre_taj_core)  
+  pre_taj_core$CHROM <- as.factor(pre_taj_core$CHROM)
+
+  post_taj_core <- taj_post[c(1:3668), ]
+  post_taj_core <- na.omit(post_taj_core)  
+  post_taj_core$CHROM <- as.factor(post_taj_core$CHROM)
+```
+
+Making factor variables so they can be coloured by pop
+```{r}
+a <- taj_post
+a$PopID <- rep("post", length(a$CHROM))
+
+b <- taj_pre
+b$PopID <- rep("pre", length(b$CHROM))
+
+all_taj <- rbind(a, b)
+all_taj_core <- na.omit(subset(all_taj, CHROM<=13))
+```
+
+make plot
+```{r}
+tajD <- ggplot(all_taj_core, aes(x=as.factor(CHROM), y=TajimaD, fill=PopID))+
+  geom_boxplot()+
+  scale_fill_manual(values = c("burlywood3", "darkslategrey"))+
+  xlab("Chromosome")
+```
+
+### Nucleotide diversity
+
+```{r}
+pi_pre <- read.csv("./data_sheets/pre_samples.windowed.pi", header = T)
+
+pi_post <- read.csv("./data_sheets/post_samples.windowed.pi", header = T)
+```
+
+Extract core chroms, get rid of NAs and change chroms to factors
+```{r}
+ post_pi_core <- pi_post[c(1:3337), ]
+  post_pi_core <- na.omit(post_pi_core)  
+  post_pi_core$CHROM <- as.factor(post_pi_core$CHROM)
+
+  pre_pi_core <- pi_pre[c(1:3172), ]
+  pre_pi_core <- na.omit(pre_pi_core)  
+  pre_pi_core$CHROM <- as.factor(pre_pi_core$CHROM)
+```
+
+
+Making factor variables so they can be coloured by pop
+Nucleotide diversity
+```{r}
+a <- post_pi_core
+a$PopID <- rep("post", length(a$CHROM))
+
+b <- pre_pi_core
+b$PopID <- rep("pre", length(b$CHROM))
+
+all_pi_core <- rbind(a,b)
+```
+
+Make plot
+```{r}
+ndiv <- 
+  ggplot(all_pi_core, aes(x=as.factor(CHROM), y=PI, fill=PopID))+
+  geom_boxplot()+
+  scale_fill_manual(values = c("burlywood3", "darkslategrey"))+
+  guides(fill="none")+
+  xlab("Chromosome")
+  
+```
+
+```{r}
+library(gridExtra)
+```
+
+Put the plots together and save 
+```{r}
+all_plots <- grid.arrange(ndiv, tajD, ncol=2)
+     
+ ggsave(all_plots, filename = "./IMGS/ND_TajD_boxplot.png",  width = 30, height = 15, units = "cm")
+```
+

@@ -1,0 +1,294 @@
+---
+title: "FST_long_scatter"
+author: "G.Robertson"
+date: "12/07/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Composite plot of FST and logPvals from XP-EHH
+### Run XP_EHH_longplots.Rmd first
+
+
+Read in the data
+```{r}
+FST <- read.csv("./data_sheets/fst_file.csv")
+FST <- FST[,-c(1,2)]
+```
+
+Subset by chromosome and make custom plot for each one
+```{r}
+chr1 <- FST[FST$Chrom==1, ]
+
+f1 <- ggplot(data= chr1, aes(x=Position/1000000, y=FST))+
+ geom_point(pch=20, colour="mediumpurple4")+
+  geom_hline(yintercept = 0.9)+
+  geom_hline(yintercept = 0.05)+
+  xlab("")+
+  ylab("FST")+
+  scale_y_continuous(breaks = c(0,.5, 1))+
+  expand_limits(y=c(0,1))+
+  theme(plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr2 <- FST[FST$Chrom==2, ]
+
+f2 <- ggplot(data= chr2, aes(x=Position/1000000, y=FST))+
+ geom_point(pch=20, colour="mediumpurple4")+
+  geom_hline(yintercept = 0.9)+
+  geom_hline(yintercept = 0.05)+
+  xlab("")+
+  expand_limits(y=c(0,1))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr3 <- FST[FST$Chrom==3, ]
+
+f3 <- ggplot(data= chr3, aes(x=Position/1000000, y=FST))+
+ geom_point(pch=20, colour="mediumpurple4")+
+  geom_hline(yintercept = 0.9)+
+  geom_hline(yintercept = 0.05)+
+  xlab("")+
+  expand_limits(y=c(0,1))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr4 <- FST[FST$Chrom==4, ]
+
+f4 <- ggplot(data= chr4, aes(x=Position/1000000, y=FST))+
+ geom_point(pch=20, colour="mediumpurple4")+
+  geom_hline(yintercept = 0.9)+
+  geom_hline(yintercept = 0.05)+
+  xlab("")+
+  expand_limits(y=c(0,1))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr5 <- FST[FST$Chrom==5, ]
+
+f5 <- ggplot(data= chr5, aes(x=Position/1000000, y=FST))+
+ geom_point(pch=20, colour="mediumpurple4")+
+  geom_hline(yintercept = 0.9)+
+  geom_hline(yintercept = 0.05)+
+  xlab("")+
+  expand_limits(y=c(0,1))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr6 <- FST[FST$Chrom==6, ]
+
+f6 <- ggplot(data= chr6, aes(x=Position/1000000, y=FST))+
+ geom_point(pch=20, colour="mediumpurple4")+
+  geom_hline(yintercept = 0.9)+
+  geom_hline(yintercept = 0.05)+
+  xlab("")+
+  expand_limits(y=c(0,1))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr7 <- FST[FST$Chrom==7, ]
+
+f7 <- ggplot(data= chr7, aes(x=Position/1000000, y=FST))+
+ geom_point(pch=20, colour="mediumpurple4")+
+  geom_hline(yintercept = 0.9)+
+  geom_hline(yintercept = 0.05)+
+  xlab("")+
+  expand_limits(y=c(0,1))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr8 <- FST[FST$Chrom==8, ]
+
+f8 <- ggplot(data= chr8, aes(x=Position/1000000, y=FST))+
+ geom_point(pch=20, colour="mediumpurple4")+
+  geom_hline(yintercept = 0.9)+
+  geom_hline(yintercept = 0.05)+
+  xlab("")+
+  expand_limits(y=c(0,1))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr9 <- FST[FST$Chrom==9, ]
+
+f9 <- ggplot(data= chr9, aes(x=Position/1000000, y=FST))+
+ geom_point(pch=20, colour="mediumpurple4")+
+  geom_hline(yintercept = 0.9)+
+  geom_hline(yintercept = 0.05)+
+  xlab("")+
+  expand_limits(y=c(0,1))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr10 <- FST[FST$Chrom==10, ]
+
+f10 <- ggplot(data= chr10, aes(x=Position/1000000, y=FST))+
+ geom_point(pch=20, colour="mediumpurple4")+
+  geom_hline(yintercept = 0.9)+
+  geom_hline(yintercept = 0.05)+
+  xlab("")+
+  expand_limits(y=c(0,1))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr11 <- FST[FST$Chrom==11, ]
+
+f11 <- ggplot(data= chr11, aes(x=Position/1000000, y=FST))+
+ geom_point(pch=20, colour="mediumpurple4")+
+  geom_hline(yintercept = 0.9)+
+  geom_hline(yintercept = 0.05)+
+  xlab("")+
+  expand_limits(y=c(0,1))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr12 <- FST[FST$Chrom==12, ]
+
+f12 <- ggplot(data= chr12, aes(x=Position/1000000, y=FST))+
+ geom_point(pch=20, colour="mediumpurple4")+
+  geom_hline(yintercept = 0.9)+
+  geom_hline(yintercept = 0.05)+
+  xlab("")+
+  expand_limits(y=c(0,1))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr13 <- FST[FST$Chrom==13, ]
+
+f13 <- ggplot(data= chr13, aes(x=Position/1000000, y=FST))+
+ geom_point(pch=20, colour="mediumpurple4")+
+  geom_hline(yintercept = 0.9)+
+  geom_hline(yintercept = 0.05)+
+  xlab("")+
+  expand_limits(y=c(0,1))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+```{r}
+library(cowplot)
+```
+
+Put all plots from this and XP_EHH_longplots.Rmd into a grid.
+```{r}
+fstXPplot <- plot_grid(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, ncol = 13, nrow = 2, byrow = T, rel_widths = c(6.2, 4.1, 3.8, 2.9, 2.9, 2.3, 2.8, 2.4, 2, 1.7, 1.6, 1.2, 1.1))
+```
+
+Save this to file
+```{r}
+ggsave(filename = "./IMGS/FST_XPEHH.png", plot = fstXPplot, device = "png", width = 50, height = 8, units = "cm")
+```
+
