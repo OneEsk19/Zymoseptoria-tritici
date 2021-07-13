@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Population size bias
+## Population size bias 
 
 Problem:
 Of our two populations, the post drought population is > 10x the size of the pre drough population. This may have affected the results.
