@@ -24,10 +24,6 @@ Getting post isolate list and selecting 5 random picks of 27 isolates
 ```{r}
 postpop <- read.delim(file = "./data_sheets/postDsamples.txt", header = F)
 
-
-for (i in 1:10) {
-  write(s(i), file = paste("s", i, "postpop.keep"))
-}
 s1 <- sample(postpop$V1, 27, replace = F)
 write(s1, file = "s1.keep")
 s2 <- sample(postpop$V1, 27, replace = F)
@@ -79,5 +75,229 @@ OUTVCF="post.s5"
 vcftools --vcf ${STARTING_VCF} --keep ${KEEP} --recode --out ${OUTVCF}
 ```
 
-Then can perform:
-FST, LD, Ndiv, TajD
+Output vcfs and log files moved to new folder /Bias_Check
+
+
+Lets do Ndiv and TajD first as they are fairly easy to compute and summarise.
+Hopefully the graphs will look similar to the ones we already have
+Nucleotide diversity calculation
+```{bash}
+#1
+INPUT_VCF="post.s1.recode.vcf"
+OUTFILE="ND_s1_post"
+
+vcftools --vcf ${INPUT_VCF} --haploid --window-pi  10000 --out ${OUTFILE}
+
+#2
+INPUT_VCF="post.s2.recode.vcf"
+OUTFILE="ND_s2_post"
+
+vcftools --vcf ${INPUT_VCF} --haploid --window-pi  10000 --out ${OUTFILE}
+
+#3
+INPUT_VCF="post.s3.recode.vcf"
+OUTFILE="ND_s3_post"
+
+vcftools --vcf ${INPUT_VCF} --haploid --window-pi  10000 --out ${OUTFILE}
+
+#4
+INPUT_VCF="post.s4.recode.vcf"
+OUTFILE="ND_s4_post"
+
+vcftools --vcf ${INPUT_VCF} --haploid --window-pi  10000 --out ${OUTFILE}
+
+#5
+INPUT_VCF="post.s5.recode.vcf"
+OUTFILE="ND_s5_post"
+
+vcftools --vcf ${INPUT_VCF} --haploid --window-pi  10000 --out ${OUTFILE}
+```
+
+Read them into R
+```{r}
+pi1 <- read.delim("./Bias_Check/ND_s1_post.windowed.pi", header = T)
+pi2 <- read.delim("./Bias_Check/ND_s2_post.windowed.pi", header = T)
+pi3 <- read.delim("./Bias_Check/ND_s3_post.windowed.pi", header = T)
+pi4 <- read.delim("./Bias_Check/ND_s4_post.windowed.pi", header = T)
+pi5 <- read.delim("./Bias_Check/ND_s5_post.windowed.pi", header = T)
+```
+
+Plots
+
+```{r}
+library(ggplot2)
+```
+```{r}
+pi_pl1 <- 
+  ggplot(pi1, aes(x=PI))+
+  geom_histogram(bins = 20, fill="darkslategrey", color="burlywood3")+
+  ylab("nDiv")+
+  xlab("")+
+ggtitle("Sample 1")
+
+pi_pl2 <- 
+   ggplot(pi2, aes(x=PI))+
+  geom_histogram(bins = 20, fill="darkslategrey", color="burlywood3")+
+  ylab("nDiv")+
+     xlab("")+
+ggtitle("Sample 2")
+ 
+pi_pl3 <- 
+   ggplot(pi3, aes(x=PI))+
+  geom_histogram(bins = 20, fill="darkslategrey", color="burlywood3")+
+  ylab("nDiv")+
+     xlab("")+
+ggtitle("Sample 3")
+ 
+pi_pl4 <- 
+   ggplot(pi4, aes(x=PI))+
+  geom_histogram(bins = 20, fill="darkslategrey", color="burlywood3")+
+  ylab("nDiv")+
+     xlab("")+
+ggtitle("Sample 4")
+ 
+pi_pl5 <- 
+   ggplot(pi4, aes(x=PI))+
+  geom_histogram(bins = 20, fill="darkslategrey", color="burlywood3")+
+  ylab("nDiv")+
+     xlab("")+
+ggtitle("Sample 5")
+```
+
+Now for Taj D
+```{bash}
+#1
+INPUT_VCF="post.s1.recode.vcf"
+OUTFILE="TJ_s1_post"
+
+vcftools --vcf ${INPUT_VCF} --haploid --TajimaD 10000  --out ${OUTFILE}
+
+#2
+INPUT_VCF="post.s2.recode.vcf"
+OUTFILE="TJ_s2_post"
+
+vcftools --vcf ${INPUT_VCF} --haploid --TajimaD 10000 --out ${OUTFILE}
+
+#3
+INPUT_VCF="post.s3.recode.vcf"
+OUTFILE="TJ_s3_post"
+
+vcftools --vcf ${INPUT_VCF} --haploid --TajimaD 10000  --out ${OUTFILE}
+
+#4
+INPUT_VCF="post.s4.recode.vcf"
+OUTFILE="TJ_s4_post"
+
+vcftools --vcf ${INPUT_VCF} --haploid --TajimaD 10000  --out ${OUTFILE}
+
+#5
+INPUT_VCF="post.s5.recode.vcf"
+OUTFILE="TJ_s5_post"
+
+vcftools --vcf ${INPUT_VCF} --haploid --TajimaD 10000 --out ${OUTFILE}
+```
+
+Read into R
+```{r}
+td1 <- read.delim("./Bias_Check/TJ_s1_post.Tajima.D", header = T)
+td2 <- read.delim("./Bias_Check/TJ_s2_post.Tajima.D", header = T)
+td3 <- read.delim("./Bias_Check/TJ_s3_post.Tajima.D", header = T)
+td4 <- read.delim("./Bias_Check/TJ_s4_post.Tajima.D", header = T)
+td5 <- read.delim("./Bias_Check/TJ_s5_post.Tajima.D", header = T)
+```
+
+```{r}
+
+tdpl1 <- ggplot(td1, aes(x=TajimaD))+
+  geom_histogram(bins=20, fill="burlywood3", color="darkslategrey")+
+  ggtitle("Sample 1")+
+  xlab("")+
+  ylab("Tajima's D")
+
+tdpl2 <- ggplot(td2, aes(x=TajimaD))+
+  geom_histogram(bins=20, fill="burlywood3", color="darkslategrey")+
+  ggtitle("Sample 2")+
+  xlab("")+
+  ylab("Tajima's D")
+
+tdpl3 <- ggplot(td3, aes(x=TajimaD))+
+  geom_histogram(bins=20, fill="burlywood3", color="darkslategrey")+
+  ggtitle("Sample 3")+
+  xlab("")+
+  ylab("Tajima's D")
+
+tdpl4 <- ggplot(td4, aes(x=TajimaD))+
+  geom_histogram(bins=20, fill="burlywood3", color="darkslategrey")+
+  ggtitle("Sample 4")+
+  xlab("")+
+  ylab("Tajima's D")
+
+tdpl5 <- ggplot(td5, aes(x=TajimaD))+
+  geom_histogram(bins=20, fill="burlywood3", color="darkslategrey")+
+  ggtitle("Sample 4")+
+  xlab("")+
+  ylab("Tajima's D")
+```
+
+```{r}
+library(gridExtra)
+```
+
+```{r}
+all_plots <- grid.arrange(pi_pl1, pi_pl2, pi_pl3, pi_pl4, pi_pl5, tdpl1, tdpl2, tdpl3, tdpl4, tdpl5, ncol=2)
+ggsave(all_plots, filename = "./Bias_Check/ND_TJ_plots.png", width = 15, height = 30, units = "cm")
+```
+
+Comparing this image to this one: /IMGS/diversity_plots.png
+They seem to be true to the larger sample of 300-odd, and look very different to the pre-pops.
+- tbh this satisfies me, but to be thorough, I should perhaps do the iHS and/or FST
+
+FST is easier
+```{bash}
+#1
+POSTPOP=s1.keep
+OUTFILE=s1vspre
+
+vcftools --vcf drought_pops.recode.vcf --haploid --weir-fst-pop preDsamples.txt --weir-fst-pop ${POSTPOP} --out ${OUTFILE}
+
+#2
+POSTPOP=s2.keep
+OUTFILE=s2vspre
+
+#3
+POSTPOP=s3.keep
+OUTFILE=s3vspre
+
+#4
+POSTPOP=s4.keep
+OUTFILE=s4vspre
+
+#5
+POSTPOP=s5.keep
+OUTFILE=s5vspre
+```
+
+I would expect to see really high (>0.9) values in chrs 5, 6, 7, 16
+```{r}
+fst1 <- read.delim("./Bias_Check/s1vspre.weir.fst", header = T)
+high1 <- na.omit(fst1[fst1$WEIR_AND_COCKERHAM_FST>=0.9,])
+
+high1$CHROM <- as.numeric(high1$CHROM)
+str(high1)
+hist(high1$CHROM)
+```
+```{r}
+fst2 <- read.csv("./Bias_Check/s2vspre.weir.fst", header = T)
+high2 <- na.omit(fst2[fst2$WEIR_AND_COCKERHAM_FST>=0.9,])
+
+high2$CHROM <- as.numeric(high2$CHROM)
+hist(high2$CHROM)
+```
+
+```{r}
+fst3 <- read.csv("./Bias_Check/s3vspre.weir.fst", header = T)
+high3 <- na.omit(fst3[fst3$WEIR_AND_COCKERHAM_FST>=0.9,])
+
+high3$CHROM <- as.numeric(high3$CHROM)
+hist(high3$CHROM)
+```
