@@ -17,7 +17,7 @@ Population selection (1-4) > Global analysis (5-11) > Population analysis and Se
 |8.|FST I|Calculating FST and merging datasets|FST_file_prep.Rmd|in /data_sheets/: <br> fst_file.csv <br> FST_SNPIndex.csv|
 |9.|FST II|Summary of FST data: Boxplot|FST_summary|/IMGS/FST_summary.png|
 |10.|High differentiation|Plotting highly differentiated SNPs by chromosome|High_Variation_FST.Rmd|/data_sheets/highvariation_byLOCI.txt<br> /IMGS/chr(5,6,7,16)_HighVar.png|
-|11.|FST miscellaneous|Plotting distribution of FST values, and lnvestigating low differentiation|FST_Distribution.Rmd, Least_Variation|IMAGES|
+|11.|FST miscellaneous|Plotting distribution of FST values, and lnvestigating low differentiation|FST_Distribution.Rmd, Least_Variation.Rmd|IMAGES|
 |12.|LD I|Calculating LD between pops, per chromosome|LD_Calc_VCFtools.Rmd|Locally stored .ld files|
 |13.|LD II|Visualising Linkage decay|LD_binning.RMD <br> LD_binning_LOOP.Rmd|/IMGS/(POST/PRE)_avgLDdecay_chrXX.png|
 |14.|Nucleotide diversity|and Tajima's D computation|NT_TajD_COMPUTE.Rmd|/IMGS/diversity_plots.png|
