@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Sorting out our 2 populations
 
-# NOTE: Have manually edited the files resulting from this workflow due to some anomolies! Removed isolates are in: "/FST/dodgy.txt" and were elucidated in "high_miss_indv.Rmd"
+# NOTE: Have manually edited the files resulting from this workflow due to some anomolies! Removed isolates are in: "dodgy.txt" and were elucidated in "high_miss_indv.Rmd"
 
 Read in the excel sheet and get subsets of pre and post drought populations:
 ```{r}
