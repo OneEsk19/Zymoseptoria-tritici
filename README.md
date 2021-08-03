@@ -13,7 +13,7 @@ Population selection (1-4) > Global analysis (5-11) > Population analysis and Se
 |4.|VCF Filtering II|Subsetting final isolates from filtered VCF, and plotting PCA to show population clusters|AUS350.Rmd high_missing_indv.Rmd|Locally stored final VCF (drought_pops.recode.vcf) <br>PCA_AUS350.pdf (static)<br>PCA_AUS350.html (interactive)|
 |5.|Isolate locations|Plot of isolate location on Australia map|Mapping.Rmd|Pop_size_location.png<br>mapgraphing_table.csv<br>WGS_STB_Populations.xlsx|
 |6.|SNP Matrix|Creating SNP matrices for each chromosome from the VCF file|byChrom_snp_matrix.Rmd|Locally stored matrices and loci files <br>Dpop_ID_popname.csv<br>chromosomes.txt|
-|7.|Heatmaps|Visualising variation in the data using snp matrices|snpmatrix_heatmaps.Rmd|by chromosome heatmaps in /IMGS/|
+|7.|Heatmaps|Visualising variation in the data using snp matrices|snpmatrix_heatmaps.Rmd|by chromosome heatmaps<br>Dpop_ID_popname.csv|
 |8.|FST I|Calculating FST and merging datasets|FST_file_prep.Rmd|in /data_sheets/: <br> fst_file.csv <br> FST_SNPIndex.csv|
 |9.|FST II|Summary of FST data: Boxplot|FST_summary|/IMGS/FST_summary.png|
 |10.|High differentiation|Plotting highly differentiated SNPs by chromosome|High_Variation_FST.Rmd|/data_sheets/highvariation_byLOCI.txt<br> /IMGS/chr(5,6,7,16)_HighVar.png|
