@@ -8,8 +8,8 @@ Population selection (1-4) > Global analysis (5-11) > Population analysis and Se
 | Step | Process | Description | Workflow | Outputs |
 |------|---------|-------------|----------|---------|
 |1.|VCF Filtering I|Quality filtering of snps and isolates|Initial_VCF_FILTER_PCA.md|Locally stored vcf and misc files.|
-|2.|Quality control|Reformatting VCF and producing QC plots|PlotFilteredSNPs.rmd|QC images in /IMGS .|
-|3.|Final isolate subset|Using metadata to determine the isolates of interest for further analysis|drought_status_pops.Rmd|data_sheets/preDsamples.txt <br> data_sheets/postDsamples.txt|
+|2.|Quality control|Reformatting VCF and producing QC plots|PlotFilteredSNPs.rmd|QC images = plots.pdf|
+|3.|Final isolate subset|Using metadata to determine the isolates of interest for further analysis|AUS350.Rmd high_missing_indv.Rmd|PCA_AUS350.pdf/.html<br>excl_hamil_cluser.keep|
 |4.|VCF Filtering II|Subsetting final isolates from filtered VCF, and plotting PCA to show population clusters|AUS350.Rmd|Locally stored final VCF (drought_pops.recode.vcf) <br>/IMGS/PCA_AUS350.pdf (static)<br>/IMGS/PCA_AUS350.html (interactive)|
 |5.|Isolate locations|Plot of isolate location on Australia map|Mapping.Rmd|/IMGS/Pop_size_location.png|
 |6.|SNP Matrix|Creating SNP matrices for each chromosome from the VCF file|byChrom_snp_matrix.Rmd|Locally stored matrices and loci files|
