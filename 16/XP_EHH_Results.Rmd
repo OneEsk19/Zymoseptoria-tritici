@@ -1,0 +1,157 @@
+---
+title: "XP_EHH_Results"
+author: "G.Robertson"
+date: "14/07/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Detecting any evidence for a selective sweep in the XP_EHH results
+
+
+Read in the data
+```{r}
+XPEHH <- read.csv("./data_sheets/XPEHH_na.rm.csv")
+```
+
+Check out the distribution of values
+```{r}
+ggplot(XPEHH, aes(x=XPEHH_pre_post)) + geom_density()
+```
+# 99.5% 
+```{r}
+quantile(XPEHH$XPEHH_pre_post, probs = 0.995)
+#    99.5% 
+# 2.710898 
+```
+
+```{r}
+XPEHH99.5 <- XPEHH[XPEHH$XPEHH_pre_post>=2.710898,]
+unique(XPEHH99.5$CHR)
+# [1] 10 11 12 13  1  2  3  4  5  6  7  8  9
+```
+
+
+# 99.9%
+```{r}
+quantile(XPEHH$XPEHH_pre_post, probs = 0.999)
+#   99.9% 
+# 3.35453 
+```
+
+```{r}
+XPEHH99.9 <- XPEHH[XPEHH$XPEHH_pre_post>=3.35453,]
+unique(XPEHH99.9$CHR)
+#  [1] 12 13  1  2  3  4  6  7  8  9
+```
+
+
+# 99.95%
+```{r}
+quantile(XPEHH$XPEHH_pre_post, probs = 0.9995)
+#   99.95% 
+# 3.699798  
+```
+
+```{r}
+XPEHH99.95 <- XPEHH[XPEHH$XPEHH_pre_post>=3.699798,]
+unique(XPEHH99.95$CHR)
+#  [1] 12  1  3  4  8  9
+```
+
+
+# 99.99%
+```{r}
+quantile(XPEHH$XPEHH_pre_post, probs = 0.9999)
+#  99.99% 
+# 4.334313 
+```
+
+```{r}
+XPEHH99.99 <- XPEHH[XPEHH$XPEHH_pre_post>=4.334313,]
+unique(XPEHH99.99$CHR)
+#  [1] 12  8
+```
+Write these results. These will be put into an excel sheet.
+```{r}
+write.csv(XPEHH99.5, file = "./data_sheets/XPEHH_pctl99.5.csv", quote = F, row.names = F)
+
+write.csv(XPEHH99.95, file = "./data_sheets/XPEHH_pctl99.95.csv", quote = F, row.names = F)
+
+write.csv(XPEHH99.99, file = "./data_sheets/XPEHH_pctl99.99.csv", quote = F, row.names = F)
+```
+
+
+
+Get the top 10% of values for the hline in plots
+```{r}
+range(XPEHH$XPEHH_pre_post)
+# =  -2.699989  4.556530
+```
+
+```{r}
+2.699989+4.556530
+# 7.256519
+
+7.256519/10
+# 0.7256519
+
+4.556530 - 0.7256519
+# = 3.830878
+```
+######################## Deprecated #####################
+```{r}
+highest_XP_EHH <- data[data$XPEHH_pre_post>=2.5, ]
+write.csv(highest_XP_EHH, "./data_sheets/highest_XPEHH.csv", row.names = F)
+```
+Chroms: 2 (7 loci), 8 (1 loci)
+
+```{r}
+allhigh <- data[data$XPEHH_pre_post>=2, ]
+high_XP_EHH <- a[a$XPEHH_pre_post<2.5,]
+
+write.csv(high_XP_EHH, "./data_sheets/high_XPEHH.csv", row.names = F)
+
+unique(high_XP_EHH$CHR)
+```
+2720 loci spread across
+Chroms: 1  2  3  5  7  8  9 10 11
+
+```{r}
+library(ggplot2)
+```
+
+A kind of rough way to get a visual representation of where these loci are in thier respective chromosomes.
+
+Pop it out and stretch it to resolve them a bit better. 
+
+```{r}
+ggplot(allhigh, aes(x=POSITION/1000, y=CHR))+
+  geom_point()+
+  xlab("Loci kbp")+
+  ylab("Chromosome")+
+  ggtitle("Representation of loci with significance from XP-EHH")
+```
+
+```{r}
+ggplot()+
+  geom_point(data = highest_XP_EHH, mapping = aes(x=POSITION, y=CHR),colour="red")+
+  geom_point(data = high_XP_EHH, mapping = aes(x=POSITION, y=CHR),colour="blue")+
+  xlab("Loci kbp")+
+  ylab("Chromosome")+
+  ggtitle("Representation of loci with significance from XP-EHH")+
+  
+```
+
+```{r}
+df <- data.frame(x=c(0:129))
+ggplot(df, aes(x=x%%10, y=floor(x/10), shape=factor(x), colour=x, size=10)) +
+  geom_point() +
+  scale_shape_manual(values=df$x) + theme(legend.position='none') +
+  scale_x_continuous(breaks=0:10) + scale_y_continuous(breaks=0:12) +
+  scale_colour_hue() + scale_colour_gradientn(colours=rainbow(3))
+```
+start from 0 at bottom left and read right then up (10y + x)
