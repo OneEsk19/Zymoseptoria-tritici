@@ -1,0 +1,35 @@
+---
+title: "Taj_D_Results"
+author: "G.Robertson"
+date: "03/08/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Extracting important results from Taj D
+
+```{r}
+tajD <- read.csv("./data_sheets/post_samples.Tajima.D")
+tajD <- na.omit(tajD)
+```
+
+```{r}
+ggplot(tajD, aes(x=TajimaD)) + geom_density()
+```
+
+
+```{r}
+quantile(tajD$TajimaD, probs = .005)
+```
+
+```{r}
+tajDpercentile <- tajD[tajD$TajimaD<=-1.2,]
+```
+
+```{r}
+write.csv(tajDpercentile, file="./data_sheets/TajD_pcnt0.5.csv", row.names = F, quote = F)
+```
+
