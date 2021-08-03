@@ -1,0 +1,389 @@
+---
+title: "TajD-tTest"
+author: "G.Robertson"
+date: "14/07/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## t-tests for Tajima's D and Nucleotide Diversity
+
+### Tajima's D
+```{r}
+tajd_post <- read.csv("./data_sheets/post_samples.Tajima.D")
+tajd_post <- na.omit(tajd_post)
+
+tajd_pre <- read.csv("./data_sheets/pre_samples.Tajima.D")
+tajd_pre <- na.omit(tajd_pre)
+```
+
+```{r}
+chr1PRE <- tajd_pre[tajd_pre$CHROM==1, ]
+chr1POST <- tajd_post[tajd_post$CHROM==1,]
+
+t.test(chr1PRE$TajimaD, chr1POST$TajimaD, var.equal = T)
+```
+
+	Two Sample t-test
+
+data:  chr1PRE$TajimaD and chr1POST$TajimaD
+t = -36.556, df = 1150, p-value < 2.2e-16
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -3.666935 -3.293362
+sample estimates:
+mean of x mean of y 
+0.1484321 3.6285807 
+
+```{r}
+chr2PRE <- tajd_pre[tajd_pre$CHROM==2, ]
+chr2POST <- tajd_post[tajd_post$CHROM==2,]
+
+t.test(chr2PRE$TajimaD, chr2POST$TajimaD, var.equal = T)
+```
+
+	Two Sample t-test
+
+data:  chr2PRE$TajimaD and chr2POST$TajimaD
+t = -24.498, df = 713, p-value < 2.2e-16
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -3.038778 -2.587850
+sample estimates:
+mean of x mean of y 
+0.7153367 3.5286510 
+
+```{r}
+chr3PRE <- tajd_pre[tajd_pre$CHROM==3, ]
+chr3POST <- tajd_post[tajd_post$CHROM==3,]
+
+t.test(chr3PRE$TajimaD, chr3POST$TajimaD, var.equal = T)
+```
+
+	Two Sample t-test
+
+data:  chr3PRE$TajimaD and chr3POST$TajimaD
+t = -16.471, df = 668, p-value < 2.2e-16
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -2.261285 -1.779573
+sample estimates:
+mean of x mean of y 
+ 0.700215  2.720644 
+ 
+```{r}
+chr4PRE <- tajd_pre[tajd_pre$CHROM==4, ]
+chr4POST <- tajd_post[tajd_post$CHROM==4,]
+
+t.test(chr4PRE$TajimaD, chr4POST$TajimaD, var.equal = T)
+```
+
+	Two Sample t-test
+
+data:  chr4PRE$TajimaD and chr4POST$TajimaD
+t = -28.706, df = 553, p-value < 2.2e-16
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -3.767685 -3.285092
+sample estimates:
+mean of x mean of y 
+0.3608214 3.8872098 
+
+```{r}
+chr5PRE <- tajd_pre[tajd_pre$CHROM==5, ]
+chr5POST <- tajd_post[tajd_post$CHROM==5,]
+
+t.test(chr5PRE$TajimaD, chr5POST$TajimaD, var.equal = T)
+```
+
+	Two Sample t-test
+
+data:  chr5PRE$TajimaD and chr5POST$TajimaD
+t = -2.6764, df = 519, p-value = 0.007676
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.6990775 -0.1072342
+sample estimates:
+mean of x mean of y 
+0.9761579 1.3793137 
+
+```{r}
+chr6PRE <- tajd_pre[tajd_pre$CHROM==6, ]
+chr6POST <- tajd_post[tajd_post$CHROM==6,]
+
+t.test(chr6PRE$TajimaD, chr6POST$TajimaD, var.equal = T)
+```
+
+	Two Sample t-test
+
+data:  chr6PRE$TajimaD and chr6POST$TajimaD
+t = -10.428, df = 437, p-value < 2.2e-16
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -1.813791 -1.238534
+sample estimates:
+mean of x mean of y 
+0.4740024 2.0001649 
+
+```{r}
+chr7PRE <- tajd_pre[tajd_pre$CHROM==7, ]
+chr7POST <- tajd_post[tajd_post$CHROM==7,]
+
+t.test(chr7PRE$TajimaD, chr7POST$TajimaD, var.equal = T)
+```
+
+	Two Sample t-test
+
+data:  chr7PRE$TajimaD and chr7POST$TajimaD
+t = -19.819, df = 510, p-value < 2.2e-16
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -2.769411 -2.269878
+sample estimates:
+mean of x mean of y 
+0.4846625 3.0043066 
+
+> The rest are even more separate, if chr5 is still significant, it is guaranteed that the rest will be, see: ND_TajD_boxplot.png
+
+### Nucleotide diversity
+
+```{r}
+preND <- read.csv("./data_sheets/pre_samples.windowed.pi")
+postND <- read.csv("./data_sheets/post_samples.windowed.pi")
+```
+
+```{r}
+nd1PRE <- preND[preND$CHROM==1, ]
+nd1POST <- postND[postND$CHROM==1,]
+
+t.test(nd1PRE$PI, nd1POST$PI, var.equal = T)
+```
+	
+	Two Sample t-test
+
+data:  nd1PRE$PI and nd1POST$PI
+t = -14.755, df = 1150, p-value < 2.2e-16
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.002574796 -0.001970395
+sample estimates:
+  mean of x   mean of y 
+0.001805173 0.004077769 
+
+```{r}
+nd2PRE <- preND[preND$CHROM==2, ]
+nd2POST <- postND[postND$CHROM==2,]
+
+t.test(nd2PRE$PI, nd2POST$PI, var.equal = T)
+```
+
+	Two Sample t-test
+
+data:  nd2PRE$PI and nd2POST$PI
+t = -7.7064, df = 713, p-value = 4.349e-14
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.002011368 -0.001194605
+sample estimates:
+  mean of x   mean of y 
+0.001993826 0.003596813 
+
+```{r}
+nd3PRE <- preND[preND$CHROM==3, ]
+nd3POST <- postND[postND$CHROM==3,]
+
+t.test(nd3PRE$PI, nd3POST$PI, var.equal = T)
+```
+
+	Two Sample t-test
+
+data:  nd3PRE$PI and nd3POST$PI
+t = -5.7138, df = 667, p-value = 1.665e-08
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.0015800147 -0.0007718199
+sample estimates:
+  mean of x   mean of y 
+0.002359196 0.003535113 
+
+```{r}
+nd4PRE <- preND[preND$CHROM==4, ]
+nd4POST <- postND[postND$CHROM==4,]
+
+t.test(nd4PRE$PI, nd4POST$PI, var.equal = T)
+```
+
+	Two Sample t-test
+
+data:  nd4PRE$PI and nd4POST$PI
+t = -9.2622, df = 553, p-value < 2.2e-16
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.002488430 -0.001617639
+sample estimates:
+  mean of x   mean of y 
+0.001780507 0.003833542 
+```{r}
+nd5PRE <- preND[preND$CHROM==5, ]
+nd5POST <- postND[postND$CHROM==5,]
+
+t.test(nd5PRE$PI, nd5POST$PI, var.equal = T)
+```
+### NO SIGNIFIANT DIFFERENCE IN DIVERSITY
+	Two Sample t-test
+
+data:  nd5PRE$PI and nd5POST$PI
+t = -0.87387, df = 519, p-value = 0.3826
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.0006673338  0.0002564252
+sample estimates:
+  mean of x   mean of y 
+0.002551263 0.002756717 
+
+```{r}
+nd6PRE <- preND[preND$CHROM==6, ]
+nd6POST <- postND[postND$CHROM==6,]
+
+t.test(nd6PRE$PI, nd6POST$PI, var.equal = T)
+```
+
+	Two Sample t-test
+
+data:  nd6PRE$PI and nd6POST$PI
+t = -4.0854, df = 437, p-value = 5.234e-05
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.0013307249 -0.0004662464
+sample estimates:
+  mean of x   mean of y 
+0.001915917 0.002814402 
+
+```{r}
+nd7PRE <- preND[preND$CHROM==7, ]
+nd7POST <- postND[postND$CHROM==7,]
+
+t.test(nd7PRE$PI, nd7POST$PI, var.equal = T)
+```
+
+	Two Sample t-test
+
+data:  nd7PRE$PI and nd7POST$PI
+t = -7.1212, df = 510, p-value = 3.659e-12
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.002127667 -0.001207538
+sample estimates:
+  mean of x   mean of y 
+0.002053023 0.003720626 
+
+```{r}
+nd8PRE <- preND[preND$CHROM==8, ]
+nd8POST <- postND[postND$CHROM==8,]
+
+t.test(nd8PRE$PI, nd8POST$PI, var.equal = T)
+```
+
+	Two Sample t-test
+
+data:  nd8PRE$PI and nd8POST$PI
+t = -5.3789, df = 426, p-value = 1.239e-07
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.002196477 -0.001020812
+sample estimates:
+  mean of x   mean of y 
+0.003345473 0.004954118 
+
+```{r}
+nd9PRE <- preND[preND$CHROM==9, ]
+nd9POST <- postND[postND$CHROM==9,]
+
+t.test(nd9PRE$PI, nd9POST$PI, var.equal = T)
+```
+
+	Two Sample t-test
+
+data:  nd9PRE$PI and nd9POST$PI
+t = -5.7004, df = 381, p-value = 2.398e-08
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.002725266 -0.001327400
+sample estimates:
+  mean of x   mean of y 
+0.003108468 0.005134801 
+
+```{r}
+nd10PRE <- preND[preND$CHROM==10, ]
+nd10POST <- postND[postND$CHROM==10,]
+
+t.test(nd10PRE$PI, nd10POST$PI, var.equal = T)
+```
+
+	Two Sample t-test
+
+data:  nd10PRE$PI and nd10POST$PI
+t = -6.4353, df = 339, p-value = 4.206e-10
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.002712413 -0.001442451
+sample estimates:
+  mean of x   mean of y 
+0.002920907 0.004998338 
+
+```{r}
+nd11PRE <- preND[preND$CHROM==11, ]
+nd11POST <- postND[postND$CHROM==11,]
+
+t.test(nd11PRE$PI, nd11POST$PI, var.equal = T)
+```
+
+	Two Sample t-test
+
+data:  nd11PRE$PI and nd11POST$PI
+t = -4.1015, df = 303, p-value = 5.28e-05
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.0020120292 -0.0007073282
+sample estimates:
+  mean of x   mean of y 
+0.002892236 0.004251915 
+
+```{r}
+nd12PRE <- preND[preND$CHROM==12, ]
+nd12POST <- postND[postND$CHROM==12,]
+
+t.test(nd12PRE$PI, nd12POST$PI, var.equal = T)
+```
+
+	Two Sample t-test
+
+data:  nd12PRE$PI and nd12POST$PI
+t = -6.1688, df = 272, p-value = 2.483e-09
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.002647648 -0.001366545
+sample estimates:
+  mean of x   mean of y 
+0.002063403 0.004070499 
+
+```{r}
+nd13PRE <- preND[preND$CHROM==13, ]
+nd13POST <- postND[postND$CHROM==13,]
+
+t.test(nd13PRE$PI, nd13POST$PI, var.equal = T)
+```
+
+	Two Sample t-test
+
+data:  nd13PRE$PI and nd13POST$PI
+t = -5.7177, df = 213, p-value = 3.621e-08
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.003631921 -0.001769707
+sample estimates:
+  mean of x   mean of y 
+0.003020759 0.005721573 
