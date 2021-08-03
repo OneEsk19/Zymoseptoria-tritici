@@ -1,0 +1,110 @@
+---
+title: "IHS_POIs"
+author: "G.Robertson"
+date: "22/07/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## iHS results
+
+Read in the data and clean it up
+```{r}
+postIHS <- read.csv("./data_sheets/ISH_Post.csv")
+
+IHSpost <- na.omit(postIHS)
+IHSpost <- IHSpost[,-1]
+```
+
+Write the data to file
+```{r}
+write.csv(postIHS, file = "./data_sheets/IHS_na.rm_POST.csv")
+```
+_________________________________________
+
+Results
+```{r}
+IHS <- read.csv("./data_sheets/IHS_na.rm_POST.csv")
+IHS <- na.omit(IHS)
+```
+
+```{r}
+ggplot(IHS, aes(x=IHS)) +geom_density()
+```
+Check the 99.5% percentile
+```{r}
+quantile(IHS$IHS, probs = .995)
+#   99.5% 
+# 2.669369 
+
+iHS_99.5 <- IHS[IHS$IHS>=2.67,]
+
+print(unique(iHS_99.5$CHR))
+# [1]  1  2  3  4  5  6  7  8  9 10 11 12 13
+```
+This is too general
+
+Lets be more stringent (99.9)
+```{r}
+quantile(IHS$IHS, probs = .999)
+# 99.9% 
+# 3.47111 
+
+iHS_99.9 <- IHS[IHS$IHS>=3.47,]
+
+print(unique(iHS_99.9$CHR))
+# [1]  1  2  3  4  5  7  8  9 13
+
+write.csv(iHS_99.9, file = "./data_sheets/iHS_pctl99.9.csv", quote = F, row.names = F)
+```
+
+.. and more (99.95)
+```{r}
+quantile(IHS$IHS, probs = .9995)
+#   99.95% 
+# 3.665497  
+
+iHS_99.95 <- IHS[IHS$IHS>=3.67,]
+
+print(unique(iHS_99.95$CHR))
+# [1]  1  2  3  4  5  7  8  9 13
+
+write.csv(iHS_99.95, file = "./data_sheets/iHS_pctl99.95.csv", quote = F, row.names = F)
+```
+
+.. and even more (99.99)
+```{r}
+quantile(IHS$IHS, probs = .9999)
+#   99.99% 
+# 4.466202  
+
+iHS_99.99 <- IHS[IHS$IHS>=4.47,]
+
+print(unique(iHS_99.99$CHR))
+# [1]  2  4  9 13
+
+write.csv(iHS_99.99, file = "./data_sheets/iHS_pctl99.99.csv", quote = F, row.names = F)
+```
+
+## Individual percentile files are consolidated into the excel workbook: iHs_percentile_results.xlsx ##
+
+
+Calculate the top 10% of values (for hline on plot)
+```{r}
+range(IHS$IHS)
+
+# Full range
+4.415272 + 5.877516
+# = 10.29279
+
+# Divide by 10 to get 10% of it
+10.29279/10
+# = 1.03 is 10%
+
+# find lower end of the top 10%
+5.877516-1.029279
+# = 4.848237
+```
