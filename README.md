@@ -12,7 +12,7 @@ Population selection (1-4) > Global analysis (5-11) > Population analysis and Se
 |3.|Final isolate subset|Using metadata to determine the isolates of interest for further analysis|drought_status_pops.Rmd |WGS_STB_Populations.xlsx<br>postDsamples.txt<br> preDsamples.txt<br>excl_hamil_cluser.keep|
 |4.|VCF Filtering II|Subsetting final isolates from filtered VCF, and plotting PCA to show population clusters|AUS350.Rmd high_missing_indv.Rmd|Locally stored final VCF (drought_pops.recode.vcf) <br>PCA_AUS350.pdf (static)<br>PCA_AUS350.html (interactive)|
 |5.|Isolate locations|Plot of isolate location on Australia map|Mapping.Rmd|Pop_size_location.png<br>mapgraphing_table.csv<br>WGS_STB_Populations.xlsx|
-|6.|SNP Matrix|Creating SNP matrices for each chromosome from the VCF file|byChrom_snp_matrix.Rmd|Locally stored matrices and loci files|
+|6.|SNP Matrix|Creating SNP matrices for each chromosome from the VCF file|byChrom_snp_matrix.Rmd|Locally stored matrices and loci files <br>Dpop_ID_popname.csv<br>chromosomes.txt|
 |7.|Heatmaps|Visualising variation in the data using snp matrices|snpmatrix_heatmaps.Rmd|by chromosome heatmaps in /IMGS/|
 |8.|FST I|Calculating FST and merging datasets|FST_file_prep.Rmd|in /data_sheets/: <br> fst_file.csv <br> FST_SNPIndex.csv|
 |9.|FST II|Summary of FST data: Boxplot|FST_summary|/IMGS/FST_summary.png|
