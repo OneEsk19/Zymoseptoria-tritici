@@ -20,7 +20,7 @@ Population selection (1-4) > Global analysis (5-11) > Population analysis and Se
 |11.|FST miscellaneous|Plotting distribution of FST values, and lnvestigating low differentiation|FST_Distribution.Rmd, Least_Variation.Rmd|IMAGES|
 |12.|LD I|Calculating LD between pops, per chromosome|LD_Calc_VCFtools.Rmd|Locally stored .ld files|
 |13.|LD II|Visualising Linkage decay|LD_binning.RMD <br> LD_binning_LOOP.Rmd|/IMGS/(POST/PRE)_avgLDdecay_chrXX.png|
-|14.|Nucleotide diversity<br Tajima's D|Computation workflow and preliminary plots|NT_TajD_COMPUTE.Rmd|/IMGS/diversity_plots.png|
+|14.|Nucleotide diversity<br> and Tajima's D|Computation workflow and preliminary plots|NT_TajD_COMPUTE.Rmd|/IMGS/diversity_plots.png|
 |15.|Nucleotide diversity<br>and Tajima's D|Summary plots and t-tests|NT_TajD_core_summary.Rmd <br> t_tests_ND_TajD.Rmd|/IMGS/ND_TajD_boxplot.png|
 |16.|XP_EHH|Calculating cross population extended haplotype homozygosity|XP-EHH_compute.Rmd|/data_sheets/XPEHH_na.rm.csv|
 |17.|IHS|Calculating IHS witin population statistic|IHS.Rmd|in /data_sheets/ <br> ISH_Pre.csv <br> IHS_Frequency_Pre.csv<br>ISH_Post.csv<br> IHS_Frequency_Post.csv|
