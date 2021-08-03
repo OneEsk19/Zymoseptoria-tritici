@@ -50,17 +50,29 @@ Read in the post data
 postCLR <- read.csv("./data_sheets/CLR_post_core.csv")
 ```
 
-See what the upper and lower limits to the data are, extract the top 10% and write to file
+
+Should us percentiles.
+PLot the data
 ```{r}
-range(postCLR$Likelihood)
-# 0.000 1553.731
-highest <- postCLR[postCLR$Likelihood>=1400,]
+library(ggplot2)
 ```
 
 ```{r}
-write.csv(highest, "./data_sheets/CLR_post_top10pc.csv", quote = F, row.names = F)
-
+ggplot(postCLR, aes(x=Likelihood)) + geom_density()
 ```
+
+```{r}
+quantile(postCLR$Likelihood, probs = .995)
+```
+   99.5% 
+410.4002 
+```{r}
+CLRpercentile <- postCLR[postCLR$Likelihood>=410.4002,]
+unique(CLRpercentile$Chrom)
+
+write.csv(CLRpercentile, file = "./data_sheets/CLR_post_pctl95.5.csv", quote = F, row.names = F)
+```
+
 
 Not really needed for the pre population
 ```{r}
