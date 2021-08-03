@@ -19,7 +19,7 @@ Population selection (1-4) > Global analysis (5-11) > Population analysis and Se
 |10.|High differentiation|Plotting highly differentiated SNPs by chromosome|High_Variation_FST.Rmd|/data_sheets/highvariation_byLOCI.txt<br> /IMGS/chr(5,6,7,16)_HighVar.png|
 |11.|FST miscellaneous|Plotting distribution of FST values, and lnvestigating low differentiation|FST_Distribution.Rmd, Least_Variation.Rmd|IMAGES|
 |12.|LD I|Calculating LD between pops, per chromosome|LD_Calc_VCFtools.Rmd|Locally stored .ld files|
-|13.|LD II|Visualising Linkage decay|LD_binning.RMD <br> LD_binning_LOOP.Rmd|/IMGS/(POST/PRE)_avgLDdecay_chrXX.png|
+|13.|LD II|Visualising Linkage decay|LD_binning.RMD <br> LD_binning_LOOP.Rmd|/ Image files in the format:(POST/PRE)_avgLDdecay_chrXX.png|
 |14.|Nucleotide diversity<br> and Tajima's D|Computation workflow and preliminary plots|NT_TajD_COMPUTE.Rmd|diversity_plots.png|
 |15.|Nucleotide diversity<br>and Tajima's D|Summary plots, t-tests and Taj D results|NT_TajD_core_summary.Rmd <br> t_tests_ND_TajD.Rmd<br>TajD_Results.Rmd|ND_TajD_boxplot.png<br>TajD_pcnt0.5.csv|
 |16.|XP_EHH|Calculating cross population extended haplotype homozygosity|XP-EHH_compute.Rmd|/data_sheets/XPEHH_na.rm.csv|
