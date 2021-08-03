@@ -27,6 +27,6 @@ Population selection (1-4) > Global analysis (5-11) > Population analysis and Se
 |18.|IHS Plots|plotting IHS statistics per chrom + per pop| IHS_plots_POST.Rmd <br> IHS_plots_PRE.Rmd| in /IMGS/ <br> WG_ISH_POST.png <br> WG_ISH.PRE.png|
 |19.|CLR analysis|Composite likihood Ratio|CLR_Sweed.Rmd <br>CLR_plots_POST.Rmd <br>CLR_plots_PRE.Rmd |IMGS/WG_CLR_post.png<br>IMGS/WG_CLR_pre.png|
 |20.|Integrated plot I|Plot to integrate iHS and CLR statistics|compountPlot_IHS_CLR.Rmd|IMGS/compound_CLR_IHS.png| 
-|21.|Integrated plot II|Plot to integrate FST and XP-EHH statistics|XP_EHH_longplots.Rmd first<br>FST_long_scatter.Rmd|/IMGS/FST_XPEHH.png| 
+|21.|Integrated plot II|Plot to integrate FST, XP-EHH, CLR and iHS statistics|Compound_plot_v2.Rmd/IMGS/FST_XPEHH.png<br> All necessary data files| 
 |22.|BLAST results|Graphic for BLAST results|Blast_res_graph.R|BLAST_res.png|
 ## Abstract
