@@ -16,7 +16,7 @@ Population selection (1-4) > Global analysis (5-11) > Population analysis and Se
 |7.|Heatmaps|Visualising variation in the data using snp matrices|snpmatrix_heatmaps.Rmd|by chromosome heatmaps<br>Dpop_ID_popname.csv|
 |8.|FST I|Calculating FST and merging datasets|FST_file_prep.Rmd|FST-SNPindex.csv<br>fst_file.csv<br>pop1_vs_pop2.weir.fst|
 |9.|FST II|Summary of FST data and results|FST_summary_boxplot.Rmd<br>FST_Results.Rmd|FST_summary.png|
-|10.|High differentiation|Plotting highly differentiated SNPs by chromosome|High_Variation_FST.Rmd|/data_sheets/highvariation_byLOCI.txt<br> /IMGS/chr(5,6,7,16)_HighVar.png|
+|10.|High differentiation|Plotting highly differentiated SNPs by chromosome|High_Variation_FST.Rmd|/data_sheets/highvariation_byLOCI.txt<br> /Various images<br>fst_file.csv<br>FST_SNPindex.csv|
 |11.|FST miscellaneous|Plotting distribution of FST values, and lnvestigating low differentiation|FST_Distribution.Rmd, Least_Variation.Rmd|IMAGES|
 |12.|LD I|Calculating LD between pops, per chromosome|LD_Calc_VCFtools.Rmd|Locally stored .ld files|
 |13.|LD II|Visualising Linkage decay|LD_binning.RMD <br> LD_binning_LOOP.Rmd|Image files in the format:(POST/PRE)_avgLDdecay_chrXX.png|
