@@ -1,0 +1,79 @@
+---
+title: "much_missing_indvs"
+author: "Georgina Robertson"
+date: "01/06/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Identifying the individuals that seemed to have a lot missing in the heatmaps
+
+I had another look at the heatmaps. There are 3 individuals that look like they have a lot of missing data. This is really obvious in the core chromosomes, but they don't follow this pattern on the accessory chromosomes. They may have just slipped passed the filter by being a smidgen over the threshhold.
+
+
+Get a report on depth for the main vcf
+```{bash}
+vcftools --vcf EXCL_HAMIL_CLUS.biallelicSNP.maf0.5.miss0.9.recode.vcf --depth --out 20miss_depth
+```
+
+This made a file: 20miss_depth.idepth
+Reading this in:
+```{r}
+depth <- read.csv("./FST/20miss_depth.idepth",  sep = "\t", header = T)
+
+# there are 350 obs here, don't need to look at all of them so will just look at the area of interest.
+dodgyguys <- depth[50:80,]
+print(dodgyguys)
+# There are some obvious candidates there
+```
+
+Plot them to make it even clearer.
+```{r}
+library(ggplot2)
+
+ggplot(dodgyguys, aes(x=INDV, y=MEAN_DEPTH)) +
+  geom_bar(stat = "identity")+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+### Problematic individuals are:
+	WAI1857
+  WAI1881	
+  WAI1883	
+  
+I think the obvious course of action here is to just manually remove them from the big VCF.
+
+This will require quite a lot of back-tracking!
+
+Made a txt file with these inividuals in "dodgy.txt" 
+ALSO INCLUDED IN FILE: WAI327 WAI328 which were deleted in the original pipeline
+
+RE-CREATE the big VCF of our drought populations!
+```{bash}
+BASE_VCF="EXCL_HAMIL_CLUS.biallelicSNP.maf0.5.miss0.9"
+OUT_VCF="drought_pops"
+DEL_FILE="dodgy.txt"
+
+vcftools --vcf ${BASE_VCF}.recode.vcf --remove ${DEL_FILE} --recode --out ${OUT_VCF}
+# outputting 346 of 350 individuals (one of the 327 or 328 were removed via filtering prior to this)
+```
+
+Now need to re-run "preparation_for_pcadapt.Rmd"
+Note: Manually edited two of the files in this pipeline (removed the dodgy trio)
+re-did .bed and associated files
+DONE
+
+Now need to re-do snp_matrix.Rmd
+Note: Manually edited: populationIDs_for_droughtpopsVCF.txt" (removed 3x "post" between the 50 and 80th lines)
+Re-wrote big snp-matrix
+DONE
+
+Now need to redo splits by chromosome and create matrices
+DONE
+
+Next is creation of processed and formatted snp matrices
+
+getwd()
+
