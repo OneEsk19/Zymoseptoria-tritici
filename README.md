@@ -10,7 +10,7 @@ Population selection (1-4) > Global analysis (5-11) > Population analysis and Se
 |1.|VCF Filtering I|Quality filtering of snps and isolates|Initial_VCF_FILTER_PCA.md|Locally stored vcf and misc files.|
 |2.|Quality control|Reformatting VCF and producing QC plots|PlotFilteredSNPs.rmd|QC images = plots.pdf|
 |3.|Final isolate subset|Using metadata to determine the isolates of interest for further analysis|drought_status_pops.Rmd |WGS_STB_Populations.xlsx<br>postDsamples.txt<br> preDsamples.txt<br>excl_hamil_cluser.keep|
-|4.|VCF Filtering II|Subsetting final isolates from filtered VCF, and plotting PCA to show population clusters|AUS350.Rmdhigh_missing_indv.Rmd|Locally stored final VCF (drought_pops.recode.vcf) <br>PCA_AUS350.pdf (static)<br>PCA_AUS350.html (interactive)|
+|4.|VCF Filtering II|Subsetting final isolates from filtered VCF, and plotting PCA to show population clusters|AUS350.Rmd high_missing_indv.Rmd|Locally stored final VCF (drought_pops.recode.vcf) <br>PCA_AUS350.pdf (static)<br>PCA_AUS350.html (interactive)|
 |5.|Isolate locations|Plot of isolate location on Australia map|Mapping.Rmd|/IMGS/Pop_size_location.png|
 |6.|SNP Matrix|Creating SNP matrices for each chromosome from the VCF file|byChrom_snp_matrix.Rmd|Locally stored matrices and loci files|
 |7.|Heatmaps|Visualising variation in the data using snp matrices|snpmatrix_heatmaps.Rmd|by chromosome heatmaps in /IMGS/|
