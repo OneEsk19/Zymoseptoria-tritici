@@ -23,7 +23,7 @@ Population selection (1-4) > Global analysis (5-11) > Population analysis and Se
 |14.|Nucleotide diversity<br> and Tajima's D|Computation workflow and preliminary plots|NT_TajD_COMPUTE.Rmd|diversity_plots.png|
 |15.|Nucleotide diversity<br>and Tajima's D|Summary plots, t-tests and Taj D results|NT_TajD_core_summary.Rmd <br> t_tests_ND_TajD.Rmd<br>TajD_Results.Rmd|ND_TajD_boxplot.png<br>TajD_pcnt0.5.csv|
 |16.|XP_EHH|Calculating cross population extended haplotype homozygosity|XP-EHH_compute.Rmd|/data_sheets/XPEHH_na.rm.csv|
-|17.|IHS|Calculating IHS witin population statistic|IHS.Rmd|in /data_sheets/ <br> ISH_Pre.csv <br> IHS_Frequency_Pre.csv<br>ISH_Post.csv<br> IHS_Frequency_Post.csv|
+|17.|IHS|Calculating IHS witin population statistic<br>and extracting results|IHS.Rmd <br> iHS_Results.Rmd|ISH_Pre.csv <br> IHS_Frequency_Pre.csv<br>ISH_Post.csv<br> IHS_Frequency_Post.csv<br>iHS_percentile_results.xlsx|
 |18.|IHS Plots|plotting IHS statistics per chrom + per pop| IHS_plots_POST.Rmd <br> IHS_plots_PRE.Rmd| in /IMGS/ <br> WG_ISH_POST.png <br> WG_ISH.PRE.png|
 |19.|CLR analysis|Composite likihood Ratio|CLR_Sweed.Rmd <br>CLR_plots_POST.Rmd <br>CLR_plots_PRE.Rmd<br>CLR_results.Rmd |WG_CLR_post.png<br>WG_CLR_pre.png<br>Results data files|
 |20.|Integrated plot I|Plot to integrate iHS and CLR statistics|compountPlot_IHS_CLR.Rmd|IMGS/compound_CLR_IHS.png| 
