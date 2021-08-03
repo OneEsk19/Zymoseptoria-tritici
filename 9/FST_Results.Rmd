@@ -1,0 +1,35 @@
+---
+title: "Fst_Results"
+author: "G.Robertson"
+date: "04/08/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## FST Results
+
+Load the data
+```{r}
+fst_file <- read.csv("./data_sheets/fst_file.csv")
+fst_file <- fst_file[,-1]
+```
+
+Plot the distribution
+```{r}
+ggplot(fst_file, aes(x=FST)) + geom_density()
+```
+
+
+```{r}
+quantile(fst_file$FST, probs = .995)
+```
+ 99.5% 
+= 0.899952 
+~ 0.9
+This represents the top 10% of values, which is a good place to start.
+Use 0.9 in future analyses.
+
+
