@@ -1,0 +1,70 @@
+---
+title: "CLR_signifiant"
+author: "Georgina Robertson"
+date: "17/07/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## CLR results
+
+Get all the post data from the files into one df and write to csv
+```{r}
+postfiles <- list.files(path ="./Sweed_Results/", pattern = "*_Report.post*", full.names = T, recursive = T)
+
+dflist <- lapply(postfiles, function(i){
+ df <- read.delim(i, header = T, skip=2)
+ return(df)
+})
+postCLR <- do.call(rbind, dflist)
+
+Chrom <- c(rep(01, 1000), rep(10, 1000), rep(11, 1000), rep(12, 1000), rep(13, 1000), rep(02, 1000), rep(03, 1000),  rep(04, 1000), rep(05, 1000), rep(06, 1000), rep(07, 1000), rep(08, 1000), rep(09, 1000))
+
+postCLR <- cbind(Chrom, postCLR)
+
+write.csv(postCLR, "./data_sheets/CLR_post_core.csv", row.names = F, quote = F)
+```
+
+Get all the pre data from the files into one df and write to csv
+```{r}
+prefiles <- list.files(path ="./Sweed_Results/", pattern = "*_Report.pre*", full.names = T, recursive = T)
+
+dflist <- lapply(prefiles, function(i){
+ df <- read.delim(i, header = T, skip=2)
+ return(df)
+})
+preCLR <- do.call(rbind, dflist)
+
+Chrom <- c(rep(01, 1000), rep(10, 1000), rep(11, 1000), rep(12, 1000), rep(13, 1000), rep(02, 1000), rep(03, 1000),  rep(04, 1000), rep(05, 1000), rep(06, 1000), rep(07, 1000), rep(08, 1000), rep(09, 1000))
+
+preCLR <- cbind(Chrom, preCLR)
+
+write.csv(preCLR, "./data_sheets/CLR_pre_core.csv", row.names = F, quote = F)
+```
+
+Read in the post data
+```{r}
+postCLR <- read.csv("./data_sheets/CLR_post_core.csv")
+```
+
+See what the upper and lower limits to the data are, extract the top 10% and write to file
+```{r}
+range(postCLR$Likelihood)
+# 0.000 1553.731
+highest <- postCLR[postCLR$Likelihood>=1400,]
+```
+
+```{r}
+write.csv(highest, "./data_sheets/CLR_post_top10pc.csv", quote = F, row.names = F)
+
+```
+
+Not really needed for the pre population
+```{r}
+preCLR <- read.csv("./data_sheets/CLR_pre_core.csv")
+range(preCLR$Likelihood)
+```
+
