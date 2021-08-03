@@ -1,0 +1,1159 @@
+---
+title: "Comp_plot_2"
+author: "G.Robertson"
+date: "22/07/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## All tests, one plot
+
+
+### FST
+
+Read in the data
+```{r}
+FST <- read.csv("./data_sheets/fst_file.csv")
+FST <- FST[,-c(1,2)]
+```
+
+```{r}
+library(ggplot2)
+```
+
+Subset by chromosome and make custom plot for each one
+```{r}
+chr1 <- FST[FST$Chrom==1, ]
+
+f1 <- ggplot(data= chr1, aes(x=Position/1000000, y=FST))+
+ geom_point(pch=20, colour="mediumpurple4")+
+  geom_hline(yintercept = 0.9)+
+  geom_hline(yintercept = 0.05)+
+  xlab("")+
+  ylab("FST")+
+  scale_y_continuous(breaks = c(0,.5, 1))+
+  expand_limits(y=c(0,1))+
+  theme(plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr2 <- FST[FST$Chrom==2, ]
+
+f2 <- ggplot(data= chr2, aes(x=Position/1000000, y=FST))+
+ geom_point(pch=20, colour="mediumpurple4")+
+  geom_hline(yintercept = 0.9)+
+  geom_hline(yintercept = 0.05)+
+  xlab("")+
+  expand_limits(y=c(0,1))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr3 <- FST[FST$Chrom==3, ]
+
+f3 <- ggplot(data= chr3, aes(x=Position/1000000, y=FST))+
+ geom_point(pch=20, colour="mediumpurple4")+
+  geom_hline(yintercept = 0.9)+
+  geom_hline(yintercept = 0.05)+
+  xlab("")+
+  expand_limits(y=c(0,1))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr4 <- FST[FST$Chrom==4, ]
+
+f4 <- ggplot(data= chr4, aes(x=Position/1000000, y=FST))+
+ geom_point(pch=20, colour="mediumpurple4")+
+  geom_hline(yintercept = 0.9)+
+  geom_hline(yintercept = 0.05)+
+  xlab("")+
+  expand_limits(y=c(0,1))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr5 <- FST[FST$Chrom==5, ]
+
+f5 <- ggplot(data= chr5, aes(x=Position/1000000, y=FST))+
+ geom_point(pch=20, colour="mediumpurple4")+
+  geom_hline(yintercept = 0.9)+
+  geom_hline(yintercept = 0.05)+
+  xlab("")+
+  expand_limits(y=c(0,1))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr6 <- FST[FST$Chrom==6, ]
+
+f6 <- ggplot(data= chr6, aes(x=Position/1000000, y=FST))+
+ geom_point(pch=20, colour="mediumpurple4")+
+  geom_hline(yintercept = 0.9)+
+  geom_hline(yintercept = 0.05)+
+  xlab("")+
+  scale_x_continuous(breaks = c(0,1,2))+
+  expand_limits(y=c(0,1))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr7 <- FST[FST$Chrom==7, ]
+
+f7 <- ggplot(data= chr7, aes(x=Position/1000000, y=FST))+
+ geom_point(pch=20, colour="mediumpurple4")+
+  geom_hline(yintercept = 0.9)+
+  geom_hline(yintercept = 0.05)+
+  xlab("")+
+  expand_limits(y=c(0,1))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr8 <- FST[FST$Chrom==8, ]
+
+f8 <- ggplot(data= chr8, aes(x=Position/1000000, y=FST))+
+ geom_point(pch=20, colour="mediumpurple4")+
+  geom_hline(yintercept = 0.9)+
+  geom_hline(yintercept = 0.05)+
+  xlab("")+
+  scale_x_continuous(breaks = c(0,1,2))+
+  expand_limits(y=c(0,1))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr9 <- FST[FST$Chrom==9, ]
+
+f9 <- ggplot(data= chr9, aes(x=Position/1000000, y=FST))+
+ geom_point(pch=20, colour="mediumpurple4")+
+  geom_hline(yintercept = 0.9)+
+  geom_hline(yintercept = 0.05)+
+  xlab("")+
+  scale_x_continuous(breaks = c(0,1,2))+
+  expand_limits(y=c(0,1))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr10 <- FST[FST$Chrom==10, ]
+
+f10 <- ggplot(data= chr10, aes(x=Position/1000000, y=FST))+
+ geom_point(pch=20, colour="mediumpurple4")+
+  geom_hline(yintercept = 0.9)+
+  geom_hline(yintercept = 0.05)+
+  xlab("")+
+  scale_x_continuous(breaks = c(0,1,2))+
+  expand_limits(y=c(0,1))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr11 <- FST[FST$Chrom==11, ]
+
+f11 <- ggplot(data= chr11, aes(x=Position/1000000, y=FST))+
+ geom_point(pch=20, colour="mediumpurple4")+
+  geom_hline(yintercept = 0.9)+
+  geom_hline(yintercept = 0.05)+
+  xlab("")+
+  scale_x_continuous(breaks = c(0,1))+
+  expand_limits(y=c(0,1))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr12 <- FST[FST$Chrom==12, ]
+
+f12 <- ggplot(data= chr12, aes(x=Position/1000000, y=FST))+
+ geom_point(pch=20, colour="mediumpurple4")+
+  geom_hline(yintercept = 0.9)+
+  geom_hline(yintercept = 0.05)+
+  xlab("")+
+  scale_x_continuous(breaks = c(0,1))+
+  expand_limits(y=c(0,1))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr13 <- FST[FST$Chrom==13, ]
+
+f13 <- ggplot(data= chr13, aes(x=Position/1000000, y=FST))+
+ geom_point(pch=20, colour="mediumpurple4")+
+  geom_hline(yintercept = 0.9)+
+  geom_hline(yintercept = 0.05)+
+  xlab("")+
+  scale_x_continuous(breaks = c(0,1))+
+  expand_limits(y=c(0,1))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+library(cowplot)
+
+FSTplot <- plot_grid(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, ncol = 13, nrow = 1, rel_widths = c(6.2, 4.1, 3.8, 2.9, 2.9, 2.3, 2.8, 2.4, 2, 1.7, 1.6, 1.2, 1.1))
+```
+
+
+### XPEHH
+
+Load in the data
+```{r}
+  XPEHHfile <- read.csv("./data_sheets/XPEHH_na.rm.csv")
+XPEHHfile$NegAbs <- -abs(XPEHHfile$XPEHH_pre_post)
+```
+
+Subset by chromosome and make custom plot for each one
+```{r}
+chr1 <- XPEHHfile[XPEHHfile$CHR==1, ]
+
+x1 <- ggplot(data= chr1, aes(x=POSITION/1000000, y=NegAbs))+
+ geom_point(pch=20, colour="coral4")+
+  geom_hline(yintercept = -3.8)+
+  xlab("")+
+   expand_limits(y=c(0,-4.6))+
+  ylab("XP-EHH pre/post")+
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr2 <- XPEHHfile[XPEHHfile$CHR==2, ]
+
+x2 <- ggplot(data= chr2, aes(x=POSITION/1000000, y=NegAbs))+
+ geom_point(pch=20, colour="coral4")+
+  geom_hline(yintercept = -3.8)+
+  xlab("")+
+  expand_limits(y=c(0,-4.6))+
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr3 <- XPEHHfile[XPEHHfile$CHR==3, ]
+
+x3 <- ggplot(data= chr3, aes(x=POSITION/1000000, y=NegAbs))+
+ geom_point(pch=20, colour="coral4")+
+  geom_hline(yintercept = -3.8)+
+  xlab("")+
+  expand_limits(y=c(0,-4.6))+
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr4 <- XPEHHfile[XPEHHfile$CHR==4, ]
+
+x4 <- ggplot(data= chr4, aes(x=POSITION/1000000, y=NegAbs))+
+ geom_point(pch=20, colour="coral4")+
+  geom_hline(yintercept = -3.8)+
+  xlab("")+
+  expand_limits(y=c(0,-4.6))+
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+```{r}
+chr5 <- XPEHHfile[XPEHHfile$CHR==5, ]
+
+x5 <- ggplot(data= chr5, aes(x=POSITION/1000000, y=NegAbs))+
+ geom_point(pch=20, colour="coral4")+
+  geom_hline(yintercept = -3.8)+
+  xlab("")+
+  expand_limits(y=c(0,-4.6))+
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+```{r}
+chr6 <- XPEHHfile[XPEHHfile$CHR==6, ]
+
+x6 <- ggplot(data= chr6, aes(x=POSITION/1000000, y=NegAbs))+
+ geom_point(pch=20, colour="coral4")+
+  geom_hline(yintercept = -3.8)+
+  xlab("")+
+  expand_limits(y=c(0,-4.6))+
+  scale_x_continuous(breaks = c(0,1,2))+
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+```{r}
+chr7 <- XPEHHfile[XPEHHfile$CHR==7, ]
+
+x7 <- ggplot(data= chr7, aes(x=POSITION/1000000, y=NegAbs))+
+ geom_point(pch=20, colour="coral4")+
+  geom_hline(yintercept = -3.8)+
+  xlab("")+
+  expand_limits(y=c(0,-4.6))+
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+```{r}
+chr8 <- XPEHHfile[XPEHHfile$CHR==8, ]
+
+x8 <- ggplot(data= chr8, aes(x=POSITION/1000000, y=NegAbs))+
+ geom_point(pch=20, colour="coral4")+
+  geom_hline(yintercept = -3.8)+
+  xlab("")+
+  expand_limits(y=c(0,-4.6))+
+  scale_x_continuous(breaks = c(0,1,2))+
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr9 <- XPEHHfile[XPEHHfile$CHR==9, ]
+
+x9 <- ggplot(data= chr9, aes(x=POSITION/1000000, y=NegAbs))+
+ geom_point(pch=20, colour="coral4")+
+  geom_hline(yintercept = -3.8)+
+  xlab("")+
+  expand_limits(y=c(0,-4.6))+
+  scale_x_continuous(breaks = c(0,1,2))+
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr10 <- XPEHHfile[XPEHHfile$CHR==10, ]
+
+x10 <- ggplot(data= chr10, aes(x=POSITION/1000000, y=NegAbs))+
+ geom_point(pch=20, colour="coral4")+
+  geom_hline(yintercept = -3.8)+
+  xlab("")+
+  expand_limits(y=c(0,-4.6))+
+  scale_x_continuous(breaks = c(0,1,2))+
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr11 <- XPEHHfile[XPEHHfile$CHR==11, ]
+
+x11 <- ggplot(data= chr11, aes(x=POSITION/1000000, y=NegAbs))+
+ geom_point(pch=20, colour="coral4")+
+  geom_hline(yintercept = -3.8)+
+  xlab("")+
+  expand_limits(y=c(0,-4.6))+
+  scale_x_continuous(breaks = c(0,1))+
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr12 <- XPEHHfile[XPEHHfile$CHR==12, ]
+
+x12 <- ggplot(data= chr12, aes(x=POSITION/1000000, y=NegAbs))+
+ geom_point(pch=20, colour="coral4")+
+  geom_hline(yintercept = -3.8)+
+  xlab("")+
+  expand_limits(y=c(0,-4.6))+
+  scale_x_continuous(breaks = c(0,1))+
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+chr13 <- XPEHHfile[XPEHHfile$CHR==13, ]
+
+x13 <- ggplot(data= chr13, aes(x=POSITION/1000000, y=NegAbs))+
+ geom_point(pch=20, colour="coral4")+
+  geom_hline(yintercept = -3.8)+
+  xlab("")+
+  expand_limits(y=c(0,-4.6))+
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+```{r}
+XPEHHplot <- plot_grid(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, ncol = 13, nrow = 1, rel_widths = c(6.2, 4.1, 3.8, 2.9, 2.9, 2.3, 2.8, 2.4, 2, 1.7, 1.6, 1.2, 1.1))
+```
+
+
+### CLR 
+
+```{r}
+postCLR <- read.csv("./data_sheets/CLR_post_core.csv")
+```
+
+
+```{r}
+clr_post1 <- postCLR[postCLR$Chrom==1,]
+
+c1 <- 
+ggplot(clr_post1, aes(x=Position/1000000, y=Likelihood))+
+  geom_point(shape=20, colour="darkslateblue")+
+  geom_hline(yintercept = 1400)+
+  xlab("")+
+  ylab("CLR")+ 
+ # ggtitle("Post Drought Population")+
+  expand_limits(y=c(0,1560))+
+  theme(plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                              l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+```{r}
+clr_post2 <-postCLR[postCLR$Chrom==2,]
+
+c2 <- ggplot(clr_post2, aes(x=Position/1000000, y=Likelihood))+
+  geom_point(shape=20, colour="darkslateblue")+
+  geom_hline(yintercept = 1400)+
+  xlab("")+
+   expand_limits(y=c(0,1560))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                              l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+```{r}
+clr_post3 <- postCLR[postCLR$Chrom==3,]
+
+c3 <- ggplot(clr_post3, aes(x=Position/1000000, y=Likelihood))+
+  geom_point(shape=20, colour="darkslateblue")+
+  geom_hline(yintercept = 1400)+
+  xlab("")+
+ expand_limits(y=c(0,1560))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                              l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+clr_post4 <- postCLR[postCLR$Chrom==4,]
+
+c4 <- ggplot(clr_post4, aes(x=Position/1000000, y=Likelihood))+
+  geom_point(shape=20, colour="darkslateblue")+
+  geom_hline(yintercept = 1400)+
+  xlab("")+
+  expand_limits(y=c(0,1560))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                              l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+```{r}
+clr_post5 <- postCLR[postCLR$Chrom==5,]
+
+c5 <- ggplot(clr_post5, aes(x=Position/1000000, y=Likelihood))+
+  geom_point(shape=20, colour="darkslateblue")+
+  geom_hline(yintercept = 1400)+
+  xlab("")+
+ expand_limits(y=c(0,1560))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                              l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+```{r}
+clr_post6 <- postCLR[postCLR$Chrom==6,]
+
+c6 <- ggplot(clr_post6, aes(x=Position/1000000, y=Likelihood))+
+  geom_point(shape=20, colour="darkslateblue")+
+  geom_hline(yintercept = 1400)+
+  xlab("")+
+  scale_x_continuous(breaks = c(0,1,2))+
+ expand_limits(y=c(0,1560))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+```{r}
+clr_post7 <- postCLR[postCLR$Chrom==7,]
+
+c7 <- ggplot(clr_post7, aes(x=Position/1000000, y=Likelihood))+
+  geom_point(shape=20, colour="darkslateblue")+
+  geom_hline(yintercept = 1400)+
+  xlab("")+
+  expand_limits(y=c(0,1560))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                              l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+```{r}
+clr_post8 <- postCLR[postCLR$Chrom==8,]
+
+c8 <- ggplot(clr_post8, aes(x=Position/1000000, y=Likelihood))+
+  geom_point(shape=20, colour="darkslateblue")+
+  geom_hline(yintercept = 1400)+
+  xlab("")+
+  scale_x_continuous(breaks = c(0,1,2))+
+  expand_limits(y=c(0,1560))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+```{r}
+clr_post9 <- postCLR[postCLR$Chrom==9,]
+
+c9 <- ggplot(clr_post9, aes(x=Position/1000000, y=Likelihood))+
+  geom_point(shape=20, colour="darkslateblue")+
+  geom_hline(yintercept = 1400)+
+  xlab("")+
+  scale_x_continuous(breaks = c(0,1,2))+
+ expand_limits(y=c(0,1560))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                              l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+```{r}
+clr_post10 <- postCLR[postCLR$Chrom==10,]
+
+c10 <-  ggplot(clr_post10, aes(x=Position/1000000, y=Likelihood))+
+  geom_point(shape=20, colour="darkslateblue")+
+  geom_hline(yintercept = 1400)+
+  xlab("")+
+  scale_x_continuous(breaks = c(0,1,2))+
+ expand_limits(y=c(0,1560))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+```{r}
+clr_post11 <- postCLR[postCLR$Chrom==11,]
+
+c11 <- ggplot(clr_post11, aes(x=Position/1000000, y=Likelihood))+
+  geom_point(shape=20, colour="darkslateblue")+
+  geom_hline(yintercept = 1400)+
+  xlab("")+
+  scale_x_continuous(breaks = c(0,1))+
+  expand_limits(y=c(0,1560))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+```{r}
+clr_post12 <- postCLR[postCLR$Chrom==12,]
+
+c12 <- ggplot(clr_post12, aes(x=Position/1000000, y=Likelihood))+
+  geom_point(shape=20, colour="darkslateblue")+
+  geom_hline(yintercept = 1400)+
+  xlab("")+
+  scale_x_continuous(breaks = c(0,1))+
+  expand_limits(y=c(0,1560))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+```{r}
+clr_post13 <- postCLR[postCLR$Chrom==13,]
+
+c13 <- ggplot(clr_post13, aes(x=Position/1000000, y=Likelihood))+
+  geom_point(shape=20, colour="darkslateblue")+
+  geom_hline(yintercept = 1400)+
+  xlab("")+
+  scale_x_continuous(breaks = c(0,1))+
+  expand_limits(y=c(0,1560))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=1,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+```{r}
+CLRplot <- plot_grid(c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, ncol = 13, nrow = 1, rel_widths = c(6.2, 4.1, 3.8, 2.9, 2.9, 2.3, 2.8, 2.4, 2, 1.7, 1.6, 1.2, 1.1))
+```
+
+
+### iHS
+
+```{r}
+library(stringr)
+```
+
+```{r}
+postIHS <- read.csv("./data_sheets/ISH_Post.csv")
+postIHS$NegAbs <- -abs(postIHS$IHS)
+postIHS<- postIHS[,-1]
+postIHS <- na.omit(postIHS)
+
+
+temp <- postIHS$CHR
+temp2 <- str_split(temp, "_")
+temp3 <- sapply(temp2, "[[", 3)
+postIHS$CHR <- temp3
+
+rm(temp, temp2, temp3)
+```
+
+```{r}
+chr1post <- postIHS[postIHS$CHR=="01",]
+range(chr1post$POSITION)
+
+i1 <- 
+  ggplot(data = chr1post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  geom_hline(yintercept = -4.85)+
+  xlab("Chromosome:   1")+
+  ylab("-[iHS]")+   
+  expand_limits(y=c(0,-5.9))+
+  theme(plot.margin = margin(t=0.25,
+                             r=0.25,
+                             b= 0.25,
+                              l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+```
+
+```{r}
+chr2post <- postIHS[postIHS$CHR=="02",]
+
+i2 <- 
+  ggplot(data = chr2post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  geom_hline(yintercept = -4.85)+
+  xlab("2")+
+  expand_limits(y=c(0,-5.9))+
+    theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=0.25,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+```
+
+```{r}
+chr3post <- postIHS[postIHS$CHR=="03",]
+
+i3 <- 
+  ggplot(data = chr3post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  geom_hline(yintercept = -4.85)+
+  xlab("3")+
+  expand_limits(y=c(0,-5.9))+
+    theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=0.25,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+```
+
+```{r}
+chr4post <- postIHS[postIHS$CHR=="04",]
+
+i4 <- 
+  ggplot(data = chr4post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  geom_hline(yintercept = -4.85)+
+  xlab("4")+
+  expand_limits(y=c(0,-5.9))+
+    theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=0.25,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+```
+
+```{r}
+chr5post <- postIHS[postIHS$CHR=="05",]
+
+i5 <- 
+  ggplot(data = chr5post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  geom_hline(yintercept = -4.85)+
+  xlab("5")+
+  expand_limits(y=c(0,-5.9))+
+  theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=0.25,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+```
+
+```{r}
+chr6post <- postIHS[postIHS$CHR=="06",]
+
+i6 <- 
+  ggplot(data = chr6post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  geom_hline(yintercept = -4.85)+
+  xlab("6")+
+  expand_limits(y=c(0,-5.9))+
+  scale_x_continuous(breaks = c(0,1,2))+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=0.25,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+```
+
+```{r}
+chr7post <- postIHS[postIHS$CHR=="07",]
+
+
+i7 <- 
+  ggplot(data = chr7post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  geom_hline(yintercept = -4.85)+
+  xlab("7")+
+  expand_limits(y=c(0,-5.9))+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=0.25,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+```
+
+```{r}
+chr8post <- postIHS[postIHS$CHR=="08",]
+
+i8 <- 
+  ggplot(data = chr8post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  geom_hline(yintercept = -4.85)+
+  xlab("8")+
+  expand_limits(y=c(0,-5.9))+
+  scale_x_continuous(breaks = c(0,1,2))+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=0.25,
+                             r=0.25,
+                             b= 0.25,
+                              l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+```
+
+```{r}
+chr9post <- postIHS[postIHS$CHR=="09",]
+
+i9 <- 
+  ggplot(data = chr9post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  geom_hline(yintercept = -4.85)+
+  xlab("9")+
+  expand_limits(y=c(0,-5.9))+
+  scale_x_continuous(breaks = c(0,1,2))+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=0.25,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+```
+
+```{r}
+chr10post <- postIHS[postIHS$CHR=="10",]
+
+i10 <- 
+  ggplot(data = chr10post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  geom_hline(yintercept = -4.85)+
+  xlab("10")+
+  expand_limits(y=c(0,-5.9))+
+  scale_x_continuous(breaks = c(0,1,2))+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=0.25,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+```
+
+```{r}
+chr11post <- postIHS[postIHS$CHR=="11",]
+
+i11 <- 
+  ggplot(data = chr11post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  geom_hline(yintercept = -4.85)+
+  xlab("11")+
+  expand_limits(y=c(0,-5.9))+
+  scale_x_continuous(breaks = c(0,1))+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=0.25,
+                             r=0.25,
+                             b= 0.25,
+                              l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+```
+
+```{r}
+chr12post <- postIHS[postIHS$CHR=="12",]
+
+i12 <- 
+  ggplot(data = chr12post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  geom_hline(yintercept = -4.85)+
+  xlab("12")+
+  expand_limits(y=c(0,-5.9))+
+  scale_x_continuous(breaks = c(0,1))+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=0.25,
+                             r=0.25,
+                             b= 0.25,
+                              l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+```
+
+```{r}
+chr13post <- postIHS[postIHS$CHR=="13",]
+
+i13 <- 
+  ggplot(data = chr13post, aes(x=POSITION/1000000, y=NegAbs))+
+  geom_point(shape=20, colour="darkslategrey")+
+  geom_hline(yintercept = -4.85)+
+  xlab("13")+
+  expand_limits(y=c(0,-5.9))+
+  scale_x_continuous(breaks = c(0,1))+
+   theme(axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          plot.margin = margin(t=0.25,
+                             r=0.25,
+                             b= 0.25,
+                             l=0))+
+    theme(panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+```
+
+
+```{r}
+IHSplot <- plot_grid(i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, ncol = 13, nrow = 1, rel_widths = c(6.2, 4.1, 3.8, 2.9, 2.9, 2.3, 2.8, 2.4, 2, 1.7, 1.6, 1.2, 1.1))
+```
+
+```{r}
+library(gridExtra)
+```
+
+```{r}
+compound2 <- grid.arrange(FSTplot, XPEHHplot, CLRplot, IHSplot, ncol=1)
+```
+
+```{r}
+ggsave(filename = "./IMGS/compound_v2.png", plot = compound2, device = "png", width = 50, height = 20, units = "cm")
+```
+
