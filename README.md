@@ -18,7 +18,7 @@ Population selection (1-4) > Global analysis (5-11) > Population analysis and Se
 |9.|FST II|Summary of FST data and results|FST_summary_boxplot.Rmd<br>FST_Results.Rmd|FST_summary.png|
 |10.|High differentiation|Plotting highly differentiated SNPs by chromosome|High_Variation_FST.Rmd|highvariation_byLOCI.txt<br> Various images<br>fst_file.csv<br>FST_SNPindex.csv|
 |11.|FST miscellaneous|Plotting distribution of FST values, and lnvestigating low differentiation|FST_Distribution.Rmd, Least_Variation.Rmd|IMAGES|
-|12.|LD I|Calculating LD between pops, per chromosome|LD_Calc_VCFtools.Rmd|Locally stored .ld files|
+|12.|LD I|Calculating LD between pops, per chromosome and average linkage above r^2 =5|LD_Calc_VCFtools.Rmd<br>LD_Average.RmD|Locally stored .ld files<br>avg_LD_bychrom.xlsx/.csv<br>avg_LD.png|
 |13.|LD II|Visualising Linkage decay|LD_binning.RMD <br> LD_binning_LOOP.Rmd|Image files in the format:(POST/PRE)_avgLDdecay_chrXX.png|
 |14.|Nucleotide diversity<br> and Tajima's D|Computation workflow and preliminary plots|NT_TajD_COMPUTE.Rmd|diversity_plots.png|
 |15.|Nucleotide diversity<br>and Tajima's D|Summary plots, t-tests and Taj D results|NT_TajD_core_summary.Rmd <br> t_tests_ND_TajD.Rmd<br>TajD_Results.Rmd|ND_TajD_boxplot.png<br>TajD_pcnt0.5.csv|
