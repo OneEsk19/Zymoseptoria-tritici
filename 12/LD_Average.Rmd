@@ -1,0 +1,122 @@
+---
+title: "AVG_LD"
+author: "G.Robertson"
+date: "04/08/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Average LD by chromosome per population
+
+### Calculating average LD
+Read in the list of files
+```{r}
+postLDfiles <- list.files(path ="./LDfiles/", pattern = "post_chr*", full.names = T, recursive = T)
+
+postLDfiles <- postLDfiles[c(1, 10, 13:19, 2:9, 11, 12)]
+postLDfiles<- as.data.frame(postLDfiles)
+postLDfiles$chrom <- c(1:16, 19:21)
+
+# pre files were not parsing (because there was no chroosome 21), so I manually edited the dataframe and saved it to csv
+preLDfiles <- read.csv("preLDfiles.csv", header = T)
+```
+
+Calc avg LD for post population by chrom and store result in variable
+```{r}
+for (i in 1:19) {
+      
+      postfile <- read.delim(file = postLDfiles$postLDfiles[i], header = F)
+      
+      colnames(postfile) <- c("CHR","POS1","POS2","N_CHR","Rsq","D","Dprime")
+      
+      postfile$dist <- postfile$POS2 - postfile$POS1
+      
+      postupper <- na.omit(postfile[postfile$Rsq >=0.5,])
+      
+      avgDecay <- mean(postupper$dist)
+      
+      if (i == 1) {
+            post_avg_decay <- avgDecay
+      } else {
+            post_avg_decay <- rbind(post_avg_decay, avgDecay)
+      }
+}
+
+```
+
+Calc avg LD for pre population by chrom and store result in variable
+```{r}
+for (i in 1:18) {
+      
+      prefile <- read.delim(file = preLDfiles$preLDfiles[i], header = F)
+      
+      colnames(prefile) <- c("CHR","POS1","POS2","N_CHR","Rsq","D","Dprime")
+      
+      prefile$dist <- prefile$POS2 - prefile$POS1
+      
+      preupper <- na.omit(prefile[prefile$Rsq >=0.5,])
+      
+      avgDecay <- mean(preupper$dist)
+      
+      if (i == 1) {
+            pre_avg_decay <- avgDecay
+      } else {
+            pre_avg_decay <- rbind(pre_avg_decay, avgDecay)
+      }
+}
+```
+
+Stick the two results together
+```{r}
+chrom <-  c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,19,20,21)
+# Need to add the 19th row to pre
+pre_av_dec <- rbind(pre_avg_decay, "NA")
+
+Avg_LD <- cbind(chrom, post_avg_decay, pre_av_dec)
+colnames(Avg_LD) <- c("chrom", "post", "pre")
+print(Avg_LD)
+```
+
+```{r}
+write.csv(Avg_LD, "./data_sheets/avg_LD_bychrom.csv", row.names = F, quote = F)
+```
+___________________________________________________________
+
+### Graphing the results
+
+```{R}
+LD <- read.csv("./data_sheets/avg_LD_bychrom.csv")
+LD <- LD[1:13,]
+```
+
+
+```{r}
+library(reshape2)
+library(ggplot2)
+```
+
+```{r}
+LD2 <- melt(LD, id.vars="chrom")
+head(LD2)
+```
+
+```{r}
+my_colours <- c("darkslategrey", "coral4")
+
+p <- ggplot(LD2, aes(x=chrom, y=value, fill=variable))+
+  geom_bar(stat = "identity", position = "dodge")+
+  scale_x_continuous(breaks =  c(1,2,3,4,5,6,7,8,9,10,11,12,13))+
+  scale_fill_manual(values = my_colours, labels=c("Post", "Pre"))+
+  xlab("Chromosome")+
+  ylab("Average Distance(bp)")
+```
+
+```{r}
+ggsave(filename = "./IMGS/avg_LD.png", plot = p, device = "png", width=15, height=8, units = "cm")
+```
+
+
+
