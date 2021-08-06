@@ -29,7 +29,7 @@ Population selection (1-4) > Global analysis (5-11) > Population analysis and Se
 |20.|Integrated plot I|Plot to integrate iHS and CLR statistics|compountPlot_IHS_CLR.Rmd|IMGS/compound_CLR_IHS.png| 
 |21.|Integrated plot II|Plot to integrate FST, XP-EHH, CLR and iHS statistics|Compound_plot_v2.Rmd|Comound_v2.png<br> All necessary data files| 
 |22.|BLAST results|Graphic for BLAST results|Blast_res_graph.R|BLAST_res.png|
-|23.|Bias Check|Testing for population bias|
+|23.|Bias Check|Testing for population bias|Pop_size_bias.Rmd|analysis output files: (FST, TajD, ND)| 
 
 ## Abstract
 
