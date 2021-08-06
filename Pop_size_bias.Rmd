@@ -24,15 +24,15 @@ Getting post isolate list and selecting 5 random picks of 27 isolates
 ```{r}
 postpop <- read.delim(file = "./data_sheets/postDsamples.txt", header = F)
 
-s1 <- sample(postpop$V1, 27, replace = F)
+s1 <- sample(postpop$V1, 29, replace = F)
 write(s1, file = "s1.keep")
-s2 <- sample(postpop$V1, 27, replace = F)
+s2 <- sample(postpop$V1, 29, replace = F)
 write(s2, file = "s2.keep")
-s3 <- sample(postpop$V1, 27, replace = F)
+s3 <- sample(postpop$V1, 29, replace = F)
 write(s3, file = "s3.keep")
-s4 <- sample(postpop$V1, 27, replace = F)
+s4 <- sample(postpop$V1, 29, replace = F)
 write(s4, file = "s4.keep")
-s5 <- sample(postpop$V1, 27, replace = F)
+s5 <- sample(postpop$V1, 29, replace = F)
 write(s5, file = "s5.keep")
 ```
 
@@ -286,6 +286,7 @@ high1$CHROM <- as.numeric(high1$CHROM)
 str(high1)
 hist(high1$CHROM)
 ```
+
 ```{r}
 fst2 <- read.csv("./Bias_Check/s2vspre.weir.fst", header = T)
 high2 <- na.omit(fst2[fst2$WEIR_AND_COCKERHAM_FST>=0.9,])
