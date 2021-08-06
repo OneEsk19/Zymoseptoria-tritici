@@ -1,7 +1,7 @@
 # Population genetics with *Zymoseptoria tritici* 
 
 ## Summary
-Population selection (1-4) > Global analysis (5-11) > Population analysis and Selection tests (12-19) > Big plots (20-21)
+Population selection (1-5) > Global analysis (6-11) > Population analysis and Selection tests (12-19) > Big plots (20-21) > Characterising loci of interest (22) > Population bias check (23)
 
 ## Workflow 
 
@@ -24,9 +24,9 @@ Population selection (1-4) > Global analysis (5-11) > Population analysis and Se
 |15.|Nucleotide diversity<br>and Tajima's D|Summary plots, t-tests and Taj D results|NT_TajD_core_summary.Rmd <br> t_tests_ND_TajD.Rmd<br>TajD_Results.Rmd|ND_TajD_boxplot.png<br>TajD_pcnt0.5.csv|
 |16.|XP_EHH|Calculating cross population extended haplotype homozygosity and extracting results|XP-EHH_compute.Rmd XP_EHH_Results.Rmd|XPEHH_na.rm.csv XP_EHH_percentile_results.xlsx|
 |17.|IHS|Calculating IHS witin population statistic<br>and extracting results|IHS.Rmd <br> iHS_Results.Rmd|ISH_Pre.csv <br> IHS_Frequency_Pre.csv<br>ISH_Post.csv<br> IHS_Frequency_Post.csv<br>iHS_percentile_results.xlsx|
-|18.|IHS Plots|plotting IHS statistics per chrom + per pop| IHS_plots_POST.Rmd <br> IHS_plots_PRE.Rmd| in /IMGS/ <br> WG_ISH_POST.png <br> WG_ISH.PRE.png|
+|18.|IHS Plots|plotting IHS statistics per chrom + per pop| IHS_plots_POST.Rmd <br> IHS_plots_PRE.Rmd| WG_ISH_POST.png <br> WG_ISH.PRE.png|
 |19.|CLR analysis|Composite likihood Ratio|CLR_Sweed.Rmd <br>CLR_plots_POST.Rmd <br>CLR_plots_PRE.Rmd<br>CLR_results.Rmd |WG_CLR_post.png<br>WG_CLR_pre.png<br>Results data files|
-|20.|Integrated plot I|Plot to integrate iHS and CLR statistics|compountPlot_IHS_CLR.Rmd|IMGS/compound_CLR_IHS.png| 
+|20.|Integrated plot I|Plot to integrate iHS and CLR statistics|compountPlot_IHS_CLR.Rmd|compound_CLR_IHS.png| 
 |21.|Integrated plot II|Plot to integrate FST, XP-EHH, CLR and iHS statistics|Compound_plot_v2.Rmd|Comound_v2.png<br> All necessary data files| 
 |22.|BLAST results|Graphic for BLAST results|Blast_res_graph.R|BLAST_res.png|
 |23.|Bias Check|Testing for population bias|Pop_size_bias.Rmd|analysis output files: (FST, TajD, ND)| 
