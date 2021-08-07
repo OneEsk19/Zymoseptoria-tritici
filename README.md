@@ -38,3 +38,4 @@ Population selection (1-5) > Global analysis (6-11) > Population analysis and Se
 ## Note
 1) The code in this repo is a tidied-up version of my original work-in-progress repository which had a different directory structure. Consequently some of the file paths in the markdown documents will be incorrect.
 2) Large data files >100mb including VCF files are not included in this repo and are available upon request.
+gcr066[at]student.bham.ac.uk
