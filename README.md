@@ -34,3 +34,7 @@ Population selection (1-5) > Global analysis (6-11) > Population analysis and Se
 ## Abstract
 
 *Zymoseptoria tritici* is a fungal wheat pathogen of global agroeconomic importance and in Europe, 70% of fungicides are used on controlling this pathogen. It is highly adaptable, has large effective population sizes and is wind dispersed making it exceptionally difficult to control. Here we examine two temporally separated populations from Australia that occur before and after a decade long drought during which the disease was absent in wheat crops. Bioinformatic tools were used to compare the two populations and examine the changes to the genome that enabled this pathogen to survive and then re-emerge after this bottleneck event. Concurrence between three of the statistical tests found evidence of a hard selective sweep on chromosome 5 where putative melanin genes and their regulatory elements were found.
+
+## Note
+1) The code in this repo is a tidied-up version of my original work-in-progress repository which had a different directory structure. Consequently some of the file paths in the markdown documents will be incorrect.
+2) Large data files >100mb including VCF files are not included in this repo and are available upon request.
