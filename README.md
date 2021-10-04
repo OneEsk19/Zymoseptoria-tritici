@@ -1,5 +1,5 @@
 # Population genetics with *Zymoseptoria tritici* 
-
+![image](/misc/thesis_wordcloud.jpg)
 ## Summary
 Population selection (1-5) > Global analysis (6-11) > Population analysis and Selection tests (12-19) > Big plots (20-21) > Characterising loci of interest (22) > Population bias check (23)
 
